@@ -17,7 +17,8 @@ void yyerror(char *s, ...);
 "return" { return RETURN; }
 "void"   { return VOID; }
 "while"  { return WHILE; }
-
+"const"  { return CONST; }
+"enum"  { return ENUM; }
 
 
 
@@ -28,6 +29,11 @@ void yyerror(char *s, ...);
 ">=" 	{ return GTEQ; }
 "<"		{ return LT; }
 ">"		{ return GT; }
+"&&"     { return AND; }
+"||"     { return OR; }
+"++"     { return INC; }
+"--"     { return DEC; }
+"!"     { return yytext[0]; }
 "="     { return yytext[0]; }
 ","     { return yytext[0]; }
 ";" 	{ return yytext[0]; }

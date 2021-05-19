@@ -25,7 +25,17 @@ void yyerror(char *s, ...);
 %token LTEQ
 %token GTEQ
 %token ERROR
+%token CONST
+%token ENUM
+%token AND
+%token OR
+%token INC
+%token DEC
 
+%nonassoc AND
+%nonassoc OR
+%nonassoc INC
+%nonassoc DEC
 %nonassoc EQ
 %nonassoc NEQ
 %nonassoc LT
@@ -47,12 +57,17 @@ declaration-list:
 
 declaration:
   var-declaration 
-| fun-declaration  
+| fun-declaration
+| const-declaration  
 ;
 
 var-declaration: 
   type-specifier ID ';'
 | type-specifier ID '[' NUM ']' ';'
+;
+
+const-declaration: 
+  INT CONST ID '=' NUM ';'
 ;
 
 fun-declaration: 

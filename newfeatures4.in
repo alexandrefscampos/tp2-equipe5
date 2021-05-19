@@ -1,0 +1,13 @@
+// incr, decr
+int a;
+int b;
+int const max = 10;
+
+void main(void) {
+// ler a, b; 
+
+    if (a == 0)
+        ++a;
+    if (b == max)
+        --b;
+}

@@ -18,7 +18,7 @@ void yyerror(char *s, ...);
 "void"   { return VOID; }
 "while"  { return WHILE; }
 "const"  { return CONST; }
-"enum"  { return ENUM; }
+"enum"   { return ENUM; }
 
 
 
@@ -29,10 +29,10 @@ void yyerror(char *s, ...);
 ">=" 	{ return GTEQ; }
 "<"		{ return LT; }
 ">"		{ return GT; }
-"&&"     { return AND; }
-"||"     { return OR; }
-"++"     { return INC; }
-"--"     { return DEC; }
+"&&"    { return AND; }
+"||"    { return OR; }
+"++"    { return INC; }
+"--"    { return DEC; }
 "!"     { return yytext[0]; }
 "="     { return yytext[0]; }
 ","     { return yytext[0]; }
@@ -49,6 +49,7 @@ void yyerror(char *s, ...);
 "/"     { return yytext[0]; }
 [ \t]   { /* ignore white space */ }
 "\n"    { /* ignore white space */ }
+"\r"    { /* ignore white space */ }
 . 		{ yyerror("lexical error, character %c", yytext[0]); }
 %%
 

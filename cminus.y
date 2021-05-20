@@ -32,10 +32,6 @@ void yyerror(char *s, ...);
 %token INC
 %token DEC
 
-%nonassoc AND
-%nonassoc OR
-%nonassoc INC
-%nonassoc DEC
 %nonassoc EQ
 %nonassoc NEQ
 %nonassoc LT
@@ -43,7 +39,7 @@ void yyerror(char *s, ...);
 %nonassoc LTEQ
 %nonassoc GTEQ
 
-%start program
+%start program 
 
 %%
 
@@ -59,6 +55,7 @@ declaration:
   var-declaration 
 | fun-declaration
 | const-declaration  
+| enum-declaration
 ;
 
 var-declaration: 
@@ -68,6 +65,17 @@ var-declaration:
 
 const-declaration: 
   INT CONST ID '=' NUM ';'
+;
+
+enum-declaration:
+  ENUM ID ID ';'
+| ENUM ID '{' id-list '}' ';'
+| ENUM ID '{' id-list '}' ID ';'
+;
+
+id-list:
+  ID
+| id-list ',' ID 
 ;
 
 fun-declaration: 
@@ -100,6 +108,7 @@ compound-stmt:
 
 local-declarations: 
   local-declarations var-declaration
+| local-declarations enum-declaration
 | /* empty */
 ;
 

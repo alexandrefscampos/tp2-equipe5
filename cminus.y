@@ -156,10 +156,14 @@ var:
 
 simple-expression:
   additive-expression relop additive-expression 
+| simple-expression logop additive-expression
 | additive-expression
 ;
 
 relop: LTEQ | LT | GT | GTEQ | EQ | NEQ
+;
+
+logop: AND | OR
 ;
 
 additive-expression: 
@@ -172,6 +176,14 @@ term:
   factor
 | term '*' factor
 | term '/' factor
+| unary-expression
+;
+
+unary-expression:
+  unary_op factor
+;
+
+unary_op: '!' | DEC | INC
 ;
 
 factor: 

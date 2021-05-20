@@ -108,6 +108,7 @@ compound-stmt:
 
 local-declarations: 
   local-declarations var-declaration
+| local-declarations const-declaration
 | local-declarations enum-declaration
 | /* empty */
 ;

@@ -192,7 +192,13 @@ struct expr *expression_create(expr_t kind,
     e->left = left;
     e->right = right;
     e->name = name;
-    e->integer_value = value;
+    if (kind == EXPR_INC) {
+      e->integer_value = value + 1;
+    } else if (kind == EXPR_DEC) {
+      e->integer_value = value - 1;
+    } else {
+      e->integer_value = value;
+    }
   } else
     printf("No memory\n");
   return e;

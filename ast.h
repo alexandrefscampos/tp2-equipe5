@@ -46,7 +46,12 @@ typedef enum {
   EXPR_FUN,
   EXPR_CALL,
   EXPR_ARG,
-  EXPR_INTEGER_LITERAL
+  EXPR_INTEGER_LITERAL,
+  EXPR_AND,
+  EXPR_OR,
+  EXPR_INC,
+  EXPR_DEC,
+  EXPR_NOT
 } expr_t;
 
 /* nodes in the abstract syntax tree */

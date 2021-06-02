@@ -95,8 +95,7 @@ struct decl *enum_decl_create(char *name, struct type *type, struct param_list *
 }
 
 struct decl *const_declaration_create(char *name, struct type *type, int val) {
-  struct expr *expression = create_integer(val);
-  struct decl *constDeclaration = decl_create(name, type, expression, 0, 0);
+  struct decl *constDeclaration = decl_create(name, type, val, 0, 0);
   return constDeclaration;
 }
 

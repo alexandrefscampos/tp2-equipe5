@@ -152,6 +152,9 @@ struct decl *var_decl_create(char *name, struct type *type);
 struct decl *array_decl_create(char *, struct type *, int i);
 struct decl *func_decl_create(char *, struct type *, struct param_list *pl, struct stmt *body);
 
+struct decl *enum_decl_create(char *, struct type *, int i);
+struct decl *const_decl_create(char *, struct type *, int val);
+
 struct param_list *param_create(char *name, struct type *type);
 struct param_list *param_array_create(char *name, struct type *type);
 

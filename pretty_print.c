@@ -326,11 +326,11 @@ void bracket(struct decl *program)
     printf("\n]\n");
 }
 
-int main(void)
-{
-    int result = yyparse();
-    if (!result)
-        bracket(parser_result);
+// int main(void)
+// {
+//     int result = yyparse();
+//     if (!result)
+//         bracket(parser_result);
 
-    return result;
-}
+//     return result;
+// }

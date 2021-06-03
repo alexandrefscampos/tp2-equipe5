@@ -72,7 +72,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-// #include "tp2.h"
+#include "tp2.h"
 #include "ast.h"
 
 int yylex();
@@ -154,15 +154,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 53 "cminus.y"
+#line 52 "cminus.y"
 
     char *id;
     int num;
-    struct decl *decl;
-    struct stmt *stmt;
     struct expr *expr;
-    struct type *type;
     struct param_list *param_list;
+    struct type *type;
+    struct stmt *stmt;
+    struct decl *decl;
     struct id_list *id_list;
 
 #line 169 "cminus.tab.c"
@@ -542,15 +542,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    68,    68,    72,    73,    90,    91,    92,    93,    97,
-      98,   102,   106,   107,   108,   112,   113,   117,   121,   122,
-     126,   127,   131,   132,   136,   137,   141,   145,   146,   147,
-     148,   152,   153,   157,   158,   159,   160,   161,   165,   166,
-     170,   171,   175,   178,   179,   183,   184,   188,   189,   193,
-     194,   195,   198,   198,   198,   198,   198,   198,   201,   201,
-     205,   206,   207,   211,   212,   213,   214,   218,   221,   221,
-     221,   225,   226,   227,   228,   232,   236,   237,   241,   242,
-     250
+       0,    75,    75,    81,    82,    89,    90,    91,    92,    96,
+      97,   101,   105,   106,   107,   111,   112,   116,   120,   121,
+     125,   126,   130,   131,   135,   136,   140,   144,   145,   146,
+     147,   151,   152,   156,   157,   158,   159,   160,   164,   165,
+     169,   170,   174,   177,   178,   182,   183,   187,   188,   192,
+     193,   194,   197,   197,   197,   197,   197,   197,   200,   200,
+     204,   205,   206,   210,   211,   212,   213,   217,   220,   220,
+     220,   224,   225,   226,   227,   231,   235,   236,   240,   241,
+     249
 };
 #endif
 
@@ -1438,16 +1438,33 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 80:
-#line 250 "cminus.y"
-            {
-  (yyval.id) = yylval.id;
+  case 2:
+#line 75 "cminus.y"
+                          {
+  execute((yyvsp[0].decl));
 }
 #line 1447 "cminus.tab.c"
     break;
 
+  case 4:
+#line 82 "cminus.y"
+                               {
+    (yyvsp[0].decl)->next = (yyvsp[-1].decl);
+    (yyval.decl) = (yyvsp[0].decl);
+  }
+#line 1456 "cminus.tab.c"
+    break;
 
-#line 1451 "cminus.tab.c"
+  case 80:
+#line 249 "cminus.y"
+            {
+  (yyval.id) = yylval.id;
+}
+#line 1464 "cminus.tab.c"
+    break;
+
+
+#line 1468 "cminus.tab.c"
 
       default: break;
     }
@@ -1679,7 +1696,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 257 "cminus.y"
+#line 256 "cminus.y"
 
 
 

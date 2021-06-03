@@ -1013,7 +1013,7 @@ YY_RULE_SETUP
 case 40:
 YY_RULE_SETUP
 #line 61 "cminus.l"
-ECHO;
+YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
 #line 1019 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):

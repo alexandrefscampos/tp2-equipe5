@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-// #include "tp2.h"
+#include "tp2.h"
 #include "ast.h"
 
 int yylex();
@@ -44,7 +44,6 @@ int yylex();
 %type <decl> declaration-list declaration var-declaration fun-declaration const-declaration enum-declaration local-declarations
 %type <type> type-specifier
 %type <param_list> params param-list param
-// %type <id_list> id-list id
 %type <stmt> compound-stmt statement-list statement expression-stmt selection-stmt iteration-stmt return-stmt
 %type <expr> expression var simple-expression relop logop unary_op  additive-expression term factor call args args-list unary-expression
 %type <id> type_ID
@@ -53,11 +52,11 @@ int yylex();
 %union {
     char *id;
     int num;
-    struct decl *decl;
-    struct stmt *stmt;
     struct expr *expr;
-    struct type *type;
     struct param_list *param_list;
+    struct type *type;
+    struct stmt *stmt;
+    struct decl *decl;
     struct id_list *id_list;
 }
 
@@ -65,26 +64,26 @@ int yylex();
 
 %%
 
-program: declaration-list
-;
-
-declaration-list: 
-  declaration
-| declaration-list declaration 
-;
-
-// program: declaration-list {
-//   execute($1);
-// }
+// program: declaration-list
 // ;
 
 // declaration-list: 
 //   declaration
-// | declaration-list declaration {
-//     $2->next = $1;
-//     $$ = $2;
-//   }
+// | declaration-list declaration 
 // ;
+
+program: declaration-list {
+  execute($1);
+}
+;
+
+declaration-list: 
+  declaration
+| declaration-list declaration {
+    $2->next = $1;
+    $$ = $2;
+  }
+;
 
 declaration:
   var-declaration 

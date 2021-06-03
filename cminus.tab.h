@@ -77,15 +77,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 53 "cminus.y"
+#line 52 "cminus.y"
 
     char *id;
     int num;
-    struct decl *decl;
-    struct stmt *stmt;
     struct expr *expr;
-    struct type *type;
     struct param_list *param_list;
+    struct type *type;
+    struct stmt *stmt;
+    struct decl *decl;
     struct id_list *id_list;
 
 #line 92 "cminus.tab.h"

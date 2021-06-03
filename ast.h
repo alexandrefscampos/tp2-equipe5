@@ -9,7 +9,7 @@
 
 /* interface to the lexer */
 extern int yylineno; /* from lexer */
-void yyerror(char *errmsg, ...);
+// void yyerror(char *errmsg, ...);
 
 typedef enum
 {

@@ -7,7 +7,6 @@
 #include "ast.h"
 
 int yylex();
-// void yyerror(char *s, ...);
 %}
 
 
@@ -50,27 +49,19 @@ int yylex();
 %type <num> type_NUM;
 
 %union {
-    char *id;
-    int num;
-    struct expr *expr;
-    struct param_list *param_list;
-    struct type *type;
-    struct stmt *stmt;
-    struct decl *decl;
-    struct id_list *id_list;
+  char *id;
+  int num;
+  struct expr *expr;
+  struct param_list *param_list;
+  struct type *type;
+  struct stmt *stmt;
+  struct decl *decl;
+  struct id_list *id_list;
 }
 
 %start program 
 
 %%
-
-// program: declaration-list
-// ;
-
-// declaration-list: 
-//   declaration
-// | declaration-list declaration 
-// ;
 
 program: declaration-list {
   execute($1);
@@ -93,27 +84,41 @@ declaration:
 ;
 
 var-declaration: 
-  type-specifier type_ID ';'
-| type-specifier ID '[' NUM ']' ';'
+  type-specifier type_ID ';' {
+    $$ = decl_create($2, $1, 0, 0, 0);
+  }
+| type-specifier type_ID '[' type_NUM ']' ';' {
+      $$ = decl_create(
+        $2, type_create(TYPE_ARRAY, $1, 0), expr_create_integer($4), 0, 0
+      );
+    }
 ;
 
 const-declaration: 
-  INT CONST ID '=' NUM ';'
+  INT CONST type_ID '=' type_NUM ';' {
+    $$ = decl_create(
+      $2, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0
+    );
+  }
 ;
 
 enum-declaration:
-  ENUM ID ID ';'
-| ENUM ID '{' id-list '}' ';'
-| ENUM ID '{' id-list '}' ID ';'
+  ENUM type_ID type_ID ';' {
+    $$ = enum_decl_create(
+      $3, type_create(TYPE_ENUM, $2, 0), 0
+    );
+  }
+| ENUM type_ID '{' id-list '}' ';'
+| ENUM type_ID '{' id-list '}' type_ID ';'
 ;
 
 id-list:
-  ID
-| id-list ',' ID 
+  type_ID
+| id-list ',' type_ID 
 ;
 
 fun-declaration: 
-  type-specifier ID '(' params ')' compound-stmt
+  type-specifier type_ID '(' params ')' compound-stmt
 ;
 
 type-specifier: 
@@ -132,8 +137,8 @@ param-list:
 ;
 
 param: 
-  type-specifier ID
-| type-specifier ID '[' ']'
+  type-specifier type_ID
+| type-specifier type_ID '[' ']'
 ;
 
 compound-stmt: 
@@ -184,8 +189,8 @@ expression:
 ;
 
 var:  
-  ID
-| ID '[' expression ']'
+  type_ID
+| type_ID '[' expression ']'
 ;
 
 simple-expression:
@@ -221,14 +226,14 @@ unary_op: '!' | DEC | INC
 ;
 
 factor: 
-  NUM
+  type_NUM
 | '(' expression ')'
 | var 
 | call 
 ;
 
 call: 
-  ID '(' args ')'
+  type_ID '(' args ')'
 ;
 
 args:

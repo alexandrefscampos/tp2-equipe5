@@ -43,6 +43,15 @@ void prettyprint_type(struct type *type)
                 prettyprint_type(t->subtype);
             break;
         }
+        case TYPE_ENUM:
+        {
+            if (t->subtype)
+            {
+                printf("[enum]");
+                prettyprint_type(t->subtype);
+            }
+            break;
+        }
         default:
             break;
         }

@@ -75,7 +75,23 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 53 "cminus.y"
+
+    char *id;
+    int num;
+    struct decl *decl;
+    struct stmt *stmt;
+    struct expr *expr;
+    struct type *type;
+    struct param_list *param_list;
+    struct id_list *id_list;
+
+#line 92 "cminus.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

@@ -9,9 +9,10 @@
 
 /* interface to the lexer */
 extern int yylineno; /* from lexer */
-void yyerror(char *errmsg);
+void yyerror(char *errmsg, ...);
 
-typedef enum {
+typedef enum
+{
   TYPE_VOID,
   TYPE_INTEGER,
   TYPE_ARRAY,
@@ -19,7 +20,8 @@ typedef enum {
   TYPE_ENUM
 } type_t;
 
-typedef enum {
+typedef enum
+{
   STMT_EXPR,
   STMT_IF_ELSE,
   STMT_WHILE,
@@ -28,7 +30,8 @@ typedef enum {
   STMT_BLOCK
 } stmt_t;
 
-typedef enum {
+typedef enum
+{
   EXPR_ASSIGN,
   EXPR_ADD,
   EXPR_SUB,
@@ -56,7 +59,8 @@ typedef enum {
 
 /* nodes in the abstract syntax tree */
 
-struct decl {
+struct decl
+{
   struct type *type;
   char *name;
   struct expr *expr;
@@ -64,13 +68,15 @@ struct decl {
   struct decl *next;
 };
 
-struct type {
+struct type
+{
   type_t kind;
   struct type *subtype;
   struct param_list *params;
 };
 
-struct stmt {
+struct stmt
+{
   stmt_t kind;
   struct decl *decl;
   struct expr *init_expr;
@@ -81,7 +87,8 @@ struct stmt {
   struct stmt *next;
 };
 
-struct expr {
+struct expr
+{
   expr_t kind;
   struct expr *left;
   struct expr *right;
@@ -89,7 +96,8 @@ struct expr {
   int integer_value;
 };
 
-struct param_list {
+struct param_list
+{
   char *name;
   struct type *type;
   struct param_list *next;
@@ -157,7 +165,7 @@ struct decl *var_decl_create(char *name, struct type *type);
 struct decl *array_decl_create(char *, struct type *, int i);
 struct decl *func_decl_create(char *, struct type *, struct param_list *pl, struct stmt *body);
 
-struct decl *enum_decl_create(char *, struct type *, int i);
+struct decl *enum_decl_create(char *, struct type *, struct param_list *idList);
 struct decl *const_decl_create(char *, struct type *, int val);
 
 struct param_list *param_create(char *name, struct type *type);

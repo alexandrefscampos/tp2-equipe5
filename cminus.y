@@ -3,9 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+// #include "tp2.h"
+#include "ast.h"
 
 int yylex();
-void yyerror(char *s, ...);
+// void yyerror(char *s, ...);
 %}
 
 
@@ -39,6 +41,26 @@ void yyerror(char *s, ...);
 %nonassoc LTEQ
 %nonassoc GTEQ
 
+%type <decl> declaration-list declaration var-declaration fun-declaration const-declaration enum-declaration local-declarations
+%type <type> type-specifier
+%type <param_list> params param-list param
+// %type <id_list> id-list id
+%type <stmt> compound-stmt statement-list statement expression-stmt selection-stmt iteration-stmt return-stmt
+%type <expr> expression var simple-expression relop logop unary_op  additive-expression term factor call args args-list unary-expression
+%type <id> type_ID
+%type <num> type_NUM;
+
+%union {
+    char *id;
+    int num;
+    struct decl *decl;
+    struct stmt *stmt;
+    struct expr *expr;
+    struct type *type;
+    struct param_list *param_list;
+    struct id_list *id_list;
+}
+
 %start program 
 
 %%
@@ -47,9 +69,22 @@ program: declaration-list
 ;
 
 declaration-list: 
-  declaration-list declaration
-| declaration
+  declaration
+| declaration-list declaration 
 ;
+
+// program: declaration-list {
+//   execute($1);
+// }
+// ;
+
+// declaration-list: 
+//   declaration
+// | declaration-list declaration {
+//     $2->next = $1;
+//     $$ = $2;
+//   }
+// ;
 
 declaration:
   var-declaration 
@@ -59,7 +94,7 @@ declaration:
 ;
 
 var-declaration: 
-  type-specifier ID ';'
+  type-specifier type_ID ';'
 | type-specifier ID '[' NUM ']' ';'
 ;
 
@@ -206,6 +241,18 @@ args-list:
   args-list ',' expression  
 | expression 
 ;
+
+type_NUM: NUM {
+  $$ = yylval.num;
+ }
+;
+
+type_ID: ID {
+  $$ = yylval.id;
+}
+;
+
+
 
 %%
 

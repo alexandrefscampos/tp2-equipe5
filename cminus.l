@@ -1,15 +1,18 @@
-%option noyywrap nodefault yylineno
+%option yylineno noyywrap
 %{ 
-#include <string.h>
-#include "cminus.tab.h"
+    #include <string.h>
+    #include "cminus.tab.h"
+    #include "ast.h"
 
-void yyerror(char *s, ...);
 %}
 
 %%
 "//".*	{ /* ignore comment  */ }
 
-[0-9]+  { return NUM; }
+[0-9]+  { 
+    yylval.num = atof(yytext);
+    return NUM; 
+}
 
 "else"   { return ELSE; }
 "if"     { return IF; }
@@ -22,7 +25,11 @@ void yyerror(char *s, ...);
 
 
 
-[A-Za-z][A-Za-z0-9]* { return ID; }
+[A-Za-z][A-Za-z0-9]* { 
+    yylval.id = strdup(yytext);
+    return ID; 
+}
+
 "!="	{ return NEQ; }
 "==" 	{ return EQ; }
 "<="	{ return LTEQ; }

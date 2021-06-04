@@ -114,13 +114,7 @@ enum-declaration:
 
 fun-declaration: 
   type-specifier type_ID '(' params ')' compound-stmt {
-    $$ = decl_create(
-      $2,
-      type_create(TYPE_FUNCTION, $1, $4),
-      0,
-      $6,
-      0
-    );
+    $$ = func_decl_create($2, $1, $4, $6);
   }
 ;
 
@@ -158,7 +152,7 @@ param:
 
 compound-stmt: 
   '{' local-declarations statement-list '}' {
-    $$ = compound_stmt_create( STMT_BLOCK, $2, $3);
+    $$ = compound_stmt_create(STMT_BLOCK, $2, $3);
   }
 ;
 

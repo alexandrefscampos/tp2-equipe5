@@ -104,7 +104,7 @@ struct decl *var_decl_create(
 
 struct decl *enum_decl_create(char *name, struct type *type, struct param_list *idList)
 {
-  struct type *enumType = type_create(TYPE_ENUM, 0, idList);
+  struct type *enumType = type_create(TYPE_ENUM, type, idList);
   struct decl *enumDeclaration = decl_create(name, enumType, 0, 0, 0);
   return enumDeclaration;
 }
@@ -112,6 +112,7 @@ struct decl *enum_decl_create(char *name, struct type *type, struct param_list *
 struct decl *const_declaration_create(char *name, struct type *type, int val)
 {
   struct expr *i = create_integer(val);
+  struct type *it = type_create(TYPE_INTEGER, 0, 0);
   struct decl *constDeclaration = decl_create(name, type, i, 0, 0);
   return constDeclaration;
 }

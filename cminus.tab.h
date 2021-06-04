@@ -77,7 +77,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 52 "cminus.y"
+#line 51 "./cminus.y"
 
     char *id;
     int num;
@@ -88,7 +88,7 @@ union YYSTYPE
     struct decl *decl;
     struct id_list *id_list;
 
-#line 92 "cminus.tab.h"
+#line 92 "./cminus.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

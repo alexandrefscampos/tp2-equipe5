@@ -31,6 +31,11 @@ void prettyprint_type(struct type *type)
             printf("[int]");
             break;
         }
+        case TYPE_ENUM: 
+        {
+            
+            break;
+        }
         case TYPE_ARRAY:
         {
             if (t->subtype)
@@ -112,6 +117,12 @@ void prettyprint_decl(struct decl *decl)
             prettyprint_var(decl);
             break;
         }
+
+          case TYPE_ENUM:
+        {
+            prettyprint_var(decl);
+            break;
+        }
         case TYPE_ARRAY:
         {
             prettyprint_array(decl);
@@ -124,7 +135,6 @@ void prettyprint_decl(struct decl *decl)
         }
         default:
         {
-            printf("tipo desconhecido\n");
             break;
         }
         }
@@ -292,7 +302,36 @@ void prettyprint_expr(struct expr *e)
             prettyprint_bexpr(">=", e->left, e->right);
             break;
         }
+         case EXPR_AND:
+        {
+            prettyprint_bexpr("&&", e->left, e->right);
+            break;
+        }
+         case EXPR_OR:
+        {
+            prettyprint_bexpr("||", e->left, e->right);
+            break;
+        }
+         case EXPR_INC:
+        {
+            prettyprint_bexpr("++", e->right, NULL);
+            break;
+        }
+          case EXPR_DEC:
+        {
+            prettyprint_bexpr("--", e->right, NULL);
+            break;
+        }
+           case EXPR_NOT:
+        {
+            prettyprint_bexpr("!", e->right, NULL);
+            break;
+        }
         case EXPR_FUN:
+        {
+            break;
+        }
+         case EXPR_EMPTY:
         {
             break;
         }
@@ -313,7 +352,7 @@ void prettyprint_expr(struct expr *e)
         }
         default:
         {
-            printf("internal error:\n");
+           break;
         }
         }
     }
@@ -325,12 +364,3 @@ void bracket(struct decl *program)
     prettyprint_decl(program);
     printf("\n]\n");
 }
-
-// int main(void)
-// {
-//     int result = yyparse();
-//     if (!result)
-//         bracket(parser_result);
-
-//     return result;
-// }

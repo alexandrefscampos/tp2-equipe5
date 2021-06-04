@@ -32,6 +32,7 @@ typedef enum
 
 typedef enum
 {
+  EXPR_EMPTY,
   EXPR_ASSIGN,
   EXPR_ADD,
   EXPR_SUB,
@@ -170,9 +171,3 @@ struct decl *const_decl_create(char *, struct type *, int val);
 
 struct param_list *param_create(char *name, struct type *type);
 struct param_list *param_array_create(char *name, struct type *type);
-
-void bracket(struct decl *program);
-void prettyprint(struct decl *d);
-void printfunc(struct decl *func);
-
-extern struct decl *parser_result;

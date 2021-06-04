@@ -7,7 +7,6 @@
 #include "ast.h"
 
 int yylex();
-// void yyerror(char *s, ...);
 %}
 
 
@@ -64,14 +63,6 @@ int yylex();
 
 %%
 
-// program: declaration-list
-// ;
-
-// declaration-list: 
-//   declaration
-// | declaration-list declaration 
-// ;
-
 program: declaration-list {
   execute($1);
 }
@@ -93,63 +84,104 @@ declaration:
 ;
 
 var-declaration: 
-  type-specifier type_ID ';'
-| type-specifier ID '[' NUM ']' ';'
+  type-specifier type_ID ';'{
+    $$ = var_decl_create($2, $1);
+  }
+| type-specifier type_ID '[' type_NUM ']' ';' {
+    $$ = array_decl_create( $2, $1, $4);
+  }
 ;
 
 const-declaration: 
-  INT CONST ID '=' NUM ';'
+  INT CONST type_ID '=' type_NUM ';' {
+    $$ = const_declaration_create($3, TYPE_INTEGER, $5);
+  }
 ;
 
 enum-declaration:
-  ENUM ID ID ';'
-| ENUM ID '{' id-list '}' ';'
-| ENUM ID '{' id-list '}' ID ';'
-;
-
-id-list:
-  ID
-| id-list ',' ID 
+  ENUM type_ID type_ID ';' {
+    $$ = enum_decl_create($3, $2, 0);
+  }
+| ENUM type_ID '{' param-list '}' ';'
+  {
+    $$ = enum_decl_create(0, $2, $4);
+  }
+| ENUM type_ID '{' param-list '}' type_ID ';'
+  {
+    $$ = enum_decl_create($6, $2, $4);
+  }
 ;
 
 fun-declaration: 
-  type-specifier ID '(' params ')' compound-stmt
+  type-specifier type_ID '(' params ')' compound-stmt {
+    $$ = func_decl_create($2, $1, $4, $6);
+  }
 ;
 
 type-specifier: 
-  INT  
-| VOID 
+  INT {
+    $$ = type_create(TYPE_INTEGER, 0, 0);
+  }
+  | VOID {
+    $$ = type_create(TYPE_VOID, 0, 0);
+  }
 ;
 
 params:
   param-list
-| VOID 
+  | VOID {
+    $$ = param_create(0, type_create(TYPE_VOID, 0, 0));
+  }
 ;
 
 param-list:
-  param-list ',' param 
-| param
+  param-list ',' param  {
+    $3->next = $1;
+    $$ = $3;
+  }
+  | param 
 ;
-
 param: 
-  type-specifier ID
-| type-specifier ID '[' ']'
+  type-specifier type_ID {
+    $$ = param_create($2, $1);
+  }
+| type-specifier type_ID '[' ']' {
+    $$ = param_array_create($2, $1);
+  }
 ;
 
 compound-stmt: 
-  '{' local-declarations statement-list '}' 
+  '{' local-declarations statement-list '}' {
+    $$ = compound_stmt_create(STMT_BLOCK, $2, $3);
+  }
 ;
 
 local-declarations: 
-  local-declarations var-declaration
-| local-declarations const-declaration
-| local-declarations enum-declaration
-| /* empty */
+  local-declarations var-declaration {
+    $2->next = $1;
+    $$ = $2;
+  }
+| local-declarations const-declaration{
+    $2->next = $1;
+    $$ = $2;
+  }
+| local-declarations enum-declaration {
+    $2->next = $1;
+    $$ = $2;
+  }
+| /* empty */ {
+    $$ = 0;
+  }
 ;
 
 statement-list:
-  statement-list statement
-| /* empty */
+  statement-list statement {
+    $2->next = $1;
+    $$ = $2;
+  }
+| /* empty */ {
+    $$ = 0;
+  }
 ;
 
 statement: 
@@ -161,84 +193,145 @@ statement:
 ;
 
 expression-stmt: 
-  expression ';'
-| ';'           
+  expression ';' {
+    $$ = stmt_create(STMT_EXPR, 0, 0, $1, 0, 0, 0, 0);
+  }
+| ';' {
+    $$ = stmt_create(STMT_EXPR, 0, 0, expr_create(EXPR_EMPTY, 0, 0), 0, 0, 0, 0);
+  }          
 ;
 
 selection-stmt: 
-  IF '(' expression ')' statement
-| IF '(' expression ')' statement ELSE statement 
+  IF '(' expression ')' statement {
+    $$ = stmt_create(STMT_IF_ELSE, 0, 0, $3, 0, $5, 0, 0);
+  }
+| IF '(' expression ')' statement ELSE statement {
+    $$ = stmt_create(STMT_IF_ELSE, 0, 0, $3, 0, $5, $7, 0);
+  }
 ;
 
 iteration-stmt: 
-  WHILE '(' expression ')' statement 
+  WHILE '(' expression ')' statement {
+    $$ = stmt_create(STMT_WHILE, 0, 0, $3, 0, $5, 0, 0);
+  }
 ;
 
-return-stmt: RETURN ';' 
-| RETURN expression ';' 
+return-stmt: RETURN ';' {
+    $$ = stmt_create(STMT_RETURN, 0, 0, 0, 0, 0, 0, 0);
+  }
+| RETURN expression ';' {
+    $$ = stmt_create(STMT_RETURN, 0, 0, $2, 0, 0, 0, 0);
+  }
 ;
 
 expression: 
-  var '=' expression
+  var '=' expression {
+    $$ = expr_create(EXPR_ASSIGN, $1, $3);
+  }
 | simple-expression
 ;
 
 var:  
-  ID
-| ID '[' expression ']'
+  type_ID  {
+    $$ = expr_create_var($1);
+  }
+| type_ID '[' expression ']' {
+    $$ = expr_create_array($1, $3);
+  }
 ;
 
 simple-expression:
-  additive-expression relop additive-expression 
-| simple-expression logop additive-expression
+  additive-expression relop additive-expression {
+    $2->left = $1;
+    $2->right = $3;
+    $$ = $2;
+  }
+| simple-expression logop additive-expression {
+    $2->left = $1;
+    $2->right = $3;
+    $$ = $2;
+  }
 | additive-expression
 ;
 
-relop: LTEQ | LT | GT | GTEQ | EQ | NEQ
+relop: 
+  LTEQ { $$ = expr_create(EXPR_LTEQ, 0, 0); }
+| LT { $$ = expr_create(EXPR_LT, 0, 0); }
+| GT { $$ = expr_create(EXPR_GT, 0, 0); }
+| GTEQ { $$ = expr_create(EXPR_GTEQ, 0, 0); }
+| EQ { $$ = expr_create(EXPR_EQ, 0, 0); }
+| NEQ { $$ = expr_create(EXPR_NEQ, 0, 0); }
 ;
 
-logop: AND | OR
+logop: 
+  AND { $$ = expr_create(EXPR_AND, 0, 0); }
+| OR { $$ = expr_create(EXPR_OR, 0, 0); }
 ;
 
 additive-expression: 
-  term
-| additive-expression '+' term
-| additive-expression '-' term
+  term { $$ = $1; }
+| additive-expression '+' term {
+     $$ = expr_create(EXPR_ADD, $1, $3);
+  }
+| additive-expression '-' term {
+     $$ = expr_create(EXPR_SUB, $1, $3);
+  }
 ;
 
 term: 
-  factor
-| term '*' factor
-| term '/' factor
-| unary-expression
+factor { $$ = $1; }
+| term '*' factor {
+    $$ = expr_create(EXPR_MUL, $1, $3);
+  }
+| term '/' factor {
+    $$ = expr_create(EXPR_DIV, $1, $3);
+  }
+| unary-expression { $$ = $1; }
 ;
+
 
 unary-expression:
-  unary_op factor
+  unary_op factor {
+    $1->right = $2;
+    $$ = $1;
+  }
 ;
 
-unary_op: '!' | DEC | INC
+unary_op: 
+  '!' { $$ = expr_create(EXPR_NOT, 0, 0); }
+| DEC { $$ = expr_create(EXPR_DEC, 0, 0); }
+| INC { $$ = expr_create(EXPR_INC, 0, 0); }
 ;
 
 factor: 
-  NUM
-| '(' expression ')'
+  type_NUM {
+    $$ = expr_create_integer($1);
+  }
+| '(' expression ')' {
+    $$ = $2;
+  }
 | var 
 | call 
 ;
 
 call: 
-  ID '(' args ')'
+  type_ID '(' args ')' {
+    $$ = expr_create_call($1, $3);
+  }
 ;
 
 args:
   args-list
-| /* empty */ 
+| /* empty */ {
+    $$ = 0;
+  }
 ;
 
 args-list:
-  args-list ',' expression  
-| expression 
+  expression 
+| args-list ',' expression {
+    $$ = expr_create_arg( $1, $3);
+  }
 ;
 
 type_NUM: NUM {
@@ -250,8 +343,6 @@ type_ID: ID {
   $$ = yylval.id;
 }
 ;
-
-
 
 %%
 

@@ -1,4 +1,4 @@
-%option yylineno noyywrap nodefault
+%option yylineno nodefault noyywrap
 %{ 
     #include <string.h>
     #include "cminus.tab.h"

@@ -10,7 +10,7 @@ void execute(struct decl *decl)
   bracket(decl);
 }
 
-void yyerror(const char *s, ...)
+void yyerror(char *s, ...)
 {
   va_list ap;
   va_start(ap, s);
@@ -19,5 +19,6 @@ void yyerror(const char *s, ...)
 
 int main(int argc, char *argv[])
 {
+
   yyparse();
 }

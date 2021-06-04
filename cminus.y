@@ -233,7 +233,7 @@ expression:
 
 var:  
   type_ID  {
-    $$ = expr_create_name($1);
+    $$ = expr_create_var($1);
   }
 | type_ID '[' expression ']' {
     $$ = expr_create_array($1, $3);
@@ -291,7 +291,10 @@ factor { $$ = $1; }
 
 
 unary-expression:
-  unary_op factor 
+  unary_op factor {
+    $1->right = $2;
+    $$ = $1;
+  }
 ;
 
 unary_op: 
@@ -313,7 +316,7 @@ factor:
 
 call: 
   type_ID '(' args ')' {
-    $$ = expr_create(EXPR_CALL, expr_create_name($1), $3);
+    $$ = expr_create_call($1, $3);
   }
 ;
 
@@ -327,7 +330,7 @@ args:
 args-list:
   expression 
 | args-list ',' expression {
-    $$ = expr_create(EXPR_ARG, $1, $3);
+    $$ = expr_create_arg( $1, $3);
   }
 ;
 

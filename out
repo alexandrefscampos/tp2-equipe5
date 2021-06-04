@@ -2,16 +2,17 @@
 [func-declaration [int][foo]
 [params[param [z][int]][param [y][int]][param [x][int]]]
 [compound-stmt 
-[return-stmt [y]
+[var-declaration [int][a]]
+[return-stmt [var [y]]
 [if-else-stmt 
-[== [y][0]]
+[== [var [y]][0]]
 [compound-stmt 
-[= [y][1]]]
+[= [var [y]][1]]]
 ]
 
-[= [y]
+[= [var [y]]
 [+ 
-[* [x][y]][2]]]
+[* [var [x]][var [y]]][2]]]
 [= [var [z][0][0]]]
 ]
 ]

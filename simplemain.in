@@ -1,5 +1,7 @@
 int foo(int x, int y, int z[]) {
 
+    int a;
+
     z[0] = 0;
     y = x * y + 2;
 

@@ -547,8 +547,8 @@ static const yytype_int16 yyrline[] =
      182,   188,   189,   190,   191,   192,   196,   199,   205,   208,
      214,   219,   222,   228,   231,   235,   238,   244,   249,   254,
      258,   259,   260,   261,   262,   263,   267,   268,   272,   273,
-     276,   282,   283,   286,   289,   294,   298,   299,   300,   304,
-     307,   310,   311,   315,   321,   322,   328,   329,   334,   339
+     276,   282,   283,   286,   289,   294,   301,   302,   303,   307,
+     310,   313,   314,   318,   324,   325,   331,   332,   337,   342
 };
 #endif
 
@@ -1683,7 +1683,7 @@ yyreduce:
   case 45:
 #line 235 "./cminus.y"
            {
-    (yyval.expr) = expr_create_name((yyvsp[0].id));
+    (yyval.expr) = expr_create_var((yyvsp[0].id));
   }
 #line 1689 "./cminus.tab.c"
     break;
@@ -1814,82 +1814,91 @@ yyreduce:
 #line 1815 "./cminus.tab.c"
     break;
 
+  case 65:
+#line 294 "./cminus.y"
+                  {
+    (yyvsp[-1].expr)->right = (yyvsp[0].expr);
+    (yyval.expr) = (yyvsp[-1].expr);
+  }
+#line 1824 "./cminus.tab.c"
+    break;
+
   case 66:
-#line 298 "./cminus.y"
+#line 301 "./cminus.y"
       { (yyval.expr) = expr_create(EXPR_NOT, 0, 0); }
-#line 1821 "./cminus.tab.c"
+#line 1830 "./cminus.tab.c"
     break;
 
   case 67:
-#line 299 "./cminus.y"
+#line 302 "./cminus.y"
       { (yyval.expr) = expr_create(EXPR_DEC, 0, 0); }
-#line 1827 "./cminus.tab.c"
+#line 1836 "./cminus.tab.c"
     break;
 
   case 68:
-#line 300 "./cminus.y"
+#line 303 "./cminus.y"
       { (yyval.expr) = expr_create(EXPR_INC, 0, 0); }
-#line 1833 "./cminus.tab.c"
+#line 1842 "./cminus.tab.c"
     break;
 
   case 69:
-#line 304 "./cminus.y"
+#line 307 "./cminus.y"
            {
     (yyval.expr) = expr_create_integer((yyvsp[0].num));
   }
-#line 1841 "./cminus.tab.c"
+#line 1850 "./cminus.tab.c"
     break;
 
   case 70:
-#line 307 "./cminus.y"
+#line 310 "./cminus.y"
                      {
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1849 "./cminus.tab.c"
+#line 1858 "./cminus.tab.c"
     break;
 
   case 73:
-#line 315 "./cminus.y"
+#line 318 "./cminus.y"
                        {
-    (yyval.expr) = expr_create(EXPR_CALL, expr_create_name((yyvsp[-3].id)), (yyvsp[-1].expr));
+    (yyval.expr) = expr_create_call((yyvsp[-3].id), (yyvsp[-1].expr));
   }
-#line 1857 "./cminus.tab.c"
+#line 1866 "./cminus.tab.c"
     break;
 
   case 75:
-#line 322 "./cminus.y"
+#line 325 "./cminus.y"
               {
     (yyval.expr) = 0;
   }
-#line 1865 "./cminus.tab.c"
+#line 1874 "./cminus.tab.c"
     break;
 
   case 77:
-#line 329 "./cminus.y"
+#line 332 "./cminus.y"
                            {
-    (yyval.expr) = expr_create(EXPR_ARG, (yyvsp[-2].expr), (yyvsp[0].expr));
+    (yyval.expr) = expr_create_arg( (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1873 "./cminus.tab.c"
+#line 1882 "./cminus.tab.c"
     break;
 
   case 78:
-#line 334 "./cminus.y"
+#line 337 "./cminus.y"
               {
   (yyval.num) = yylval.num;
  }
-#line 1881 "./cminus.tab.c"
+#line 1890 "./cminus.tab.c"
     break;
 
   case 79:
-#line 339 "./cminus.y"
+#line 342 "./cminus.y"
             {
   (yyval.id) = yylval.id;
 }
-#line 1889 "./cminus.tab.c"
+#line 1898 "./cminus.tab.c"
     break;
 
 
-#line 1893 "./cminus.tab.c"
+#line 1902 "./cminus.tab.c"
 
       default: break;
     }
@@ -2121,7 +2130,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 344 "./cminus.y"
+#line 347 "./cminus.y"
 
 
 

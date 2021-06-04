@@ -1448,7 +1448,7 @@ yyreduce:
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
-<<<<<<< HEAD
+
 #line 1456 "cminus.tab.c"
     break;
 
@@ -1899,7 +1899,6 @@ yyreduce:
 
 
 #line 1902 "./cminus.tab.c"
->>>>>>> c04deb2d160e99eadfa843d41f0fe16e304337ec
 
       default: break;
     }

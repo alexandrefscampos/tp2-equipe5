@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "tp2.h"
+#include "pretty_print.h"
 #include "ast.h"
 
 int yylex();
@@ -64,12 +64,11 @@ int yylex();
 %%
 
 program: declaration-list {
-  execute($1);
+  parser_result = $1;
 }
-;
 
 declaration-list: 
-  declaration
+  declaration 
 | declaration-list declaration {
     $2->next = $1;
     $$ = $2;
@@ -88,25 +87,25 @@ var-declaration:
     $$ = decl_create($2, $1, 0, 0, 0);
   }
 | type-specifier type_ID '[' type_NUM ']' ';' {
-      $$ = decl_create(
-        $2, type_create(TYPE_ARRAY, $1, 0), expr_create_integer($4), 0, 0
-      );
+      // $$ = decl_create(
+      //   $2, type_create(TYPE_ARRAY, $1, 0), expr_create_integer($4), 0, 0
+      // );
     }
 ;
 
 const-declaration: 
   INT CONST type_ID '=' type_NUM ';' {
-    $$ = decl_create(
-      $2, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0
-    );
+    // $$ = decl_create(
+    //   $2, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0
+    // );
   }
 ;
 
 enum-declaration:
   ENUM type_ID type_ID ';' {
-    $$ = enum_decl_create(
-      $3, type_create(TYPE_ENUM, $2, 0), 0
-    );
+    // $$ = enum_decl_create(
+    //   $3, type_create(TYPE_ENUM, $2, 0), 0
+    // );
   }
 | ENUM type_ID '{' id-list '}' ';'
 | ENUM type_ID '{' id-list '}' type_ID ';'

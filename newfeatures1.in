@@ -1,2 +1,2 @@
-enum rgb color;
-
+int a;
+int b;

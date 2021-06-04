@@ -325,12 +325,3 @@ void bracket(struct decl *program)
     prettyprint_decl(program);
     printf("\n]\n");
 }
-
-int main(void)
-{
-    int result = yyparse();
-    if (!result)
-        bracket(parser_result);
-
-    return result;
-}

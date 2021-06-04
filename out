@@ -1,0 +1,33 @@
+[program 
+[func-declaration [void][main]
+[params[param [(null)][void]]]
+[compound-stmt 
+[var-declaration [int][a][10]]
+[iteration-stmt 
+[< [g][10]]
+[compound-stmt internal error:
+
+[= [g]
+[call [foo]
+[args [a][2][g]]
+]]
+]
+]
+]
+[func-declaration [int][foo]
+[params[param [z][int]][param [y][int]][param [x][int]]]
+[compound-stmt 
+[return-stmt [y]
+[if-else-stmt 
+[== [y][0]]
+[compound-stmt 
+[= [y][1]]]
+]
+
+[= [y]
+[+ 
+[* [x][y]][2]]]
+[= [var [z][0][0]]]
+]
+[var-declaration [int][g]]
+]

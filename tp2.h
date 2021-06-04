@@ -1,0 +1,1 @@
+void execute(struct decl *decl);

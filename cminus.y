@@ -9,7 +9,6 @@
 int yylex();
 %}
 
-
 /* declare tokens */
 %token NUM
 %token ID
@@ -69,7 +68,7 @@ program: declaration-list {
 ;
 
 declaration-list: 
-  declaration
+  declaration 
 | declaration-list declaration {
     $2->next = $1;
     $$ = $2;
@@ -94,7 +93,9 @@ var-declaration:
 
 const-declaration: 
   INT CONST type_ID '=' type_NUM ';' {
-    $$ = const_declaration_create($3, TYPE_INTEGER, $5);
+    $$ = const_declaration_create($3, $5);
+    //$$ = var_decl_create($3, type_create(TYPE_INTEGER, 0, 0));
+    
   }
 ;
 
@@ -102,11 +103,11 @@ enum-declaration:
   ENUM type_ID type_ID ';' {
     $$ = enum_decl_create($3, $2, 0);
   }
-| ENUM type_ID '{' param-list '}' ';'
+| ENUM type_ID '{' id-list '}' ';'
   {
     $$ = enum_decl_create(0, $2, $4);
   }
-| ENUM type_ID '{' param-list '}' type_ID ';'
+| ENUM type_ID '{' id-list '}' type_ID ';'
   {
     $$ = enum_decl_create($6, $2, $4);
   }
@@ -147,6 +148,18 @@ param:
   }
 | type-specifier type_ID '[' ']' {
     $$ = param_array_create($2, $1);
+  }
+;
+id-list:
+  id-list ',' id  {
+    $3->next = $1;
+    $$ = $3;
+  }
+  | id 
+;
+id: 
+  type_ID {
+    $$ = id_list_create($1, enum_type_create(TYPE_ENUM,0,0));
   }
 ;
 
@@ -269,7 +282,7 @@ logop:
 ;
 
 additive-expression: 
-  term { $$ = $1; }
+  term 
 | additive-expression '+' term {
      $$ = expr_create(EXPR_ADD, $1, $3);
   }
@@ -279,14 +292,14 @@ additive-expression:
 ;
 
 term: 
-factor { $$ = $1; }
+factor 
 | term '*' factor {
     $$ = expr_create(EXPR_MUL, $1, $3);
   }
 | term '/' factor {
     $$ = expr_create(EXPR_DIV, $1, $3);
   }
-| unary-expression { $$ = $1; }
+| unary-expression 
 ;
 
 

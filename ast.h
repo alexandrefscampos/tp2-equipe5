@@ -74,6 +74,7 @@ struct type
   type_t kind;
   struct type *subtype;
   struct param_list *params;
+  struct id_list *id_list;
 };
 
 struct stmt
@@ -102,6 +103,13 @@ struct param_list
   char *name;
   struct type *type;
   struct param_list *next;
+};
+
+struct id_list
+{
+  char *name;
+  struct type *type;
+  struct id_list *next;
 };
 
 /* prototypes */
@@ -166,8 +174,14 @@ struct decl *var_decl_create(char *name, struct type *type);
 struct decl *array_decl_create(char *, struct type *, int i);
 struct decl *func_decl_create(char *, struct type *, struct param_list *pl, struct stmt *body);
 
-struct decl *enum_decl_create(char *, struct type *, struct param_list *idList);
-struct decl *const_decl_create(char *, struct type *, int val);
+struct decl *enum_decl_create(char *, struct type *, struct id_list *idList);
+struct decl *const_decl_create(char *, int val);
 
 struct param_list *param_create(char *name, struct type *type);
+
+struct id_list *id_list_create(char *name, struct type *type);
+struct type *enum_type_create(type_t kind,
+                              struct type *subtype,
+                              struct id_list *params);
+
 struct param_list *param_array_create(char *name, struct type *type);

@@ -1,7 +1,9 @@
+int g;
+
 int foo(int x, int y, int z[]) {
 
-    int a;
-
+    enum rgb {red, green, blue};
+    color = red;
     z[0] = 0;
     y = x * y + 2;
 
@@ -13,3 +15,12 @@ int foo(int x, int y, int z[]) {
 
 }
 
+void main(void) {
+
+    int a[10];
+
+    while(g < 10){
+        g = foo(g, 2, a);
+        ;
+    }
+}

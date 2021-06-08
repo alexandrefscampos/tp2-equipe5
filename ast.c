@@ -22,6 +22,23 @@ struct type *type_create(type_t kind,
     t->kind = kind;
     t->subtype = subtype;
     t->params = params;
+    t->id_list = 0;
+  }
+  else
+    printf("No memory\n");
+  return t;
+}
+struct type *enum_type_create(type_t kind,
+                              struct type *subtype,
+                              struct id_list *params)
+{
+  struct type *t = malloc(sizeof(*t));
+  if (t)
+  {
+    t->kind = kind;
+    t->subtype = subtype;
+    t->params = 0;
+    t->id_list = params;
   }
   else
     printf("No memory\n");
@@ -68,6 +85,20 @@ struct param_list *insert_param(
   return head;
 }
 
+struct id_list *insert_id_list(
+    struct id_list *head,
+    struct id_list *elem)
+{
+  struct id_list *p = head;
+  struct id_list *i = elem;
+  while (p->next)
+  {
+    p = p->next;
+  }
+  p->next = i;
+  return head;
+}
+
 struct decl *decl_create(
     char *name, struct type *type,
     struct expr *expr,
@@ -102,18 +133,18 @@ struct decl *var_decl_create(
   return vd;
 }
 
-struct decl *enum_decl_create(char *name, struct type *type, struct param_list *idList)
+struct decl *enum_decl_create(char *name, struct type *type, struct id_list *idList)
 {
-  struct type *enumType = type_create(TYPE_ENUM, type, idList);
+  struct type *enumType = enum_type_create(TYPE_ENUM, type, idList);
   struct decl *enumDeclaration = decl_create(name, enumType, 0, 0, 0);
   return enumDeclaration;
 }
 
-struct decl *const_declaration_create(char *name, struct type *type, int val)
+struct decl *const_declaration_create(char *name, int val)
 {
   struct expr *i = create_integer(val);
   struct type *it = type_create(TYPE_INTEGER, 0, 0);
-  struct decl *constDeclaration = decl_create(name, type, i, 0, 0);
+  struct decl *constDeclaration = decl_create(name, it, i, 0, 0);
   return constDeclaration;
 }
 
@@ -137,6 +168,19 @@ struct decl *func_decl_create(char *name, struct type *type,
 struct param_list *param_create(char *name, struct type *type)
 {
   struct param_list *pl = malloc(sizeof(*pl));
+  if (pl)
+  {
+    pl->name = name;
+    pl->type = type;
+    pl->next = 0;
+  }
+  else
+    printf("No memory\n");
+  return pl;
+}
+struct id_list *id_list_create(char *name, struct type *type)
+{
+  struct id_list *pl = malloc(sizeof(*pl));
   if (pl)
   {
     pl->name = name;

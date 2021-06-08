@@ -35,7 +35,6 @@ void prettyprint_type(struct type *type)
         {
             if (t->subtype)
                 prettyprint_type(t->subtype);
-
             break;
         }
         case TYPE_FUNCTION:
@@ -53,43 +52,14 @@ void prettyprint_type(struct type *type)
 void prettyprint_params(struct param_list *pl)
 {
     struct param_list *p = pl;
-
-    if (!p)
-    {
-        return;
-    }
-
-    prettyprint_params(p->next);
-
-    if (p->type->kind != TYPE_VOID)
+    while (p)
     {
         printf("[param ");
-        if (p->type)
-            prettyprint_type(p->type);
-        if (p->name)
-            printf("[%s]", p->name);
-        if (p->type->kind == TYPE_ARRAY)
-            printf("[\\[\\]]");
-        printf("]");
-    }
-}
-void prettyprint_id_list(struct id_list *pl)
-{
-    struct id_list *p = pl;
-
-    if (!p)
-    {
-        return;
-    }
-
-    prettyprint_id_list(p->next);
-
-    if (p->name)
-    {
         printf("[%s]", p->name);
+        prettyprint_type(p->type);
+        printf("]");
+        p = p->next;
     }
-
-    printf("]");
 }
 
 void prettyprint_var(struct decl *var)
@@ -125,149 +95,102 @@ void prettyprint_func(struct decl *func)
     printf("]");
 }
 
-prettyprint_const(struct decl *decl)
-{
-    printf("\n[const-declaration ");
-    printf("\n[int]");
-    // printf("\n[%s] ", decl->name);
-    // printf("\n[%d] ", decl->expr->integer_value);
-    printf(" ] ");
-}
-
 void prettyprint_decl(struct decl *decl)
 {
-    if (!decl)
+    while (decl)
     {
-        return;
-    }
-
-    prettyprint_decl(decl->next);
-
-    struct type *t = decl->type;
-    switch (t->kind)
-    {
-    case TYPE_VOID:
-    {
-        printf("[void]");
-        break;
-    }
-    case TYPE_INTEGER:
-    {
-        // printf(":)");
-        // if (decl->expr)
-        //     prettyprint_const(decl);
-        // else
-        prettyprint_var(decl);
-        break;
-    }
-
-    case TYPE_ENUM:
-    {
-        if (!decl->type->params)
+        struct type *t = decl->type;
+        switch (t->kind)
         {
-
-            printf("\n[enum-var-declaration ");
-            prettyprint_name(decl->type->subtype);
-            printf("[%s] ", decl->name);
-        }
-        else
+        case TYPE_VOID:
         {
-            printf("[enum-type-declaration ");
-            prettyprint_name(decl->type->subtype);
-
-            if (decl->name)
-                printf("[%s] ", decl->name);
-
-            if (decl->type->params)
-            {
-                printf("\n[enum_consts");
-                prettyprint_id_list(decl->type->id_list);
-                printf("\n]");
-            }
+            printf("[void]");
+            break;
         }
-        printf(" ] ");
-        break;
-    }
-    case TYPE_ARRAY:
-    {
-        prettyprint_array(decl);
-        break;
-    }
-    case TYPE_FUNCTION:
-    {
-        prettyprint_func(decl);
-        break;
-    }
-    default:
-    {
-        break;
-    }
+        case TYPE_INTEGER:
+        {
+            prettyprint_var(decl);
+            break;
+        }
+        case TYPE_ARRAY:
+        {
+            prettyprint_array(decl);
+            break;
+        }
+        case TYPE_FUNCTION:
+        {
+            prettyprint_func(decl);
+            break;
+        }
+        default:
+        {
+            printf("tipo desconhecido\n");
+            break;
+        }
+        }
+        decl = decl->next;
     }
 }
 
 void prettyprint_stmt(struct stmt *s)
 {
-    if (!s)
+    while (s)
     {
-
-        return;
-    }
-
-    prettyprint_stmt(s->next);
-
-    switch (s->kind)
-    {
-    case STMT_EXPR:
-    {
-        if (s->expr)
+        switch (s->kind)
+        {
+        case STMT_EXPR:
+        {
+            if (s->expr)
+                prettyprint_expr(s->expr);
+            else
+                printf("[;]\n");
+            break;
+        }
+        case STMT_IF_ELSE:
+        {
+            printf("\n[if-else-stmt ");
             prettyprint_expr(s->expr);
-        else
-            printf("[;]\n");
-        break;
-    }
-    case STMT_IF_ELSE:
-    {
-        printf("\n[selection-stmt ");
-        prettyprint_expr(s->expr);
-        prettyprint_stmt(s->body);
-        if (s->else_body)
-            prettyprint_stmt(s->else_body);
-        printf("]\n");
-        break;
-    }
-    case STMT_WHILE:
-    {
-        printf("\n[iteration-stmt ");
-        prettyprint_expr(s->expr);
-        prettyprint_stmt(s->body);
-        printf("]\n");
-        break;
-    }
-    case STMT_PRINT:
-    {
-        break;
-    }
-    case STMT_RETURN:
-    {
-        printf("\n[return-stmt ");
-        if (s->expr)
-            prettyprint_expr(s->expr);
-        else
-            printf("[;]\n");
-        break;
-    }
-    case STMT_BLOCK:
-    {
-        printf("\n[compound-stmt ");
-        if (s->decl)
-            prettyprint_decl(s->decl);
-        if (s->body)
             prettyprint_stmt(s->body);
-        printf("]\n");
-        break;
-    }
-    default:
-        break;
+            if (s->else_body)
+                prettyprint_stmt(s->else_body);
+            printf("]\n");
+            break;
+        }
+        case STMT_WHILE:
+        {
+            printf("\n[iteration-stmt ");
+            prettyprint_expr(s->expr);
+            prettyprint_stmt(s->body);
+            printf("]\n");
+            break;
+        }
+        case STMT_PRINT:
+        {
+            break;
+        }
+        case STMT_RETURN:
+        {
+            printf("\n[return-stmt ");
+            if (s->expr)
+                prettyprint_expr(s->expr);
+            else
+                printf("[;]\n");
+            break;
+        }
+        case STMT_BLOCK:
+        {
+            printf("\n[compound-stmt ");
+            if (s->decl)
+                prettyprint_decl(s->decl);
+            if (s->body)
+                prettyprint_stmt(s->body);
+            printf("]\n");
+            break;
+        }
+        default:
+            break;
+        }
+        s = s->next;
     }
 }
 
@@ -369,36 +292,7 @@ void prettyprint_expr(struct expr *e)
             prettyprint_bexpr(">=", e->left, e->right);
             break;
         }
-        case EXPR_AND:
-        {
-            prettyprint_bexpr("&&", e->left, e->right);
-            break;
-        }
-        case EXPR_OR:
-        {
-            prettyprint_bexpr("||", e->left, e->right);
-            break;
-        }
-        case EXPR_INC:
-        {
-            prettyprint_bexpr("++", e->right, NULL);
-            break;
-        }
-        case EXPR_DEC:
-        {
-            prettyprint_bexpr("--", e->right, NULL);
-            break;
-        }
-        case EXPR_NOT:
-        {
-            prettyprint_bexpr("!", e->right, NULL);
-            break;
-        }
         case EXPR_FUN:
-        {
-            break;
-        }
-        case EXPR_EMPTY:
         {
             break;
         }
@@ -413,13 +307,13 @@ void prettyprint_expr(struct expr *e)
         }
         case EXPR_ARG:
         {
-            prettyprint_expr(e->left);
             prettyprint_expr(e->right);
+            prettyprint_expr(e->left);
             break;
         }
         default:
         {
-            break;
+            printf("internal error:\n");
         }
         }
     }

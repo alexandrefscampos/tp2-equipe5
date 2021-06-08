@@ -19,6 +19,5 @@ void yyerror(char *s, ...)
 
 int main(int argc, char *argv[])
 {
-  // printf("aaaaa");
   yyparse();
 }

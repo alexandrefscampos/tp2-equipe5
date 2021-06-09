@@ -444,3 +444,12 @@ void bracket(struct decl *program)
     printf("\n]\n");
 }
 
+int main(void)
+{
+    int result = yyparse();
+    // printf("%d", result);
+    if (!result)
+        bracket(parser_result);
+
+    return result;
+}

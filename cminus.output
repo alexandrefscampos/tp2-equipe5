@@ -3,11 +3,7 @@ Terminals unused in grammar
     ERROR
 
 
-<<<<<<< HEAD
-State 129 conflicts: 1 shift/reduce
-=======
 State 132 conflicts: 1 shift/reduce
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
 
 Grammar
@@ -30,15 +26,6 @@ Grammar
    10 const-declaration: INT CONST type_ID '=' type_NUM ';'
 
    11 enum-declaration: ENUM type_ID type_ID ';'
-<<<<<<< HEAD
-   12                 | ENUM type_ID '{' param-list '}' ';'
-   13                 | ENUM type_ID '{' param-list '}' type_ID ';'
-
-   14 fun-declaration: type-specifier type_ID '(' params ')' compound-stmt
-
-   15 type-specifier: INT
-   16               | VOID
-=======
    12                 | ENUM type_ID '{' id-list '}' ';'
    13                 | ENUM type_ID '{' id-list '}' type_ID ';'
 
@@ -46,7 +33,6 @@ Grammar
    15        | id-list ',' type_ID
 
    16 fun-declaration: type-specifier type_ID '(' params ')' compound-stmt
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
    17 params: param-list
    18       | VOID
@@ -57,12 +43,8 @@ Grammar
    21 param: type-specifier type_ID
    22      | type-specifier type_ID '[' ']'
 
-<<<<<<< HEAD
-   23 compound-stmt: '{' local-declarations statement-list '}'
-=======
    23 param: type-specifier type_ID
    24      | type-specifier type_ID '[' ']'
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
    24 local-declarations: local-declarations var-declaration
    25                   | local-declarations const-declaration
@@ -95,14 +77,8 @@ Grammar
    44 var: type_ID
    45    | type_ID '[' expression ']'
 
-<<<<<<< HEAD
-   46 simple-expression: additive-expression relop additive-expression
-   47                  | simple-expression logop additive-expression
-   48                  | additive-expression
-=======
    46 var: type_ID
    47    | type_ID '[' expression ']'
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
    49 relop: LTEQ
    50      | LT
@@ -134,32 +110,21 @@ Grammar
    70       | var
    71       | call
 
-<<<<<<< HEAD
-   72 call: type_ID '(' args ')'
-
-   73 args: args-list
-   74     | %empty
-=======
    70 factor: type_NUM
    71       | '(' expression ')'
    72       | var
    73       | call
 
    74 call: type_ID '(' args ')'
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
    75 args-list: expression
    76          | args-list ',' expression
 
    77 type_NUM: NUM
 
-<<<<<<< HEAD
-   78 type_ID: ID
-=======
    79 type_NUM: NUM
 
    80 type_ID: ID
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
 
 Terminals, with rules where they appear
@@ -180,22 +145,6 @@ Terminals, with rules where they appear
     '{' (123) 12 13 23
     '}' (125) 12 13 23
     error (256)
-<<<<<<< HEAD
-    NUM (258) 77
-    ID (259) 78
-    ELSE (260) 38
-    IF (261) 37 38
-    INT (262) 10 15
-    RETURN (263) 40 41
-    VOID (264) 16 18
-    WHILE (265) 39
-    EQ (266) 53
-    NEQ (267) 54
-    LT (268) 50
-    GT (269) 51
-    LTEQ (270) 49
-    GTEQ (271) 52
-=======
     NUM (258) 79
     ID (259) 80
     ELSE (260) 40
@@ -210,7 +159,6 @@ Terminals, with rules where they appear
     GT (269) 53
     LTEQ (270) 51
     GTEQ (271) 54
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
     ERROR (272)
     CONST (273) 10
     ENUM (274) 11 12 13

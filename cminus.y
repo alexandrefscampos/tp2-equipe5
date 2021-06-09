@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "tp2.h"
+#include "pretty_print.h"
 #include "ast.h"
 
 int yylex();
@@ -49,14 +49,14 @@ int yylex();
 %type <num> type_NUM;
 
 %union {
-    char *id;
-    int num;
-    struct expr *expr;
-    struct param_list *param_list;
-    struct type *type;
-    struct stmt *stmt;
-    struct decl *decl;
-    struct id_list *id_list;
+  char *id;
+  int num;
+  struct expr *expr;
+  struct param_list *param_list;
+  struct type *type;
+  struct stmt *stmt;
+  struct decl *decl;
+  struct id_list *id_list;
 }
 
 %start program 
@@ -64,12 +64,11 @@ int yylex();
 %%
 
 program: declaration-list {
-  execute($1);
+  parser_result = $1;
 }
-;
 
 declaration-list: 
-  declaration
+  declaration 
 | declaration-list declaration {
     $2->next = $1;
     $$ = $2;
@@ -84,38 +83,41 @@ declaration:
 ;
 
 var-declaration: 
-  type-specifier type_ID ';'{
-    $$ = var_decl_create($2, $1);
+  type-specifier type_ID ';' {
+    $$ = decl_create($2, $1, 0, 0, 0);
   }
 | type-specifier type_ID '[' type_NUM ']' ';' {
-    $$ = array_decl_create( $2, $1, $4);
-  }
+      // $$ = decl_create(
+      //   $2, type_create(TYPE_ARRAY, $1, 0), expr_create_integer($4), 0, 0
+      // );
+    }
 ;
 
 const-declaration: 
   INT CONST type_ID '=' type_NUM ';' {
-    $$ = const_declaration_create($3, TYPE_INTEGER, $5);
+    // $$ = decl_create(
+    //   $2, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0
+    // );
   }
 ;
 
 enum-declaration:
   ENUM type_ID type_ID ';' {
-    $$ = enum_decl_create($3, $2, 0);
+    // $$ = enum_decl_create(
+    //   $3, type_create(TYPE_ENUM, $2, 0), 0
+    // );
   }
-| ENUM type_ID '{' param-list '}' ';'
-  {
-    $$ = enum_decl_create(0, $2, $4);
-  }
-| ENUM type_ID '{' param-list '}' type_ID ';'
-  {
-    $$ = enum_decl_create($6, $2, $4);
-  }
+| ENUM type_ID '{' id-list '}' ';'
+| ENUM type_ID '{' id-list '}' type_ID ';'
+;
+
+id-list:
+  type_ID
+| id-list ',' type_ID 
 ;
 
 fun-declaration: 
-  type-specifier type_ID '(' params ')' compound-stmt {
-    $$ = func_decl_create($2, $1, $4, $6);
-  }
+  type-specifier type_ID '(' params ')' compound-stmt
 ;
 
 type-specifier: 
@@ -142,12 +144,8 @@ param-list:
   | param 
 ;
 param: 
-  type-specifier type_ID {
-    $$ = param_create($2, $1);
-  }
-| type-specifier type_ID '[' ']' {
-    $$ = param_array_create($2, $1);
-  }
+  type-specifier type_ID
+| type-specifier type_ID '[' ']'
 ;
 
 compound-stmt: 
@@ -232,12 +230,8 @@ expression:
 ;
 
 var:  
-  type_ID  {
-    $$ = expr_create_var($1);
-  }
-| type_ID '[' expression ']' {
-    $$ = expr_create_array($1, $3);
-  }
+  type_ID
+| type_ID '[' expression ']'
 ;
 
 simple-expression:
@@ -304,20 +298,14 @@ unary_op:
 ;
 
 factor: 
-  type_NUM {
-    $$ = expr_create_integer($1);
-  }
-| '(' expression ')' {
-    $$ = $2;
-  }
+  type_NUM
+| '(' expression ')'
 | var 
 | call 
 ;
 
 call: 
-  type_ID '(' args ')' {
-    $$ = expr_create_call($1, $3);
-  }
+  type_ID '(' args ')'
 ;
 
 args:

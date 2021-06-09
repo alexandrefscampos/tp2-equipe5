@@ -48,6 +48,14 @@ void prettyprint_type(struct type *type)
                 prettyprint_type(t->subtype);
             break;
         }
+        case TYPE_ENUM:
+        {
+            if (t->subtype)
+            {
+                prettyprint_type(t->subtype);
+            }
+            break;
+        }
         default:
             break;
         }
@@ -102,8 +110,11 @@ void prettyprint_func(struct decl *func)
 
 void prettyprint_decl(struct decl *decl)
 {
+
     while (decl)
     {
+        printf("ENUM");
+
         struct type *t = decl->type;
         switch (t->kind)
         {
@@ -131,6 +142,11 @@ void prettyprint_decl(struct decl *decl)
         case TYPE_FUNCTION:
         {
             prettyprint_func(decl);
+            break;
+        }
+        case TYPE_ENUM:
+        {
+            // prettyprint_func(decl);
             break;
         }
         default:
@@ -363,4 +379,14 @@ void bracket(struct decl *program)
     printf("[program ");
     prettyprint_decl(program);
     printf("\n]\n");
+}
+
+int main(void)
+{
+    int result = yyparse();
+    // printf("%d", result);
+    if (!result)
+        bracket(parser_result);
+
+    return result;
 }

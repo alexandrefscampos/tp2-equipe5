@@ -3,7 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+<<<<<<< HEAD
 #include "tp2.h"
+=======
+#include "pretty_print.h"
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 #include "ast.h"
 
 int yylex();
@@ -49,14 +53,14 @@ int yylex();
 %type <num> type_NUM;
 
 %union {
-    char *id;
-    int num;
-    struct decl *decl;
-    struct stmt *stmt;
-    struct expr *expr;
-    struct type *type;
-    struct param_list *param_list;
-    struct id_list *id_list;
+  char *id;
+  int num;
+  struct expr *expr;
+  struct param_list *param_list;
+  struct type *type;
+  struct stmt *stmt;
+  struct decl *decl;
+  struct id_list *id_list;
 }
 
 %start program 
@@ -64,12 +68,24 @@ int yylex();
 %%
 
 program: declaration-list {
+<<<<<<< HEAD
   execute($1);
 }
 ;
 
 declaration-list: 
+<<<<<<< HEAD:src/parser/cminus.y
   declaration 
+=======
+  declaration
+=======
+  parser_result = $1;
+}
+
+declaration-list: 
+  declaration 
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+>>>>>>> af294345b4bd5864fbb259ce64663e3b3559b41e:cminus.y
 | declaration-list declaration {
     $2->next = $1;
     $$ = $2;
@@ -84,23 +100,45 @@ declaration:
 ;
 
 var-declaration: 
+<<<<<<< HEAD
   type-specifier type_ID ';'{
     $$ = var_decl_create($2, $1);
   }
 | type-specifier type_ID '[' type_NUM ']' ';' {
     $$ = array_decl_create( $2, $1, $4);
   }
+=======
+  type-specifier type_ID ';' {
+    $$ = decl_create($2, $1, 0, 0, 0);
+  }
+| type-specifier type_ID '[' type_NUM ']' ';' {
+      // $$ = decl_create(
+      //   $2, type_create(TYPE_ARRAY, $1, 0), expr_create_integer($4), 0, 0
+      // );
+    }
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 ;
 
 const-declaration: 
   INT CONST type_ID '=' type_NUM ';' {
+<<<<<<< HEAD:src/parser/cminus.y
     $$ = decl_create($3, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0);
     
+=======
+<<<<<<< HEAD
+    $$ = const_declaration_create($3, TYPE_INTEGER, $5);
+=======
+    // $$ = decl_create(
+    //   $2, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0
+    // );
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+>>>>>>> af294345b4bd5864fbb259ce64663e3b3559b41e:cminus.y
   }
 ;
 
 enum-declaration:
   ENUM type_ID type_ID ';' {
+<<<<<<< HEAD
     $$ = enum_decl_create($3, $2, 0);
   }
 | ENUM type_ID '{' id-list '}' ';'
@@ -117,6 +155,23 @@ fun-declaration:
   type-specifier type_ID '(' params ')' compound-stmt {
     $$ = func_decl_create($2, $1, $4, $6);
   }
+=======
+    // $$ = enum_decl_create(
+    //   $3, type_create(TYPE_ENUM, $2, 0), 0
+    // );
+  }
+| ENUM type_ID '{' id-list '}' ';'
+| ENUM type_ID '{' id-list '}' type_ID ';'
+;
+
+id-list:
+  type_ID
+| id-list ',' type_ID 
+;
+
+fun-declaration: 
+  type-specifier type_ID '(' params ')' compound-stmt
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 ;
 
 type-specifier: 
@@ -143,12 +198,17 @@ param-list:
   | param 
 ;
 param: 
+<<<<<<< HEAD
   type-specifier type_ID {
     $$ = param_create($2, $1);
   }
 | type-specifier type_ID '[' ']' {
     $$ = param_array_create($2, $1);
   }
+=======
+  type-specifier type_ID
+| type-specifier type_ID '[' ']'
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 ;
 id-list:
   id-list ',' id  {
@@ -245,12 +305,17 @@ expression:
 ;
 
 var:  
+<<<<<<< HEAD
   type_ID  {
     $$ = expr_create_var($1);
   }
 | type_ID '[' expression ']' {
     $$ = expr_create_array($1, $3);
   }
+=======
+  type_ID
+| type_ID '[' expression ']'
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 ;
 
 simple-expression:
@@ -317,20 +382,29 @@ unary_op:
 ;
 
 factor: 
+<<<<<<< HEAD
   type_NUM {
     $$ = expr_create_integer($1);
   }
 | '(' expression ')' {
     $$ = $2;
   }
+=======
+  type_NUM
+| '(' expression ')'
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 | var 
 | call 
 ;
 
 call: 
+<<<<<<< HEAD
   type_ID '(' args ')' {
     $$ = expr_create_call($1, $3);
   }
+=======
+  type_ID '(' args ')'
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 ;
 
 args:

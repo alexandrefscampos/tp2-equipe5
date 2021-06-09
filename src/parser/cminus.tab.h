@@ -77,7 +77,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
+<<<<<<< HEAD:src/parser/cminus.tab.h
 #line 51 "./parser/cminus.y"
+=======
+<<<<<<< HEAD
+#line 51 "./cminus.y"
+>>>>>>> af294345b4bd5864fbb259ce64663e3b3559b41e:cminus.tab.h
 
     char *id;
     int num;
@@ -87,6 +92,18 @@ union YYSTYPE
     struct type *type;
     struct param_list *param_list;
     struct id_list *id_list;
+=======
+#line 51 "cminus.y"
+
+  char *id;
+  int num;
+  struct expr *expr;
+  struct param_list *param_list;
+  struct type *type;
+  struct stmt *stmt;
+  struct decl *decl;
+  struct id_list *id_list;
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 
 #line 92 "./parser/cminus.tab.h"
 

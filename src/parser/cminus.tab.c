@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "./cminus.y"
+#line 1 "./parser/cminus.y"
 
 /* includes, C defs */
 
@@ -77,7 +77,7 @@
 
 int yylex();
 
-#line 81 "./cminus.tab.c"
+#line 81 "./parser/cminus.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -110,8 +110,8 @@ int yylex();
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_CMINUS_TAB_H_INCLUDED
-# define YY_YY_CMINUS_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_CMINUS_TAB_H_INCLUDED
+# define YY_YY_PARSER_CMINUS_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -153,7 +153,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 51 "./cminus.y"
+#line 51 "./parser/cminus.y"
 
     char *id;
     int num;
@@ -164,7 +164,7 @@ union YYSTYPE
     struct param_list *param_list;
     struct id_list *id_list;
 
-#line 168 "./cminus.tab.c"
+#line 168 "./parser/cminus.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -177,7 +177,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CMINUS_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_CMINUS_TAB_H_INCLUDED  */
 
 
 
@@ -1436,470 +1436,470 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 66 "./cminus.y"
+#line 66 "./parser/cminus.y"
                           {
   execute((yyvsp[0].decl));
 }
-#line 1444 "./cminus.tab.c"
+#line 1444 "./parser/cminus.tab.c"
     break;
 
   case 4:
-#line 73 "./cminus.y"
+#line 73 "./parser/cminus.y"
                                {
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
-#line 1453 "./cminus.tab.c"
+#line 1453 "./parser/cminus.tab.c"
     break;
 
   case 9:
-#line 87 "./cminus.y"
+#line 87 "./parser/cminus.y"
                             {
     (yyval.decl) = var_decl_create((yyvsp[-1].id), (yyvsp[-2].type));
   }
-#line 1461 "./cminus.tab.c"
+#line 1461 "./parser/cminus.tab.c"
     break;
 
   case 10:
-#line 90 "./cminus.y"
+#line 90 "./parser/cminus.y"
                                               {
     (yyval.decl) = array_decl_create( (yyvsp[-4].id), (yyvsp[-5].type), (yyvsp[-2].num));
   }
-#line 1469 "./cminus.tab.c"
+#line 1469 "./parser/cminus.tab.c"
     break;
 
   case 11:
-#line 96 "./cminus.y"
+#line 96 "./parser/cminus.y"
                                      {
     (yyval.decl) = decl_create((yyvsp[-3].id), type_create(TYPE_INTEGER, 0, 0), expr_create_integer((yyvsp[-1].num)), 0, 0);
     
   }
-#line 1478 "./cminus.tab.c"
+#line 1478 "./parser/cminus.tab.c"
     break;
 
   case 12:
-#line 103 "./cminus.y"
+#line 103 "./parser/cminus.y"
                            {
     (yyval.decl) = enum_decl_create((yyvsp[-1].id), (yyvsp[-2].id), 0);
   }
-#line 1486 "./cminus.tab.c"
+#line 1486 "./parser/cminus.tab.c"
     break;
 
   case 13:
-#line 107 "./cminus.y"
+#line 107 "./parser/cminus.y"
   {
     (yyval.decl) = enum_decl_create(0, (yyvsp[-4].id), (yyvsp[-2].id_list));
   }
-#line 1494 "./cminus.tab.c"
+#line 1494 "./parser/cminus.tab.c"
     break;
 
   case 14:
-#line 111 "./cminus.y"
+#line 111 "./parser/cminus.y"
   {
     (yyval.decl) = enum_decl_create((yyvsp[-1].id), (yyvsp[-5].id), (yyvsp[-3].id_list));
   }
-#line 1502 "./cminus.tab.c"
+#line 1502 "./parser/cminus.tab.c"
     break;
 
   case 15:
-#line 117 "./cminus.y"
+#line 117 "./parser/cminus.y"
                                                       {
     (yyval.decl) = func_decl_create((yyvsp[-4].id), (yyvsp[-5].type), (yyvsp[-2].param_list), (yyvsp[0].stmt));
   }
-#line 1510 "./cminus.tab.c"
+#line 1510 "./parser/cminus.tab.c"
     break;
 
   case 16:
-#line 123 "./cminus.y"
+#line 123 "./parser/cminus.y"
       {
     (yyval.type) = type_create(TYPE_INTEGER, 0, 0);
   }
-#line 1518 "./cminus.tab.c"
+#line 1518 "./parser/cminus.tab.c"
     break;
 
   case 17:
-#line 126 "./cminus.y"
+#line 126 "./parser/cminus.y"
          {
     (yyval.type) = type_create(TYPE_VOID, 0, 0);
   }
-#line 1526 "./cminus.tab.c"
+#line 1526 "./parser/cminus.tab.c"
     break;
 
   case 19:
-#line 133 "./cminus.y"
+#line 133 "./parser/cminus.y"
          {
     (yyval.param_list) = param_create(0, type_create(TYPE_VOID, 0, 0));
   }
-#line 1534 "./cminus.tab.c"
+#line 1534 "./parser/cminus.tab.c"
     break;
 
   case 20:
-#line 139 "./cminus.y"
+#line 139 "./parser/cminus.y"
                         {
     (yyvsp[0].param_list)->next = (yyvsp[-2].param_list);
     (yyval.param_list) = (yyvsp[0].param_list);
   }
-#line 1543 "./cminus.tab.c"
+#line 1543 "./parser/cminus.tab.c"
     break;
 
   case 22:
-#line 146 "./cminus.y"
+#line 146 "./parser/cminus.y"
                          {
     (yyval.param_list) = param_create((yyvsp[0].id), (yyvsp[-1].type));
   }
-#line 1551 "./cminus.tab.c"
+#line 1551 "./parser/cminus.tab.c"
     break;
 
   case 23:
-#line 149 "./cminus.y"
+#line 149 "./parser/cminus.y"
                                  {
     (yyval.param_list) = param_array_create((yyvsp[-2].id), (yyvsp[-3].type));
   }
-#line 1559 "./cminus.tab.c"
+#line 1559 "./parser/cminus.tab.c"
     break;
 
   case 24:
-#line 154 "./cminus.y"
+#line 154 "./parser/cminus.y"
                   {
     (yyvsp[0].id_list)->next = (yyvsp[-2].id_list);
     (yyval.id_list) = (yyvsp[0].id_list);
   }
-#line 1568 "./cminus.tab.c"
+#line 1568 "./parser/cminus.tab.c"
     break;
 
   case 26:
-#line 161 "./cminus.y"
+#line 161 "./parser/cminus.y"
           {
     (yyval.id_list) = id_list_create((yyvsp[0].id), enum_type_create(TYPE_ENUM,0,0));
   }
-#line 1576 "./cminus.tab.c"
+#line 1576 "./parser/cminus.tab.c"
     break;
 
   case 27:
-#line 167 "./cminus.y"
+#line 167 "./parser/cminus.y"
                                             {
     (yyval.stmt) = compound_stmt_create(STMT_BLOCK, (yyvsp[-2].decl), (yyvsp[-1].stmt));
   }
-#line 1584 "./cminus.tab.c"
+#line 1584 "./parser/cminus.tab.c"
     break;
 
   case 28:
-#line 173 "./cminus.y"
+#line 173 "./parser/cminus.y"
                                      {
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
-#line 1593 "./cminus.tab.c"
+#line 1593 "./parser/cminus.tab.c"
     break;
 
   case 29:
-#line 177 "./cminus.y"
+#line 177 "./parser/cminus.y"
                                       {
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
-#line 1602 "./cminus.tab.c"
+#line 1602 "./parser/cminus.tab.c"
     break;
 
   case 30:
-#line 181 "./cminus.y"
+#line 181 "./parser/cminus.y"
                                       {
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
-#line 1611 "./cminus.tab.c"
+#line 1611 "./parser/cminus.tab.c"
     break;
 
   case 31:
-#line 185 "./cminus.y"
+#line 185 "./parser/cminus.y"
               {
     (yyval.decl) = 0;
   }
-#line 1619 "./cminus.tab.c"
+#line 1619 "./parser/cminus.tab.c"
     break;
 
   case 32:
-#line 191 "./cminus.y"
+#line 191 "./parser/cminus.y"
                            {
     (yyvsp[0].stmt)->next = (yyvsp[-1].stmt);
     (yyval.stmt) = (yyvsp[0].stmt);
   }
-#line 1628 "./cminus.tab.c"
+#line 1628 "./parser/cminus.tab.c"
     break;
 
   case 33:
-#line 195 "./cminus.y"
+#line 195 "./parser/cminus.y"
               {
     (yyval.stmt) = 0;
   }
-#line 1636 "./cminus.tab.c"
+#line 1636 "./parser/cminus.tab.c"
     break;
 
   case 39:
-#line 209 "./cminus.y"
+#line 209 "./parser/cminus.y"
                  {
     (yyval.stmt) = stmt_create(STMT_EXPR, 0, 0, (yyvsp[-1].expr), 0, 0, 0, 0);
   }
-#line 1644 "./cminus.tab.c"
+#line 1644 "./parser/cminus.tab.c"
     break;
 
   case 40:
-#line 212 "./cminus.y"
+#line 212 "./parser/cminus.y"
       {
     (yyval.stmt) = stmt_create(STMT_EXPR, 0, 0, expr_create(EXPR_EMPTY, 0, 0), 0, 0, 0, 0);
   }
-#line 1652 "./cminus.tab.c"
+#line 1652 "./parser/cminus.tab.c"
     break;
 
   case 41:
-#line 218 "./cminus.y"
+#line 218 "./parser/cminus.y"
                                   {
     (yyval.stmt) = stmt_create(STMT_IF_ELSE, 0, 0, (yyvsp[-2].expr), 0, (yyvsp[0].stmt), 0, 0);
   }
-#line 1660 "./cminus.tab.c"
+#line 1660 "./parser/cminus.tab.c"
     break;
 
   case 42:
-#line 221 "./cminus.y"
+#line 221 "./parser/cminus.y"
                                                  {
     (yyval.stmt) = stmt_create(STMT_IF_ELSE, 0, 0, (yyvsp[-4].expr), 0, (yyvsp[-2].stmt), (yyvsp[0].stmt), 0);
   }
-#line 1668 "./cminus.tab.c"
+#line 1668 "./parser/cminus.tab.c"
     break;
 
   case 43:
-#line 227 "./cminus.y"
+#line 227 "./parser/cminus.y"
                                      {
     (yyval.stmt) = stmt_create(STMT_WHILE, 0, 0, (yyvsp[-2].expr), 0, (yyvsp[0].stmt), 0, 0);
   }
-#line 1676 "./cminus.tab.c"
+#line 1676 "./parser/cminus.tab.c"
     break;
 
   case 44:
-#line 232 "./cminus.y"
+#line 232 "./parser/cminus.y"
                         {
     (yyval.stmt) = stmt_create(STMT_RETURN, 0, 0, 0, 0, 0, 0, 0);
   }
-#line 1684 "./cminus.tab.c"
+#line 1684 "./parser/cminus.tab.c"
     break;
 
   case 45:
-#line 235 "./cminus.y"
+#line 235 "./parser/cminus.y"
                         {
     (yyval.stmt) = stmt_create(STMT_RETURN, 0, 0, (yyvsp[-1].expr), 0, 0, 0, 0);
   }
-#line 1692 "./cminus.tab.c"
+#line 1692 "./parser/cminus.tab.c"
     break;
 
   case 46:
-#line 241 "./cminus.y"
+#line 241 "./parser/cminus.y"
                      {
     (yyval.expr) = expr_create(EXPR_ASSIGN, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1700 "./cminus.tab.c"
+#line 1700 "./parser/cminus.tab.c"
     break;
 
   case 48:
-#line 248 "./cminus.y"
+#line 248 "./parser/cminus.y"
            {
     (yyval.expr) = expr_create_var((yyvsp[0].id));
   }
-#line 1708 "./cminus.tab.c"
+#line 1708 "./parser/cminus.tab.c"
     break;
 
   case 49:
-#line 251 "./cminus.y"
+#line 251 "./parser/cminus.y"
                              {
     (yyval.expr) = expr_create_array((yyvsp[-3].id), (yyvsp[-1].expr));
   }
-#line 1716 "./cminus.tab.c"
+#line 1716 "./parser/cminus.tab.c"
     break;
 
   case 50:
-#line 257 "./cminus.y"
+#line 257 "./parser/cminus.y"
                                                 {
     (yyvsp[-1].expr)->left = (yyvsp[-2].expr);
     (yyvsp[-1].expr)->right = (yyvsp[0].expr);
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1726 "./cminus.tab.c"
+#line 1726 "./parser/cminus.tab.c"
     break;
 
   case 51:
-#line 262 "./cminus.y"
+#line 262 "./parser/cminus.y"
                                               {
     (yyvsp[-1].expr)->left = (yyvsp[-2].expr);
     (yyvsp[-1].expr)->right = (yyvsp[0].expr);
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1736 "./cminus.tab.c"
+#line 1736 "./parser/cminus.tab.c"
     break;
 
   case 53:
-#line 271 "./cminus.y"
+#line 271 "./parser/cminus.y"
        { (yyval.expr) = expr_create(EXPR_LTEQ, 0, 0); }
-#line 1742 "./cminus.tab.c"
+#line 1742 "./parser/cminus.tab.c"
     break;
 
   case 54:
-#line 272 "./cminus.y"
+#line 272 "./parser/cminus.y"
      { (yyval.expr) = expr_create(EXPR_LT, 0, 0); }
-#line 1748 "./cminus.tab.c"
+#line 1748 "./parser/cminus.tab.c"
     break;
 
   case 55:
-#line 273 "./cminus.y"
+#line 273 "./parser/cminus.y"
      { (yyval.expr) = expr_create(EXPR_GT, 0, 0); }
-#line 1754 "./cminus.tab.c"
+#line 1754 "./parser/cminus.tab.c"
     break;
 
   case 56:
-#line 274 "./cminus.y"
+#line 274 "./parser/cminus.y"
        { (yyval.expr) = expr_create(EXPR_GTEQ, 0, 0); }
-#line 1760 "./cminus.tab.c"
+#line 1760 "./parser/cminus.tab.c"
     break;
 
   case 57:
-#line 275 "./cminus.y"
+#line 275 "./parser/cminus.y"
      { (yyval.expr) = expr_create(EXPR_EQ, 0, 0); }
-#line 1766 "./cminus.tab.c"
+#line 1766 "./parser/cminus.tab.c"
     break;
 
   case 58:
-#line 276 "./cminus.y"
+#line 276 "./parser/cminus.y"
       { (yyval.expr) = expr_create(EXPR_NEQ, 0, 0); }
-#line 1772 "./cminus.tab.c"
+#line 1772 "./parser/cminus.tab.c"
     break;
 
   case 59:
-#line 280 "./cminus.y"
+#line 280 "./parser/cminus.y"
       { (yyval.expr) = expr_create(EXPR_AND, 0, 0); }
-#line 1778 "./cminus.tab.c"
+#line 1778 "./parser/cminus.tab.c"
     break;
 
   case 60:
-#line 281 "./cminus.y"
+#line 281 "./parser/cminus.y"
      { (yyval.expr) = expr_create(EXPR_OR, 0, 0); }
-#line 1784 "./cminus.tab.c"
+#line 1784 "./parser/cminus.tab.c"
     break;
 
   case 62:
-#line 286 "./cminus.y"
+#line 286 "./parser/cminus.y"
                                {
      (yyval.expr) = expr_create(EXPR_ADD, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1792 "./cminus.tab.c"
+#line 1792 "./parser/cminus.tab.c"
     break;
 
   case 63:
-#line 289 "./cminus.y"
+#line 289 "./parser/cminus.y"
                                {
      (yyval.expr) = expr_create(EXPR_SUB, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1800 "./cminus.tab.c"
+#line 1800 "./parser/cminus.tab.c"
     break;
 
   case 65:
-#line 296 "./cminus.y"
+#line 296 "./parser/cminus.y"
                   {
     (yyval.expr) = expr_create(EXPR_MUL, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1808 "./cminus.tab.c"
+#line 1808 "./parser/cminus.tab.c"
     break;
 
   case 66:
-#line 299 "./cminus.y"
+#line 299 "./parser/cminus.y"
                   {
     (yyval.expr) = expr_create(EXPR_DIV, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1816 "./cminus.tab.c"
+#line 1816 "./parser/cminus.tab.c"
     break;
 
   case 68:
-#line 307 "./cminus.y"
+#line 307 "./parser/cminus.y"
                   {
     (yyvsp[-1].expr)->right = (yyvsp[0].expr);
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1825 "./cminus.tab.c"
+#line 1825 "./parser/cminus.tab.c"
     break;
 
   case 69:
-#line 314 "./cminus.y"
+#line 314 "./parser/cminus.y"
       { (yyval.expr) = expr_create(EXPR_NOT, 0, 0); }
-#line 1831 "./cminus.tab.c"
+#line 1831 "./parser/cminus.tab.c"
     break;
 
   case 70:
-#line 315 "./cminus.y"
+#line 315 "./parser/cminus.y"
       { (yyval.expr) = expr_create(EXPR_DEC, 0, 0); }
-#line 1837 "./cminus.tab.c"
+#line 1837 "./parser/cminus.tab.c"
     break;
 
   case 71:
-#line 316 "./cminus.y"
+#line 316 "./parser/cminus.y"
       { (yyval.expr) = expr_create(EXPR_INC, 0, 0); }
-#line 1843 "./cminus.tab.c"
+#line 1843 "./parser/cminus.tab.c"
     break;
 
   case 72:
-#line 320 "./cminus.y"
+#line 320 "./parser/cminus.y"
            {
     (yyval.expr) = expr_create_integer((yyvsp[0].num));
   }
-#line 1851 "./cminus.tab.c"
+#line 1851 "./parser/cminus.tab.c"
     break;
 
   case 73:
-#line 323 "./cminus.y"
+#line 323 "./parser/cminus.y"
                      {
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1859 "./cminus.tab.c"
+#line 1859 "./parser/cminus.tab.c"
     break;
 
   case 76:
-#line 331 "./cminus.y"
+#line 331 "./parser/cminus.y"
                        {
     (yyval.expr) = expr_create_call((yyvsp[-3].id), (yyvsp[-1].expr));
   }
-#line 1867 "./cminus.tab.c"
+#line 1867 "./parser/cminus.tab.c"
     break;
 
   case 78:
-#line 338 "./cminus.y"
+#line 338 "./parser/cminus.y"
               {
     (yyval.expr) = 0;
   }
-#line 1875 "./cminus.tab.c"
+#line 1875 "./parser/cminus.tab.c"
     break;
 
   case 80:
-#line 345 "./cminus.y"
+#line 345 "./parser/cminus.y"
                            {
     (yyval.expr) = expr_create_arg( (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1883 "./cminus.tab.c"
+#line 1883 "./parser/cminus.tab.c"
     break;
 
   case 81:
-#line 350 "./cminus.y"
+#line 350 "./parser/cminus.y"
               {
   (yyval.num) = yylval.num;
  }
-#line 1891 "./cminus.tab.c"
+#line 1891 "./parser/cminus.tab.c"
     break;
 
   case 82:
-#line 355 "./cminus.y"
+#line 355 "./parser/cminus.y"
             {
   (yyval.id) = yylval.id;
 }
-#line 1899 "./cminus.tab.c"
+#line 1899 "./parser/cminus.tab.c"
     break;
 
 
-#line 1903 "./cminus.tab.c"
+#line 1903 "./parser/cminus.tab.c"
 
       default: break;
     }
@@ -2131,7 +2131,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 360 "./cminus.y"
+#line 360 "./parser/cminus.y"
 
 
 

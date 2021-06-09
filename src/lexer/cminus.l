@@ -1,8 +1,8 @@
 %option yylineno nodefault noyywrap
 %{ 
     #include <string.h>
-    #include "cminus.tab.h"
-    #include "ast.h"
+    #include "../parser/cminus.tab.h"
+    #include "../parser/ast.h"
 
 %}
 

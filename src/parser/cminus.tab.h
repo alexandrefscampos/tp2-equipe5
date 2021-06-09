@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_CMINUS_TAB_H_INCLUDED
-# define YY_YY_CMINUS_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_CMINUS_TAB_H_INCLUDED
+# define YY_YY_PARSER_CMINUS_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -77,7 +77,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 51 "./cminus.y"
+#line 51 "./parser/cminus.y"
 
     char *id;
     int num;
@@ -88,7 +88,7 @@ union YYSTYPE
     struct param_list *param_list;
     struct id_list *id_list;
 
-#line 92 "./cminus.tab.h"
+#line 92 "./parser/cminus.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -101,4 +101,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CMINUS_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_CMINUS_TAB_H_INCLUDED  */

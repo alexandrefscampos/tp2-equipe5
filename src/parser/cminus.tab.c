@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "./cminus.y"
+#line 1 "./parser/cminus.y"
 
 /* includes, C defs */
 
@@ -77,11 +77,15 @@
 
 int yylex();
 
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #line 81 "./cminus.tab.c"
 =======
 #line 81 "cminus.tab.c"
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#line 81 "./parser/cminus.tab.c"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -114,8 +118,8 @@ int yylex();
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_CMINUS_TAB_H_INCLUDED
-# define YY_YY_CMINUS_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_CMINUS_TAB_H_INCLUDED
+# define YY_YY_PARSER_CMINUS_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -157,6 +161,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #line 51 "./cminus.y"
 =======
@@ -177,6 +182,20 @@ union YYSTYPE
 =======
 #line 168 "cminus.tab.c"
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#line 51 "./parser/cminus.y"
+
+    char *id;
+    int num;
+    struct decl *decl;
+    struct stmt *stmt;
+    struct expr *expr;
+    struct type *type;
+    struct param_list *param_list;
+    struct id_list *id_list;
+
+#line 168 "./parser/cminus.tab.c"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -189,7 +208,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CMINUS_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_CMINUS_TAB_H_INCLUDED  */
 
 
 
@@ -495,15 +514,20 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  15
 /* YYLAST -- Last index in YYTABLE.  */
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #define YYLAST   151
 =======
 #define YYLAST   154
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#define YYLAST   148
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  38
 /* YYNNTS -- Number of nonterminals.  */
+<<<<<<< HEAD:cminus.tab.c
 #define YYNNTS  36
 /* YYNRULES -- Number of rules.  */
 <<<<<<< HEAD
@@ -515,6 +539,13 @@ union yyalloc
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  137
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#define YYNNTS  37
+/* YYNRULES -- Number of rules.  */
+#define YYNRULES  82
+/* YYNSTATES -- Number of states.  */
+#define YYNSTATES  138
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   278
@@ -565,6 +596,7 @@ static const yytype_int16 yyrline[] =
 {
 <<<<<<< HEAD
        0,    66,    66,    72,    73,    80,    81,    82,    83,    87,
+<<<<<<< HEAD:cminus.tab.c
       90,    96,   102,   105,   109,   116,   122,   125,   131,   132,
      138,   142,   145,   148,   154,   160,   164,   168,   172,   178,
      182,   188,   189,   190,   191,   192,   196,   199,   205,   208,
@@ -583,6 +615,16 @@ static const yytype_int16 yyrline[] =
      224,   228,   229,   230,   231,   235,   239,   240,   244,   245,
      248,   253
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+      90,    96,   103,   106,   110,   117,   123,   126,   132,   133,
+     139,   143,   146,   149,   154,   158,   161,   167,   173,   177,
+     181,   185,   191,   195,   201,   202,   203,   204,   205,   209,
+     212,   218,   221,   227,   232,   235,   241,   244,   248,   251,
+     257,   262,   267,   271,   272,   273,   274,   275,   276,   280,
+     281,   285,   286,   289,   295,   296,   299,   302,   307,   314,
+     315,   316,   320,   323,   326,   327,   331,   337,   338,   344,
+     345,   350,   355
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 #endif
 
@@ -598,11 +640,11 @@ static const char *const yytname[] =
   "'!'", "$accept", "program", "declaration-list", "declaration",
   "var-declaration", "const-declaration", "enum-declaration",
   "fun-declaration", "type-specifier", "params", "param-list", "param",
-  "compound-stmt", "local-declarations", "statement-list", "statement",
-  "expression-stmt", "selection-stmt", "iteration-stmt", "return-stmt",
-  "expression", "var", "simple-expression", "relop", "logop",
-  "additive-expression", "term", "unary-expression", "unary_op", "factor",
-  "call", "args", "args-list", "type_NUM", "type_ID", YY_NULLPTR
+  "id-list", "id", "compound-stmt", "local-declarations", "statement-list",
+  "statement", "expression-stmt", "selection-stmt", "iteration-stmt",
+  "return-stmt", "expression", "var", "simple-expression", "relop",
+  "logop", "additive-expression", "term", "unary-expression", "unary_op",
+  "factor", "call", "args", "args-list", "type_NUM", "type_ID", YY_NULLPTR
 };
 #endif
 
@@ -618,11 +660,15 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #define YYPACT_NINF (-78)
 =======
 #define YYPACT_NINF (-121)
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#define YYPACT_NINF (-114)
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -636,6 +682,7 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
       72,    -7,   -78,    11,    36,    72,   -78,   -78,   -78,   -78,
      -78,    11,    11,   -78,     1,   -78,   -78,    83,    -8,    81,
@@ -667,6 +714,22 @@ static const yytype_int16 yypact[] =
       85,  -121,  -121,   109,  -121,   110,   111,    49,    49,  -121,
     -121,    23,   128,  -121,  -121,    49,  -121
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+       5,    -9,  -114,    16,    46,     5,  -114,  -114,  -114,  -114,
+    -114,    16,    16,  -114,     1,  -114,  -114,    32,    41,    16,
+      48,  -114,    73,    35,    73,   -10,  -114,  -114,  -114,  -114,
+      52,  -114,    50,    16,    57,    62,  -114,    81,     3,    16,
+      83,    78,    80,    45,  -114,  -114,    87,  -114,  -114,    86,
+    -114,  -114,  -114,  -114,  -114,     5,  -114,  -114,  -114,    16,
+      37,    11,    84,    76,    85,  -114,  -114,  -114,  -114,    79,
+    -114,  -114,  -114,  -114,  -114,  -114,  -114,   104,   102,    43,
+     111,    49,  -114,     0,  -114,  -114,  -114,     9,    79,  -114,
+     106,    79,   100,  -114,    79,  -114,  -114,    79,  -114,  -114,
+    -114,  -114,  -114,  -114,    79,    79,    79,     0,     0,  -114,
+    -114,    79,    79,   101,  -114,   103,  -114,  -114,    53,    49,
+      49,    53,  -114,  -114,   107,  -114,   105,   108,    67,    67,
+    -114,  -114,    79,   130,  -114,  -114,    67,  -114
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -676,6 +739,7 @@ static const yytype_int8 yydefact[] =
 {
 <<<<<<< HEAD
        0,    16,    17,     0,     0,     2,     3,     5,     7,     8,
+<<<<<<< HEAD:cminus.tab.c
        6,     0,     0,    79,     0,     1,     4,     0,     0,     0,
        0,     9,     0,     0,     0,    16,     0,     0,    21,    12,
       78,     0,    17,     0,    18,     0,    22,     0,     0,     0,
@@ -705,11 +769,27 @@ static const yytype_int8 yydefact[] =
       49,    64,    65,     0,    79,     0,    76,     0,     0,    48,
       75,     0,    40,    42,    78,     0,    41
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+       6,     0,     0,    82,     0,     1,     4,     0,     0,     0,
+       0,     9,     0,     0,     0,     0,    25,    26,    12,    81,
+       0,    16,    17,     0,     0,    18,    21,     0,     0,     0,
+       0,    22,     0,     0,    11,    13,     0,    24,    10,     0,
+      31,    15,    20,    14,    23,    33,    28,    29,    30,     0,
+       0,     0,     0,     0,     0,    71,    70,    40,    27,     0,
+      69,    35,    32,    34,    36,    37,    38,     0,    74,    47,
+      52,    61,    67,     0,    64,    75,    72,    48,     0,    44,
+       0,     0,     0,    39,     0,    59,    60,     0,    57,    58,
+      54,    55,    53,    56,     0,     0,     0,     0,     0,    74,
+      68,     0,    78,     0,    45,     0,    73,    46,    51,    62,
+      63,    50,    65,    66,     0,    79,     0,    77,     0,     0,
+      49,    76,     0,    41,    43,    80,     0,    42
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
      -78,   -78,   -78,   131,    86,    87,    89,   -78,     3,   -78,
      119,   110,   111,   -78,   -78,   -73,   -78,   -78,   -78,   -78,
@@ -721,11 +801,18 @@ static const yytype_int16 yypgoto[] =
     -121,   -62,   -15,  -121,  -121,  -121,   -94,    17,  -121,  -121,
       -8,  -121,  -121,  -121,    72,    -2
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+    -114,  -114,  -114,   132,    88,    91,    92,  -114,   -22,  -114,
+    -114,    95,  -114,   109,    97,  -114,  -114,  -113,  -114,  -114,
+    -114,  -114,   -63,    13,  -114,  -114,  -114,   -89,   -12,  -114,
+    -114,   -57,  -114,  -114,  -114,    31,    -1
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
       -1,     4,     5,     6,     7,     8,     9,    10,    26,    33,
       27,    28,    67,    51,    56,    68,    69,    70,    71,    72,
@@ -737,6 +824,12 @@ static const yytype_int8 yydefgoto[] =
       75,    76,    77,    78,   105,    96,    79,    80,    81,    82,
       83,    84,   125,   126,    85,    86
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+      -1,     4,     5,     6,     7,     8,     9,    10,    11,    34,
+      35,    36,    25,    26,    71,    55,    60,    72,    73,    74,
+      75,    76,    77,    78,    79,   106,    97,    80,    81,    82,
+      83,    84,    85,   126,   127,    86,    87
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -744,6 +837,7 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
       86,    14,   106,    11,    37,    13,    88,    38,    11,    17,
       18,    12,    20,    30,    13,    13,    58,    13,    59,    24,
@@ -779,10 +873,28 @@ static const yytype_int16 yytable[] =
        0,   131,   130,     0,    55,    56,    57,     0,     0,     0,
        0,     0,     0,     0,    51
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+      90,    33,    14,    29,    13,    13,    92,    13,   118,    12,
+      17,    18,     1,    20,     2,   133,   134,   121,    27,    38,
+      13,    33,    39,   137,     3,   113,   110,    45,   115,    19,
+      69,   117,    41,    59,   111,    21,    22,    46,    27,   112,
+      29,    13,    31,    62,    32,    63,    15,    64,   124,   125,
+     122,   123,    31,    30,     2,    37,    21,    22,    61,    65,
+      66,    67,    23,    95,    96,    50,    68,    69,    24,   135,
+      29,    13,    28,    62,    70,    63,    29,    64,    40,    29,
+      13,   -19,    29,    13,   107,   108,   104,   105,    42,    65,
+      66,    67,   119,   120,    43,    50,   109,    69,    65,    66,
+      89,    65,    66,    49,    70,    44,    69,    48,    50,    69,
+     109,    53,    54,    70,    88,    91,    70,   109,   109,   109,
+     109,   109,    98,    99,   100,   101,   102,   103,    93,    94,
+     114,   116,   128,   130,   129,   136,   131,    16,    52,    51,
+     132,     0,     0,    56,   104,   105,    57,    58,    47
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
 static const yytype_int16 yycheck[] =
 {
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
       59,     3,    79,     0,    29,     4,    65,    32,     5,    11,
       12,    18,    14,     3,     4,     4,     6,     4,     8,    27,
@@ -818,6 +930,23 @@ static const yytype_int16 yycheck[] =
       -1,    30,    32,    -1,    54,    54,    54,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    42
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+      63,    23,     3,     3,     4,     4,    69,     4,    97,    18,
+      11,    12,     7,    14,     9,   128,   129,   106,    19,    29,
+       4,    43,    32,   136,    19,    88,    83,    24,    91,    28,
+      30,    94,    33,    55,    25,    24,    25,    38,    39,    30,
+       3,     4,     7,     6,     9,     8,     0,    10,   111,   112,
+     107,   108,     7,    22,     9,    24,    24,    25,    59,    22,
+      23,    24,    30,    20,    21,    28,    29,    30,    27,   132,
+       3,     4,    24,     6,    37,     8,     3,    10,    26,     3,
+       4,    31,     3,     4,    35,    36,    33,    34,    31,    22,
+      23,    24,   104,   105,    32,    28,    83,    30,    22,    23,
+      24,    22,    23,    25,    37,    24,    30,    24,    28,    30,
+      97,    24,    26,    37,    30,    30,    37,   104,   105,   106,
+     107,   108,    11,    12,    13,    14,    15,    16,    24,    27,
+      24,    31,    31,    26,    31,     5,    31,     5,    43,    42,
+      32,    -1,    -1,    55,    33,    34,    55,    55,    39
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -825,6 +954,7 @@ static const yytype_int16 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     7,     9,    19,    39,    40,    41,    42,    43,    44,
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
       45,    46,    18,     4,    72,     0,    41,    72,    72,    28,
       72,    24,    25,    30,    27,     7,    46,    48,    49,    24,
@@ -854,6 +984,21 @@ static const yytype_int8 yystos[] =
       64,    68,    68,    59,    59,    70,    71,    32,    32,    26,
       32,    30,    54,    54,    59,     5,    54
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+      45,    46,    18,     4,    74,     0,    41,    74,    74,    28,
+      74,    24,    25,    30,    27,    50,    51,    74,    24,     3,
+      73,     7,     9,    46,    47,    48,    49,    73,    29,    32,
+      26,    74,    31,    32,    24,    24,    74,    51,    24,    25,
+      28,    52,    49,    24,    26,    53,    42,    43,    44,    46,
+      54,    74,     6,     8,    10,    22,    23,    24,    29,    30,
+      37,    52,    55,    56,    57,    58,    59,    60,    61,    62,
+      65,    66,    67,    68,    69,    70,    73,    74,    30,    24,
+      60,    30,    60,    24,    27,    20,    21,    64,    11,    12,
+      13,    14,    15,    16,    33,    34,    63,    35,    36,    61,
+      69,    25,    30,    60,    24,    60,    31,    60,    65,    66,
+      66,    65,    69,    69,    60,    60,    71,    72,    31,    31,
+      26,    31,    32,    55,    55,    60,     5,    55
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -862,6 +1007,7 @@ static const yytype_int8 yyr1[] =
        0,    38,    39,    40,    40,    41,    41,    41,    41,    42,
 <<<<<<< HEAD
       42,    43,    44,    44,    44,    45,    46,    46,    47,    47,
+<<<<<<< HEAD:cminus.tab.c
       48,    48,    49,    49,    50,    51,    51,    51,    51,    52,
       52,    53,    53,    53,    53,    53,    54,    54,    55,    55,
       56,    57,    57,    58,    58,    59,    59,    60,    60,    60,
@@ -878,6 +1024,15 @@ static const yytype_int8 yyr1[] =
       67,    68,    68,    68,    68,    69,    70,    70,    71,    71,
       72,    73
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+      48,    48,    49,    49,    50,    50,    51,    52,    53,    53,
+      53,    53,    54,    54,    55,    55,    55,    55,    55,    56,
+      56,    57,    57,    58,    59,    59,    60,    60,    61,    61,
+      62,    62,    62,    63,    63,    63,    63,    63,    63,    64,
+      64,    65,    65,    65,    66,    66,    66,    66,    67,    68,
+      68,    68,    69,    69,    69,    69,    70,    71,    71,    72,
+      72,    73,    74
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -886,6 +1041,7 @@ static const yytype_int8 yyr2[] =
        0,     2,     1,     1,     2,     1,     1,     1,     1,     3,
 <<<<<<< HEAD
        6,     6,     4,     6,     7,     6,     1,     1,     1,     1,
+<<<<<<< HEAD:cminus.tab.c
        3,     1,     2,     4,     4,     2,     2,     2,     0,     2,
        0,     1,     1,     1,     1,     1,     2,     1,     5,     7,
        5,     2,     3,     3,     1,     1,     4,     3,     3,     1,
@@ -902,6 +1058,15 @@ static const yytype_int8 yyr2[] =
        1,     1,     3,     1,     1,     4,     1,     0,     3,     1,
        1,     1
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+       3,     1,     2,     4,     3,     1,     1,     4,     2,     2,
+       2,     0,     2,     0,     1,     1,     1,     1,     1,     2,
+       1,     5,     7,     5,     2,     3,     3,     1,     1,     4,
+       3,     3,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     3,     3,     1,     3,     3,     1,     2,     1,
+       1,     1,     1,     3,     1,     1,     4,     1,     0,     1,
+       3,     1,     1
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 };
 
 
@@ -1597,14 +1762,19 @@ yyreduce:
   switch (yyn)
     {
   case 2:
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #line 66 "./cminus.y"
 =======
 #line 66 "cminus.y"
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#line 66 "./parser/cminus.y"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
                           {
   parser_result = (yyvsp[0].decl);
 }
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #line 1443 "./cminus.tab.c"
     break;
@@ -1618,10 +1788,18 @@ yyreduce:
   case 4:
 #line 72 "cminus.y"
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#line 1444 "./parser/cminus.tab.c"
+    break;
+
+  case 4:
+#line 73 "./parser/cminus.y"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
                                {
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 
 #line 1456 "cminus.tab.c"
@@ -1685,448 +1863,467 @@ yyreduce:
     break;
 
 #line 90 "./cminus.y"
+=======
+#line 1453 "./parser/cminus.tab.c"
+    break;
+
+  case 9:
+#line 87 "./parser/cminus.y"
+                            {
+    (yyval.decl) = var_decl_create((yyvsp[-1].id), (yyvsp[-2].type));
+  }
+#line 1461 "./parser/cminus.tab.c"
+    break;
+
+  case 10:
+#line 90 "./parser/cminus.y"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
                                               {
     (yyval.decl) = array_decl_create( (yyvsp[-4].id), (yyvsp[-5].type), (yyvsp[-2].num));
   }
-#line 1468 "./cminus.tab.c"
+#line 1469 "./parser/cminus.tab.c"
     break;
 
   case 11:
-#line 96 "./cminus.y"
+#line 96 "./parser/cminus.y"
                                      {
-    (yyval.decl) = const_declaration_create((yyvsp[-3].id), TYPE_INTEGER, (yyvsp[-1].num));
+    (yyval.decl) = decl_create((yyvsp[-3].id), type_create(TYPE_INTEGER, 0, 0), expr_create_integer((yyvsp[-1].num)), 0, 0);
+    
   }
-#line 1476 "./cminus.tab.c"
+#line 1478 "./parser/cminus.tab.c"
     break;
 
   case 12:
-#line 102 "./cminus.y"
+#line 103 "./parser/cminus.y"
                            {
     (yyval.decl) = enum_decl_create((yyvsp[-1].id), (yyvsp[-2].id), 0);
   }
-#line 1484 "./cminus.tab.c"
+#line 1486 "./parser/cminus.tab.c"
     break;
 
   case 13:
-#line 106 "./cminus.y"
+#line 107 "./parser/cminus.y"
   {
-    (yyval.decl) = enum_decl_create(0, (yyvsp[-4].id), (yyvsp[-2].param_list));
+    (yyval.decl) = enum_decl_create(0, (yyvsp[-4].id), (yyvsp[-2].id_list));
   }
-#line 1492 "./cminus.tab.c"
+#line 1494 "./parser/cminus.tab.c"
     break;
 
   case 14:
-#line 110 "./cminus.y"
+#line 111 "./parser/cminus.y"
   {
-    (yyval.decl) = enum_decl_create((yyvsp[-1].id), (yyvsp[-5].id), (yyvsp[-3].param_list));
+    (yyval.decl) = enum_decl_create((yyvsp[-1].id), (yyvsp[-5].id), (yyvsp[-3].id_list));
   }
-#line 1500 "./cminus.tab.c"
+#line 1502 "./parser/cminus.tab.c"
     break;
 
   case 15:
-#line 116 "./cminus.y"
+#line 117 "./parser/cminus.y"
                                                       {
     (yyval.decl) = func_decl_create((yyvsp[-4].id), (yyvsp[-5].type), (yyvsp[-2].param_list), (yyvsp[0].stmt));
   }
-#line 1508 "./cminus.tab.c"
+#line 1510 "./parser/cminus.tab.c"
     break;
 
   case 16:
-#line 122 "./cminus.y"
+#line 123 "./parser/cminus.y"
       {
     (yyval.type) = type_create(TYPE_INTEGER, 0, 0);
   }
-#line 1516 "./cminus.tab.c"
+#line 1518 "./parser/cminus.tab.c"
     break;
 
   case 17:
-#line 125 "./cminus.y"
+#line 126 "./parser/cminus.y"
          {
     (yyval.type) = type_create(TYPE_VOID, 0, 0);
   }
-#line 1524 "./cminus.tab.c"
+#line 1526 "./parser/cminus.tab.c"
     break;
 
   case 19:
-#line 132 "./cminus.y"
+#line 133 "./parser/cminus.y"
          {
     (yyval.param_list) = param_create(0, type_create(TYPE_VOID, 0, 0));
   }
-#line 1532 "./cminus.tab.c"
+#line 1534 "./parser/cminus.tab.c"
     break;
 
   case 20:
-#line 138 "./cminus.y"
+#line 139 "./parser/cminus.y"
                         {
     (yyvsp[0].param_list)->next = (yyvsp[-2].param_list);
     (yyval.param_list) = (yyvsp[0].param_list);
   }
-#line 1541 "./cminus.tab.c"
+#line 1543 "./parser/cminus.tab.c"
     break;
 
   case 22:
-#line 145 "./cminus.y"
+#line 146 "./parser/cminus.y"
                          {
     (yyval.param_list) = param_create((yyvsp[0].id), (yyvsp[-1].type));
   }
-#line 1549 "./cminus.tab.c"
+#line 1551 "./parser/cminus.tab.c"
     break;
 
   case 23:
-#line 148 "./cminus.y"
+#line 149 "./parser/cminus.y"
                                  {
     (yyval.param_list) = param_array_create((yyvsp[-2].id), (yyvsp[-3].type));
   }
-#line 1557 "./cminus.tab.c"
+#line 1559 "./parser/cminus.tab.c"
     break;
 
   case 24:
-#line 154 "./cminus.y"
+#line 154 "./parser/cminus.y"
+                  {
+    (yyvsp[0].id_list)->next = (yyvsp[-2].id_list);
+    (yyval.id_list) = (yyvsp[0].id_list);
+  }
+#line 1568 "./parser/cminus.tab.c"
+    break;
+
+  case 26:
+#line 161 "./parser/cminus.y"
+          {
+    (yyval.id_list) = id_list_create((yyvsp[0].id), enum_type_create(TYPE_ENUM,0,0));
+  }
+#line 1576 "./parser/cminus.tab.c"
+    break;
+
+  case 27:
+#line 167 "./parser/cminus.y"
                                             {
     (yyval.stmt) = compound_stmt_create(STMT_BLOCK, (yyvsp[-2].decl), (yyvsp[-1].stmt));
   }
-#line 1565 "./cminus.tab.c"
+#line 1584 "./parser/cminus.tab.c"
     break;
 
-  case 25:
-#line 160 "./cminus.y"
+  case 28:
+#line 173 "./parser/cminus.y"
                                      {
     (yyvsp[0].decl)->next = (yyvsp[-1].decl);
     (yyval.decl) = (yyvsp[0].decl);
   }
-#line 1574 "./cminus.tab.c"
-    break;
-
-  case 26:
-#line 164 "./cminus.y"
-                                      {
-    (yyvsp[0].decl)->next = (yyvsp[-1].decl);
-    (yyval.decl) = (yyvsp[0].decl);
-  }
-#line 1583 "./cminus.tab.c"
-    break;
-
-  case 27:
-#line 168 "./cminus.y"
-                                      {
-    (yyvsp[0].decl)->next = (yyvsp[-1].decl);
-    (yyval.decl) = (yyvsp[0].decl);
-  }
-#line 1592 "./cminus.tab.c"
-    break;
-
-  case 28:
-#line 172 "./cminus.y"
-              {
-    (yyval.decl) = 0;
-  }
-#line 1600 "./cminus.tab.c"
+#line 1593 "./parser/cminus.tab.c"
     break;
 
   case 29:
-#line 178 "./cminus.y"
+#line 177 "./parser/cminus.y"
+                                      {
+    (yyvsp[0].decl)->next = (yyvsp[-1].decl);
+    (yyval.decl) = (yyvsp[0].decl);
+  }
+#line 1602 "./parser/cminus.tab.c"
+    break;
+
+  case 30:
+#line 181 "./parser/cminus.y"
+                                      {
+    (yyvsp[0].decl)->next = (yyvsp[-1].decl);
+    (yyval.decl) = (yyvsp[0].decl);
+  }
+#line 1611 "./parser/cminus.tab.c"
+    break;
+
+  case 31:
+#line 185 "./parser/cminus.y"
+              {
+    (yyval.decl) = 0;
+  }
+#line 1619 "./parser/cminus.tab.c"
+    break;
+
+  case 32:
+#line 191 "./parser/cminus.y"
                            {
     (yyvsp[0].stmt)->next = (yyvsp[-1].stmt);
     (yyval.stmt) = (yyvsp[0].stmt);
   }
-#line 1609 "./cminus.tab.c"
+#line 1628 "./parser/cminus.tab.c"
     break;
 
-  case 30:
-#line 182 "./cminus.y"
+  case 33:
+#line 195 "./parser/cminus.y"
               {
     (yyval.stmt) = 0;
   }
-#line 1617 "./cminus.tab.c"
-    break;
-
-  case 36:
-#line 196 "./cminus.y"
-                 {
-    (yyval.stmt) = stmt_create(STMT_EXPR, 0, 0, (yyvsp[-1].expr), 0, 0, 0, 0);
-  }
-#line 1625 "./cminus.tab.c"
-    break;
-
-  case 37:
-#line 199 "./cminus.y"
-      {
-    (yyval.stmt) = stmt_create(STMT_EXPR, 0, 0, expr_create(EXPR_EMPTY, 0, 0), 0, 0, 0, 0);
-  }
-#line 1633 "./cminus.tab.c"
-    break;
-
-  case 38:
-#line 205 "./cminus.y"
-                                  {
-    (yyval.stmt) = stmt_create(STMT_IF_ELSE, 0, 0, (yyvsp[-2].expr), 0, (yyvsp[0].stmt), 0, 0);
-  }
-#line 1641 "./cminus.tab.c"
+#line 1636 "./parser/cminus.tab.c"
     break;
 
   case 39:
-#line 208 "./cminus.y"
-                                                 {
-    (yyval.stmt) = stmt_create(STMT_IF_ELSE, 0, 0, (yyvsp[-4].expr), 0, (yyvsp[-2].stmt), (yyvsp[0].stmt), 0);
+#line 209 "./parser/cminus.y"
+                 {
+    (yyval.stmt) = stmt_create(STMT_EXPR, 0, 0, (yyvsp[-1].expr), 0, 0, 0, 0);
   }
-#line 1649 "./cminus.tab.c"
+#line 1644 "./parser/cminus.tab.c"
     break;
 
   case 40:
-#line 214 "./cminus.y"
-                                     {
-    (yyval.stmt) = stmt_create(STMT_WHILE, 0, 0, (yyvsp[-2].expr), 0, (yyvsp[0].stmt), 0, 0);
+#line 212 "./parser/cminus.y"
+      {
+    (yyval.stmt) = stmt_create(STMT_EXPR, 0, 0, expr_create(EXPR_EMPTY, 0, 0), 0, 0, 0, 0);
   }
-#line 1657 "./cminus.tab.c"
+#line 1652 "./parser/cminus.tab.c"
     break;
 
   case 41:
-#line 219 "./cminus.y"
-                        {
-    (yyval.stmt) = stmt_create(STMT_RETURN, 0, 0, 0, 0, 0, 0, 0);
+#line 218 "./parser/cminus.y"
+                                  {
+    (yyval.stmt) = stmt_create(STMT_IF_ELSE, 0, 0, (yyvsp[-2].expr), 0, (yyvsp[0].stmt), 0, 0);
   }
-#line 1665 "./cminus.tab.c"
+#line 1660 "./parser/cminus.tab.c"
     break;
 
   case 42:
-#line 222 "./cminus.y"
-                        {
-    (yyval.stmt) = stmt_create(STMT_RETURN, 0, 0, (yyvsp[-1].expr), 0, 0, 0, 0);
+#line 221 "./parser/cminus.y"
+                                                 {
+    (yyval.stmt) = stmt_create(STMT_IF_ELSE, 0, 0, (yyvsp[-4].expr), 0, (yyvsp[-2].stmt), (yyvsp[0].stmt), 0);
   }
-#line 1673 "./cminus.tab.c"
+#line 1668 "./parser/cminus.tab.c"
     break;
 
   case 43:
-#line 228 "./cminus.y"
-                     {
-    (yyval.expr) = expr_create(EXPR_ASSIGN, (yyvsp[-2].expr), (yyvsp[0].expr));
+#line 227 "./parser/cminus.y"
+                                     {
+    (yyval.stmt) = stmt_create(STMT_WHILE, 0, 0, (yyvsp[-2].expr), 0, (yyvsp[0].stmt), 0, 0);
   }
-#line 1681 "./cminus.tab.c"
+#line 1676 "./parser/cminus.tab.c"
+    break;
+
+  case 44:
+#line 232 "./parser/cminus.y"
+                        {
+    (yyval.stmt) = stmt_create(STMT_RETURN, 0, 0, 0, 0, 0, 0, 0);
+  }
+#line 1684 "./parser/cminus.tab.c"
     break;
 
   case 45:
-#line 235 "./cminus.y"
-           {
-    (yyval.expr) = expr_create_var((yyvsp[0].id));
+#line 235 "./parser/cminus.y"
+                        {
+    (yyval.stmt) = stmt_create(STMT_RETURN, 0, 0, (yyvsp[-1].expr), 0, 0, 0, 0);
   }
-#line 1689 "./cminus.tab.c"
+#line 1692 "./parser/cminus.tab.c"
     break;
 
   case 46:
-#line 238 "./cminus.y"
+#line 241 "./parser/cminus.y"
+                     {
+    (yyval.expr) = expr_create(EXPR_ASSIGN, (yyvsp[-2].expr), (yyvsp[0].expr));
+  }
+#line 1700 "./parser/cminus.tab.c"
+    break;
+
+  case 48:
+#line 248 "./parser/cminus.y"
+           {
+    (yyval.expr) = expr_create_var((yyvsp[0].id));
+  }
+#line 1708 "./parser/cminus.tab.c"
+    break;
+
+  case 49:
+#line 251 "./parser/cminus.y"
                              {
     (yyval.expr) = expr_create_array((yyvsp[-3].id), (yyvsp[-1].expr));
   }
-#line 1697 "./cminus.tab.c"
+#line 1716 "./parser/cminus.tab.c"
     break;
 
-  case 47:
-#line 244 "./cminus.y"
+  case 50:
+#line 257 "./parser/cminus.y"
                                                 {
     (yyvsp[-1].expr)->left = (yyvsp[-2].expr);
     (yyvsp[-1].expr)->right = (yyvsp[0].expr);
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1707 "./cminus.tab.c"
+#line 1726 "./parser/cminus.tab.c"
     break;
 
-  case 48:
-#line 249 "./cminus.y"
+  case 51:
+#line 262 "./parser/cminus.y"
                                               {
     (yyvsp[-1].expr)->left = (yyvsp[-2].expr);
     (yyvsp[-1].expr)->right = (yyvsp[0].expr);
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1717 "./cminus.tab.c"
-    break;
-
-  case 50:
-#line 258 "./cminus.y"
-       { (yyval.expr) = expr_create(EXPR_LTEQ, 0, 0); }
-#line 1723 "./cminus.tab.c"
-    break;
-
-  case 51:
-#line 259 "./cminus.y"
-     { (yyval.expr) = expr_create(EXPR_LT, 0, 0); }
-#line 1729 "./cminus.tab.c"
-    break;
-
-  case 52:
-#line 260 "./cminus.y"
-     { (yyval.expr) = expr_create(EXPR_GT, 0, 0); }
-#line 1735 "./cminus.tab.c"
+#line 1736 "./parser/cminus.tab.c"
     break;
 
   case 53:
-#line 261 "./cminus.y"
-       { (yyval.expr) = expr_create(EXPR_GTEQ, 0, 0); }
-#line 1741 "./cminus.tab.c"
+#line 271 "./parser/cminus.y"
+       { (yyval.expr) = expr_create(EXPR_LTEQ, 0, 0); }
+#line 1742 "./parser/cminus.tab.c"
     break;
 
   case 54:
-#line 262 "./cminus.y"
-     { (yyval.expr) = expr_create(EXPR_EQ, 0, 0); }
-#line 1747 "./cminus.tab.c"
+#line 272 "./parser/cminus.y"
+     { (yyval.expr) = expr_create(EXPR_LT, 0, 0); }
+#line 1748 "./parser/cminus.tab.c"
     break;
 
   case 55:
-#line 263 "./cminus.y"
-      { (yyval.expr) = expr_create(EXPR_NEQ, 0, 0); }
-#line 1753 "./cminus.tab.c"
+#line 273 "./parser/cminus.y"
+     { (yyval.expr) = expr_create(EXPR_GT, 0, 0); }
+#line 1754 "./parser/cminus.tab.c"
     break;
 
   case 56:
-#line 267 "./cminus.y"
-      { (yyval.expr) = expr_create(EXPR_AND, 0, 0); }
-#line 1759 "./cminus.tab.c"
+#line 274 "./parser/cminus.y"
+       { (yyval.expr) = expr_create(EXPR_GTEQ, 0, 0); }
+#line 1760 "./parser/cminus.tab.c"
     break;
 
   case 57:
-#line 268 "./cminus.y"
-     { (yyval.expr) = expr_create(EXPR_OR, 0, 0); }
-#line 1765 "./cminus.tab.c"
+#line 275 "./parser/cminus.y"
+     { (yyval.expr) = expr_create(EXPR_EQ, 0, 0); }
+#line 1766 "./parser/cminus.tab.c"
     break;
 
   case 58:
-#line 272 "./cminus.y"
-       { (yyval.expr) = (yyvsp[0].expr); }
-#line 1771 "./cminus.tab.c"
+#line 276 "./parser/cminus.y"
+      { (yyval.expr) = expr_create(EXPR_NEQ, 0, 0); }
+#line 1772 "./parser/cminus.tab.c"
     break;
 
   case 59:
-#line 273 "./cminus.y"
-                               {
-     (yyval.expr) = expr_create(EXPR_ADD, (yyvsp[-2].expr), (yyvsp[0].expr));
-  }
-#line 1779 "./cminus.tab.c"
+#line 280 "./parser/cminus.y"
+      { (yyval.expr) = expr_create(EXPR_AND, 0, 0); }
+#line 1778 "./parser/cminus.tab.c"
     break;
 
   case 60:
-#line 276 "./cminus.y"
-                               {
-     (yyval.expr) = expr_create(EXPR_SUB, (yyvsp[-2].expr), (yyvsp[0].expr));
-  }
-#line 1787 "./cminus.tab.c"
-    break;
-
-  case 61:
-#line 282 "./cminus.y"
-       { (yyval.expr) = (yyvsp[0].expr); }
-#line 1793 "./cminus.tab.c"
+#line 281 "./parser/cminus.y"
+     { (yyval.expr) = expr_create(EXPR_OR, 0, 0); }
+#line 1784 "./parser/cminus.tab.c"
     break;
 
   case 62:
-#line 283 "./cminus.y"
-                  {
-    (yyval.expr) = expr_create(EXPR_MUL, (yyvsp[-2].expr), (yyvsp[0].expr));
+#line 286 "./parser/cminus.y"
+                               {
+     (yyval.expr) = expr_create(EXPR_ADD, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1801 "./cminus.tab.c"
+#line 1792 "./parser/cminus.tab.c"
     break;
 
   case 63:
-#line 286 "./cminus.y"
-                  {
-    (yyval.expr) = expr_create(EXPR_DIV, (yyvsp[-2].expr), (yyvsp[0].expr));
+#line 289 "./parser/cminus.y"
+                               {
+     (yyval.expr) = expr_create(EXPR_SUB, (yyvsp[-2].expr), (yyvsp[0].expr));
   }
-#line 1809 "./cminus.tab.c"
-    break;
-
-  case 64:
-#line 289 "./cminus.y"
-                   { (yyval.expr) = (yyvsp[0].expr); }
-#line 1815 "./cminus.tab.c"
+#line 1800 "./parser/cminus.tab.c"
     break;
 
   case 65:
-#line 294 "./cminus.y"
+#line 296 "./parser/cminus.y"
+                  {
+    (yyval.expr) = expr_create(EXPR_MUL, (yyvsp[-2].expr), (yyvsp[0].expr));
+  }
+#line 1808 "./parser/cminus.tab.c"
+    break;
+
+  case 66:
+#line 299 "./parser/cminus.y"
+                  {
+    (yyval.expr) = expr_create(EXPR_DIV, (yyvsp[-2].expr), (yyvsp[0].expr));
+  }
+#line 1816 "./parser/cminus.tab.c"
+    break;
+
+  case 68:
+#line 307 "./parser/cminus.y"
                   {
     (yyvsp[-1].expr)->right = (yyvsp[0].expr);
     (yyval.expr) = (yyvsp[-1].expr);
   }
-#line 1824 "./cminus.tab.c"
-    break;
-
-  case 66:
-#line 301 "./cminus.y"
-      { (yyval.expr) = expr_create(EXPR_NOT, 0, 0); }
-#line 1830 "./cminus.tab.c"
-    break;
-
-  case 67:
-#line 302 "./cminus.y"
-      { (yyval.expr) = expr_create(EXPR_DEC, 0, 0); }
-#line 1836 "./cminus.tab.c"
-    break;
-
-  case 68:
-#line 303 "./cminus.y"
-      { (yyval.expr) = expr_create(EXPR_INC, 0, 0); }
-#line 1842 "./cminus.tab.c"
+#line 1825 "./parser/cminus.tab.c"
     break;
 
   case 69:
-#line 307 "./cminus.y"
-           {
-    (yyval.expr) = expr_create_integer((yyvsp[0].num));
-  }
-#line 1850 "./cminus.tab.c"
+#line 314 "./parser/cminus.y"
+      { (yyval.expr) = expr_create(EXPR_NOT, 0, 0); }
+#line 1831 "./parser/cminus.tab.c"
     break;
 
   case 70:
-#line 310 "./cminus.y"
-                     {
-    (yyval.expr) = (yyvsp[-1].expr);
+#line 315 "./parser/cminus.y"
+      { (yyval.expr) = expr_create(EXPR_DEC, 0, 0); }
+#line 1837 "./parser/cminus.tab.c"
+    break;
+
+  case 71:
+#line 316 "./parser/cminus.y"
+      { (yyval.expr) = expr_create(EXPR_INC, 0, 0); }
+#line 1843 "./parser/cminus.tab.c"
+    break;
+
+  case 72:
+#line 320 "./parser/cminus.y"
+           {
+    (yyval.expr) = expr_create_integer((yyvsp[0].num));
   }
-#line 1858 "./cminus.tab.c"
+#line 1851 "./parser/cminus.tab.c"
     break;
 
   case 73:
-#line 318 "./cminus.y"
+#line 323 "./parser/cminus.y"
+                     {
+    (yyval.expr) = (yyvsp[-1].expr);
+  }
+#line 1859 "./parser/cminus.tab.c"
+    break;
+
+  case 76:
+#line 331 "./parser/cminus.y"
                        {
     (yyval.expr) = expr_create_call((yyvsp[-3].id), (yyvsp[-1].expr));
   }
-#line 1866 "./cminus.tab.c"
-    break;
-
-  case 75:
-#line 325 "./cminus.y"
-              {
-    (yyval.expr) = 0;
-  }
-#line 1874 "./cminus.tab.c"
-    break;
-
-  case 77:
-#line 332 "./cminus.y"
-                           {
-    (yyval.expr) = expr_create_arg( (yyvsp[-2].expr), (yyvsp[0].expr));
-  }
-#line 1882 "./cminus.tab.c"
+#line 1867 "./parser/cminus.tab.c"
     break;
 
   case 78:
-#line 337 "./cminus.y"
+#line 338 "./parser/cminus.y"
+              {
+    (yyval.expr) = 0;
+  }
+#line 1875 "./parser/cminus.tab.c"
+    break;
+
+  case 80:
+#line 345 "./parser/cminus.y"
+                           {
+    (yyval.expr) = expr_create_arg( (yyvsp[-2].expr), (yyvsp[0].expr));
+  }
+#line 1883 "./parser/cminus.tab.c"
+    break;
+
+  case 81:
+#line 350 "./parser/cminus.y"
               {
   (yyval.num) = yylval.num;
  }
-#line 1890 "./cminus.tab.c"
+#line 1891 "./parser/cminus.tab.c"
     break;
 
-  case 79:
-#line 342 "./cminus.y"
+  case 82:
+#line 355 "./parser/cminus.y"
             {
   (yyval.id) = yylval.id;
 }
-#line 1898 "./cminus.tab.c"
+#line 1899 "./parser/cminus.tab.c"
     break;
 
 
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #line 1902 "./cminus.tab.c"
 =======
 #line 1513 "cminus.tab.c"
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#line 1903 "./parser/cminus.tab.c"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
       default: break;
     }
@@ -2357,11 +2554,15 @@ yyreturn:
 #endif
   return yyresult;
 }
+<<<<<<< HEAD:cminus.tab.c
 <<<<<<< HEAD
 #line 347 "./cminus.y"
 =======
 #line 260 "cminus.y"
 >>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
+=======
+#line 360 "./parser/cminus.y"
+>>>>>>> ec801233f08900c71602639ecb96dfd1a8650945:src/parser/cminus.tab.c
 
 
 

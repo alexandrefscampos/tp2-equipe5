@@ -31,15 +31,11 @@ void prettyprint_type(struct type *type)
             printf("[int]");
             break;
         }
-        case TYPE_ENUM: 
-        {
-            
-            break;
-        }
         case TYPE_ARRAY:
         {
             if (t->subtype)
                 prettyprint_type(t->subtype);
+
             break;
         }
         case TYPE_FUNCTION:
@@ -65,14 +61,43 @@ void prettyprint_type(struct type *type)
 void prettyprint_params(struct param_list *pl)
 {
     struct param_list *p = pl;
-    while (p)
+
+    if (!p)
+    {
+        return;
+    }
+
+    prettyprint_params(p->next);
+
+    if (p->type->kind != TYPE_VOID)
     {
         printf("[param ");
-        printf("[%s]", p->name);
-        prettyprint_type(p->type);
+        if (p->type)
+            prettyprint_type(p->type);
+        if (p->name)
+            printf("[%s]", p->name);
+        if (p->type->kind == TYPE_ARRAY)
+            printf("[\\[\\]]");
         printf("]");
-        p = p->next;
     }
+}
+void prettyprint_id_list(struct id_list *pl)
+{
+    struct id_list *p = pl;
+
+    if (!p)
+    {
+        return;
+    }
+
+    prettyprint_id_list(p->next);
+    printf("\n[enum-const ");
+    if (p->name)
+    {
+        printf("[%s]", p->name);
+    }
+
+    printf("]");
 }
 
 void prettyprint_var(struct decl *var)
@@ -108,115 +133,152 @@ void prettyprint_func(struct decl *func)
     printf("]");
 }
 
+prettyprint_const(struct decl *decl)
+{
+    printf("\n[const-declaration ");
+    printf("[int] ");
+    printf("[%s] ", decl->name);
+    if (decl->expr)
+    {
+        int i = decl->expr->integer_value;
+        printf("[%d] ", i);
+    }
+    printf("] ");
+}
+
 void prettyprint_decl(struct decl *decl)
 {
-
-    while (decl)
+    if (!decl)
     {
-        printf("ENUM");
+        return;
+    }
 
-        struct type *t = decl->type;
-        switch (t->kind)
-        {
-        case TYPE_VOID:
-        {
-            printf("[void]");
-            break;
-        }
-        case TYPE_INTEGER:
-        {
-            prettyprint_var(decl);
-            break;
-        }
+    prettyprint_decl(decl->next);
 
-          case TYPE_ENUM:
-        {
+    struct type *t = decl->type;
+    switch (t->kind)
+    {
+    case TYPE_VOID:
+    {
+        printf("[void]");
+        break;
+    }
+    case TYPE_INTEGER:
+    {
+        if (decl->expr)
+            prettyprint_const(decl);
+        else
             prettyprint_var(decl);
-            break;
-        }
-        case TYPE_ARRAY:
+        break;
+    }
+
+    case TYPE_ENUM:
+    {
+        if (!decl->type->id_list)
         {
-            prettyprint_array(decl);
-            break;
+
+            printf("\n[enum-var-declaration ");
+            prettyprint_name(decl->type->subtype);
+            printf("[%s] ", decl->name);
         }
-        case TYPE_FUNCTION:
+        else
         {
-            prettyprint_func(decl);
-            break;
+            printf("\n[enum-type-declaration ");
+            prettyprint_name(decl->type->subtype);
+
+            if (decl->name)
+                printf("[%s] ", decl->name);
+
+            if (decl->type->id_list)
+            {
+                printf("\n[enum_consts");
+                prettyprint_id_list(decl->type->id_list);
+                printf("\n]");
+            }
         }
-        case TYPE_ENUM:
-        {
-            // prettyprint_func(decl);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-        }
-        decl = decl->next;
+        printf("\n] ");
+        break;
+    }
+    case TYPE_ARRAY:
+    {
+        prettyprint_array(decl);
+        break;
+    }
+    case TYPE_FUNCTION:
+    {
+        prettyprint_func(decl);
+        break;
+    }
+    default:
+    {
+        break;
+    }
     }
 }
 
 void prettyprint_stmt(struct stmt *s)
 {
-    while (s)
+    if (!s)
     {
-        switch (s->kind)
-        {
-        case STMT_EXPR:
-        {
-            if (s->expr)
-                prettyprint_expr(s->expr);
-            else
-                printf("[;]\n");
-            break;
-        }
-        case STMT_IF_ELSE:
-        {
-            printf("\n[if-else-stmt ");
+
+        return;
+    }
+
+    prettyprint_stmt(s->next);
+
+    switch (s->kind)
+    {
+    case STMT_EXPR:
+    {
+        if (s->expr)
             prettyprint_expr(s->expr);
-            prettyprint_stmt(s->body);
-            if (s->else_body)
-                prettyprint_stmt(s->else_body);
-            printf("]\n");
-            break;
-        }
-        case STMT_WHILE:
-        {
-            printf("\n[iteration-stmt ");
+        else
+            printf("[;]\n");
+        break;
+    }
+    case STMT_IF_ELSE:
+    {
+        printf("\n[selection-stmt ");
+        prettyprint_expr(s->expr);
+        prettyprint_stmt(s->body);
+        if (s->else_body)
+            prettyprint_stmt(s->else_body);
+        printf("]\n");
+        break;
+    }
+    case STMT_WHILE:
+    {
+        printf("\n[iteration-stmt ");
+        prettyprint_expr(s->expr);
+        prettyprint_stmt(s->body);
+        printf("]\n");
+        break;
+    }
+    case STMT_PRINT:
+    {
+        break;
+    }
+    case STMT_RETURN:
+    {
+        printf("\n[return-stmt ");
+        if (s->expr)
             prettyprint_expr(s->expr);
+        else
+            printf("[;]\n");
+        break;
+    }
+    case STMT_BLOCK:
+    {
+        printf("\n[compound-stmt ");
+        if (s->decl)
+            prettyprint_decl(s->decl);
+        if (s->body)
             prettyprint_stmt(s->body);
-            printf("]\n");
-            break;
-        }
-        case STMT_PRINT:
-        {
-            break;
-        }
-        case STMT_RETURN:
-        {
-            printf("\n[return-stmt ");
-            if (s->expr)
-                prettyprint_expr(s->expr);
-            else
-                printf("[;]\n");
-            break;
-        }
-        case STMT_BLOCK:
-        {
-            printf("\n[compound-stmt ");
-            if (s->decl)
-                prettyprint_decl(s->decl);
-            if (s->body)
-                prettyprint_stmt(s->body);
-            printf("]\n");
-            break;
-        }
-        default:
-            break;
-        }
-        s = s->next;
+        printf("]\n");
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -278,6 +340,7 @@ void prettyprint_expr(struct expr *e)
             printf("[var ");
             prettyprint_expr(e->left);
             prettyprint_expr(e->right);
+            printf("]");
             break;
         }
         case EXPR_INTEGER_LITERAL:
@@ -318,27 +381,27 @@ void prettyprint_expr(struct expr *e)
             prettyprint_bexpr(">=", e->left, e->right);
             break;
         }
-         case EXPR_AND:
+        case EXPR_AND:
         {
             prettyprint_bexpr("&&", e->left, e->right);
             break;
         }
-         case EXPR_OR:
+        case EXPR_OR:
         {
             prettyprint_bexpr("||", e->left, e->right);
             break;
         }
-         case EXPR_INC:
+        case EXPR_INC:
         {
             prettyprint_bexpr("++", e->right, NULL);
             break;
         }
-          case EXPR_DEC:
+        case EXPR_DEC:
         {
             prettyprint_bexpr("--", e->right, NULL);
             break;
         }
-           case EXPR_NOT:
+        case EXPR_NOT:
         {
             prettyprint_bexpr("!", e->right, NULL);
             break;
@@ -347,7 +410,7 @@ void prettyprint_expr(struct expr *e)
         {
             break;
         }
-         case EXPR_EMPTY:
+        case EXPR_EMPTY:
         {
             break;
         }
@@ -362,13 +425,13 @@ void prettyprint_expr(struct expr *e)
         }
         case EXPR_ARG:
         {
-            prettyprint_expr(e->right);
             prettyprint_expr(e->left);
+            prettyprint_expr(e->right);
             break;
         }
         default:
         {
-           break;
+            break;
         }
         }
     }
@@ -381,12 +444,3 @@ void bracket(struct decl *program)
     printf("\n]\n");
 }
 
-int main(void)
-{
-    int result = yyparse();
-    // printf("%d", result);
-    if (!result)
-        bracket(parser_result);
-
-    return result;
-}

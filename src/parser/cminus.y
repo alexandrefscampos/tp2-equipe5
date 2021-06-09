@@ -9,7 +9,6 @@
 int yylex();
 %}
 
-
 /* declare tokens */
 %token NUM
 %token ID
@@ -43,6 +42,7 @@ int yylex();
 %type <decl> declaration-list declaration var-declaration fun-declaration const-declaration enum-declaration local-declarations
 %type <type> type-specifier
 %type <param_list> params param-list param
+%type <id_list> id id-list
 %type <stmt> compound-stmt statement-list statement expression-stmt selection-stmt iteration-stmt return-stmt
 %type <expr> expression var simple-expression relop logop unary_op  additive-expression term factor call args args-list unary-expression
 %type <id> type_ID
@@ -95,17 +95,22 @@ var-declaration:
 
 const-declaration: 
   INT CONST type_ID '=' type_NUM ';' {
-    // $$ = decl_create(
-    //   $2, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0
-    // );
+    $$ = decl_create($3, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0);
+    
   }
 ;
 
 enum-declaration:
   ENUM type_ID type_ID ';' {
-    // $$ = enum_decl_create(
-    //   $3, type_create(TYPE_ENUM, $2, 0), 0
-    // );
+    $$ = enum_decl_create($3, $2, 0);
+  }
+| ENUM type_ID '{' id-list '}' ';'
+  {
+    $$ = enum_decl_create(0, $2, $4);
+  }
+| ENUM type_ID '{' id-list '}' type_ID ';'
+  {
+    $$ = enum_decl_create($6, $2, $4);
   }
 | ENUM type_ID '{' id-list '}' ';'
 | ENUM type_ID '{' id-list '}' type_ID ';'
@@ -146,6 +151,18 @@ param-list:
 param: 
   type-specifier type_ID
 | type-specifier type_ID '[' ']'
+;
+id-list:
+  id-list ',' id  {
+    $3->next = $1;
+    $$ = $3;
+  }
+  | id 
+;
+id: 
+  type_ID {
+    $$ = id_list_create($1, enum_type_create(TYPE_ENUM,0,0));
+  }
 ;
 
 compound-stmt: 
@@ -263,7 +280,7 @@ logop:
 ;
 
 additive-expression: 
-  term { $$ = $1; }
+  term 
 | additive-expression '+' term {
      $$ = expr_create(EXPR_ADD, $1, $3);
   }
@@ -273,14 +290,14 @@ additive-expression:
 ;
 
 term: 
-factor { $$ = $1; }
+factor 
 | term '*' factor {
     $$ = expr_create(EXPR_MUL, $1, $3);
   }
 | term '/' factor {
     $$ = expr_create(EXPR_DIV, $1, $3);
   }
-| unary-expression { $$ = $1; }
+| unary-expression 
 ;
 
 

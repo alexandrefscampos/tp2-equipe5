@@ -1013,7 +1013,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 61 "./cminus.l"
+=======
+#line 61 "cminus.l"
+>>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
 #line 1020 "./lex.yy.c"

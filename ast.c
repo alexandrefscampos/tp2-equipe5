@@ -22,7 +22,6 @@ struct type *type_create(type_t kind,
     t->kind = kind;
     t->subtype = subtype;
     t->params = params;
-    t->id_list = 0;
   }
   else
     printf("No memory\n");
@@ -37,7 +36,6 @@ struct type *enum_type_create(type_t kind,
   {
     t->kind = kind;
     t->subtype = subtype;
-    t->params = 0;
     t->id_list = params;
   }
   else
@@ -142,7 +140,7 @@ struct decl *enum_decl_create(char *name, struct type *type, struct id_list *idL
 
 struct decl *const_declaration_create(char *name, int val)
 {
-  struct expr *i = create_integer(val);
+  struct expr *i = expr_create_integer(val);
   struct type *it = type_create(TYPE_INTEGER, 0, 0);
   struct decl *constDeclaration = decl_create(name, it, i, 0, 0);
   return constDeclaration;

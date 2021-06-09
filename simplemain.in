@@ -2,8 +2,6 @@ int g;
 
 int foo(int x, int y, int z[]) {
 
-    enum rgb {red, green, blue};
-    color = red;
     z[0] = 0;
     y = x * y + 2;
 

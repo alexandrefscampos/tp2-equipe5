@@ -42,6 +42,7 @@ int yylex();
 %type <decl> declaration-list declaration var-declaration fun-declaration const-declaration enum-declaration local-declarations
 %type <type> type-specifier
 %type <param_list> params param-list param
+%type <id_list> id id-list
 %type <stmt> compound-stmt statement-list statement expression-stmt selection-stmt iteration-stmt return-stmt
 %type <expr> expression var simple-expression relop logop unary_op  additive-expression term factor call args args-list unary-expression
 %type <id> type_ID
@@ -93,8 +94,7 @@ var-declaration:
 
 const-declaration: 
   INT CONST type_ID '=' type_NUM ';' {
-    $$ = const_declaration_create($3, $5);
-    //$$ = var_decl_create($3, type_create(TYPE_INTEGER, 0, 0));
+    $$ = decl_create($3, type_create(TYPE_INTEGER, 0, 0), expr_create_integer($5), 0, 0);
     
   }
 ;

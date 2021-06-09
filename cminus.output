@@ -3,7 +3,7 @@ Terminals unused in grammar
     ERROR
 
 
-State 129 conflicts: 1 shift/reduce
+State 133 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -26,8 +26,8 @@ Grammar
    10 const-declaration: INT CONST type_ID '=' type_NUM ';'
 
    11 enum-declaration: ENUM type_ID type_ID ';'
-   12                 | ENUM type_ID '{' param-list '}' ';'
-   13                 | ENUM type_ID '{' param-list '}' type_ID ';'
+   12                 | ENUM type_ID '{' id-list '}' ';'
+   13                 | ENUM type_ID '{' id-list '}' type_ID ';'
 
    14 fun-declaration: type-specifier type_ID '(' params ')' compound-stmt
 
@@ -43,125 +43,130 @@ Grammar
    21 param: type-specifier type_ID
    22      | type-specifier type_ID '[' ']'
 
-   23 compound-stmt: '{' local-declarations statement-list '}'
+   23 id-list: id-list ',' id
+   24        | id
 
-   24 local-declarations: local-declarations var-declaration
-   25                   | local-declarations const-declaration
-   26                   | local-declarations enum-declaration
-   27                   | %empty
+   25 id: type_ID
 
-   28 statement-list: statement-list statement
-   29               | %empty
+   26 compound-stmt: '{' local-declarations statement-list '}'
 
-   30 statement: expression-stmt
-   31          | compound-stmt
-   32          | selection-stmt
-   33          | iteration-stmt
-   34          | return-stmt
+   27 local-declarations: local-declarations var-declaration
+   28                   | local-declarations const-declaration
+   29                   | local-declarations enum-declaration
+   30                   | %empty
 
-   35 expression-stmt: expression ';'
-   36                | ';'
+   31 statement-list: statement-list statement
+   32               | %empty
 
-   37 selection-stmt: IF '(' expression ')' statement
-   38               | IF '(' expression ')' statement ELSE statement
+   33 statement: expression-stmt
+   34          | compound-stmt
+   35          | selection-stmt
+   36          | iteration-stmt
+   37          | return-stmt
 
-   39 iteration-stmt: WHILE '(' expression ')' statement
+   38 expression-stmt: expression ';'
+   39                | ';'
 
-   40 return-stmt: RETURN ';'
-   41            | RETURN expression ';'
+   40 selection-stmt: IF '(' expression ')' statement
+   41               | IF '(' expression ')' statement ELSE statement
 
-   42 expression: var '=' expression
-   43           | simple-expression
+   42 iteration-stmt: WHILE '(' expression ')' statement
 
-   44 var: type_ID
-   45    | type_ID '[' expression ']'
+   43 return-stmt: RETURN ';'
+   44            | RETURN expression ';'
 
-   46 simple-expression: additive-expression relop additive-expression
-   47                  | simple-expression logop additive-expression
-   48                  | additive-expression
+   45 expression: var '=' expression
+   46           | simple-expression
 
-   49 relop: LTEQ
-   50      | LT
-   51      | GT
-   52      | GTEQ
-   53      | EQ
-   54      | NEQ
+   47 var: type_ID
+   48    | type_ID '[' expression ']'
 
-   55 logop: AND
-   56      | OR
+   49 simple-expression: additive-expression relop additive-expression
+   50                  | simple-expression logop additive-expression
+   51                  | additive-expression
 
-   57 additive-expression: term
-   58                    | additive-expression '+' term
-   59                    | additive-expression '-' term
+   52 relop: LTEQ
+   53      | LT
+   54      | GT
+   55      | GTEQ
+   56      | EQ
+   57      | NEQ
 
-   60 term: factor
-   61     | term '*' factor
-   62     | term '/' factor
-   63     | unary-expression
+   58 logop: AND
+   59      | OR
 
-   64 unary-expression: unary_op factor
+   60 additive-expression: term
+   61                    | additive-expression '+' term
+   62                    | additive-expression '-' term
 
-   65 unary_op: '!'
-   66         | DEC
-   67         | INC
+   63 term: factor
+   64     | term '*' factor
+   65     | term '/' factor
+   66     | unary-expression
 
-   68 factor: type_NUM
-   69       | '(' expression ')'
-   70       | var
-   71       | call
+   67 unary-expression: unary_op factor
 
-   72 call: type_ID '(' args ')'
+   68 unary_op: '!'
+   69         | DEC
+   70         | INC
 
-   73 args: args-list
-   74     | %empty
+   71 factor: type_NUM
+   72       | '(' expression ')'
+   73       | var
+   74       | call
 
-   75 args-list: expression
-   76          | args-list ',' expression
+   75 call: type_ID '(' args ')'
 
-   77 type_NUM: NUM
+   76 args: args-list
+   77     | %empty
 
-   78 type_ID: ID
+   78 args-list: expression
+   79          | args-list ',' expression
+
+   80 type_NUM: NUM
+
+   81 type_ID: ID
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
-    '!' (33) 65
-    '(' (40) 14 37 38 39 69 72
-    ')' (41) 14 37 38 39 69 72
-    '*' (42) 61
-    '+' (43) 58
-    ',' (44) 19 76
-    '-' (45) 59
-    '/' (47) 62
-    ';' (59) 8 9 10 11 12 13 35 36 40 41
-    '=' (61) 10 42
-    '[' (91) 9 22 45
-    ']' (93) 9 22 45
-    '{' (123) 12 13 23
-    '}' (125) 12 13 23
+    '!' (33) 68
+    '(' (40) 14 40 41 42 72 75
+    ')' (41) 14 40 41 42 72 75
+    '*' (42) 64
+    '+' (43) 61
+    ',' (44) 19 23 79
+    '-' (45) 62
+    '/' (47) 65
+    ';' (59) 8 9 10 11 12 13 38 39 43 44
+    '=' (61) 10 45
+    '[' (91) 9 22 48
+    ']' (93) 9 22 48
+    '{' (123) 12 13 26
+    '}' (125) 12 13 26
     error (256)
-    NUM (258) 77
-    ID (259) 78
-    ELSE (260) 38
-    IF (261) 37 38
+    NUM (258) 80
+    ID (259) 81
+    ELSE (260) 41
+    IF (261) 40 41
     INT (262) 10 15
-    RETURN (263) 40 41
+    RETURN (263) 43 44
     VOID (264) 16 18
-    WHILE (265) 39
-    EQ (266) 53
-    NEQ (267) 54
-    LT (268) 50
-    GT (269) 51
-    LTEQ (270) 49
-    GTEQ (271) 52
+    WHILE (265) 42
+    EQ (266) 56
+    NEQ (267) 57
+    LT (268) 53
+    GT (269) 54
+    LTEQ (270) 52
+    GTEQ (271) 55
     ERROR (272)
     CONST (273) 10
     ENUM (274) 11 12 13
-    AND (275) 55
-    OR (276) 56
-    INC (277) 67
-    DEC (278) 66
+    AND (275) 58
+    OR (276) 59
+    INC (277) 70
+    DEC (278) 69
 
 
 Nonterminals, with rules where they appear
@@ -179,13 +184,13 @@ Nonterminals, with rules where they appear
         on right: 2 3
     var-declaration <decl> (42)
         on left: 8 9
-        on right: 4 24
+        on right: 4 27
     const-declaration <decl> (43)
         on left: 10
-        on right: 6 25
+        on right: 6 28
     enum-declaration <decl> (44)
         on left: 11 12 13
-        on right: 7 26
+        on right: 7 29
     fun-declaration <decl> (45)
         on left: 14
         on right: 5
@@ -197,79 +202,85 @@ Nonterminals, with rules where they appear
         on right: 14
     param-list <param_list> (48)
         on left: 19 20
-        on right: 12 13 17 19
+        on right: 17 19
     param <param_list> (49)
         on left: 21 22
         on right: 19 20
-    compound-stmt <stmt> (50)
-        on left: 23
-        on right: 14 31
-    local-declarations <decl> (51)
-        on left: 24 25 26 27
-        on right: 23 24 25 26
-    statement-list <stmt> (52)
-        on left: 28 29
-        on right: 23 28
-    statement <stmt> (53)
-        on left: 30 31 32 33 34
-        on right: 28 37 38 39
-    expression-stmt <stmt> (54)
-        on left: 35 36
-        on right: 30
-    selection-stmt <stmt> (55)
-        on left: 37 38
-        on right: 32
-    iteration-stmt <stmt> (56)
-        on left: 39
+    id-list <id_list> (50)
+        on left: 23 24
+        on right: 12 13 23
+    id <id_list> (51)
+        on left: 25
+        on right: 23 24
+    compound-stmt <stmt> (52)
+        on left: 26
+        on right: 14 34
+    local-declarations <decl> (53)
+        on left: 27 28 29 30
+        on right: 26 27 28 29
+    statement-list <stmt> (54)
+        on left: 31 32
+        on right: 26 31
+    statement <stmt> (55)
+        on left: 33 34 35 36 37
+        on right: 31 40 41 42
+    expression-stmt <stmt> (56)
+        on left: 38 39
         on right: 33
-    return-stmt <stmt> (57)
+    selection-stmt <stmt> (57)
         on left: 40 41
-        on right: 34
-    expression <expr> (58)
-        on left: 42 43
-        on right: 35 37 38 39 41 42 45 69 75 76
-    var <expr> (59)
-        on left: 44 45
-        on right: 42 70
-    simple-expression <expr> (60)
-        on left: 46 47 48
-        on right: 43 47
-    relop <expr> (61)
-        on left: 49 50 51 52 53 54
-        on right: 46
-    logop <expr> (62)
-        on left: 55 56
-        on right: 47
-    additive-expression <expr> (63)
-        on left: 57 58 59
-        on right: 46 47 48 58 59
-    term <expr> (64)
-        on left: 60 61 62 63
-        on right: 57 58 59 61 62
-    unary-expression <expr> (65)
-        on left: 64
-        on right: 63
-    unary_op <expr> (66)
-        on left: 65 66 67
-        on right: 64
-    factor <expr> (67)
-        on left: 68 69 70 71
-        on right: 60 61 62 64
-    call <expr> (68)
-        on left: 72
-        on right: 71
-    args <expr> (69)
-        on left: 73 74
-        on right: 72
-    args-list <expr> (70)
-        on left: 75 76
-        on right: 73 76
-    type_NUM <num> (71)
-        on left: 77
-        on right: 9 10 68
-    type_ID <id> (72)
-        on left: 78
-        on right: 8 9 10 11 12 13 14 21 22 44 45 72
+        on right: 35
+    iteration-stmt <stmt> (58)
+        on left: 42
+        on right: 36
+    return-stmt <stmt> (59)
+        on left: 43 44
+        on right: 37
+    expression <expr> (60)
+        on left: 45 46
+        on right: 38 40 41 42 44 45 48 72 78 79
+    var <expr> (61)
+        on left: 47 48
+        on right: 45 73
+    simple-expression <expr> (62)
+        on left: 49 50 51
+        on right: 46 50
+    relop <expr> (63)
+        on left: 52 53 54 55 56 57
+        on right: 49
+    logop <expr> (64)
+        on left: 58 59
+        on right: 50
+    additive-expression <expr> (65)
+        on left: 60 61 62
+        on right: 49 50 51 61 62
+    term <expr> (66)
+        on left: 63 64 65 66
+        on right: 60 61 62 64 65
+    unary-expression <expr> (67)
+        on left: 67
+        on right: 66
+    unary_op <expr> (68)
+        on left: 68 69 70
+        on right: 67
+    factor <expr> (69)
+        on left: 71 72 73 74
+        on right: 63 64 65 67
+    call <expr> (70)
+        on left: 75
+        on right: 74
+    args <expr> (71)
+        on left: 76 77
+        on right: 75
+    args-list <expr> (72)
+        on left: 78 79
+        on right: 76 79
+    type_NUM <num> (73)
+        on left: 80
+        on right: 9 10 71
+    type_ID <id> (74)
+        on left: 81
+        on right: 8 9 10 11 12 13 14 21 22 25 47 48 75
 
 
 State 0
@@ -310,8 +321,8 @@ State 2
 State 3
 
    11 enum-declaration: ENUM . type_ID type_ID ';'
-   12                 | ENUM . type_ID '{' param-list '}' ';'
-   13                 | ENUM . type_ID '{' param-list '}' type_ID ';'
+   12                 | ENUM . type_ID '{' id-list '}' ';'
+   13                 | ENUM . type_ID '{' id-list '}' type_ID ';'
 
     ID  shift, and go to state 13
 
@@ -401,16 +412,16 @@ State 12
 
 State 13
 
-   78 type_ID: ID .
+   81 type_ID: ID .
 
-    $default  reduce using rule 78 (type_ID)
+    $default  reduce using rule 81 (type_ID)
 
 
 State 14
 
    11 enum-declaration: ENUM type_ID . type_ID ';'
-   12                 | ENUM type_ID . '{' param-list '}' ';'
-   13                 | ENUM type_ID . '{' param-list '}' type_ID ';'
+   12                 | ENUM type_ID . '{' id-list '}' ';'
+   13                 | ENUM type_ID . '{' id-list '}' type_ID ';'
 
     ID   shift, and go to state 13
     '{'  shift, and go to state 19
@@ -452,22 +463,21 @@ State 18
 
 State 19
 
-   12 enum-declaration: ENUM type_ID '{' . param-list '}' ';'
-   13                 | ENUM type_ID '{' . param-list '}' type_ID ';'
+   12 enum-declaration: ENUM type_ID '{' . id-list '}' ';'
+   13                 | ENUM type_ID '{' . id-list '}' type_ID ';'
 
-    INT   shift, and go to state 25
-    VOID  shift, and go to state 2
+    ID  shift, and go to state 13
 
-    type-specifier  go to state 26
-    param-list      go to state 27
-    param           go to state 28
+    id-list  go to state 25
+    id       go to state 26
+    type_ID  go to state 27
 
 
 State 20
 
    11 enum-declaration: ENUM type_ID type_ID . ';'
 
-    ';'  shift, and go to state 29
+    ';'  shift, and go to state 28
 
 
 State 21
@@ -481,86 +491,83 @@ State 22
 
     9 var-declaration: type-specifier type_ID '[' . type_NUM ']' ';'
 
-    NUM  shift, and go to state 30
+    NUM  shift, and go to state 29
 
-    type_NUM  go to state 31
+    type_NUM  go to state 30
 
 
 State 23
 
    14 fun-declaration: type-specifier type_ID '(' . params ')' compound-stmt
 
-    INT   shift, and go to state 25
+    INT   shift, and go to state 31
     VOID  shift, and go to state 32
 
-    type-specifier  go to state 26
-    params          go to state 33
-    param-list      go to state 34
-    param           go to state 28
+    type-specifier  go to state 33
+    params          go to state 34
+    param-list      go to state 35
+    param           go to state 36
 
 
 State 24
 
    10 const-declaration: INT CONST type_ID '=' . type_NUM ';'
 
-    NUM  shift, and go to state 30
+    NUM  shift, and go to state 29
 
-    type_NUM  go to state 35
+    type_NUM  go to state 37
 
 
 State 25
 
-   15 type-specifier: INT .
+   12 enum-declaration: ENUM type_ID '{' id-list . '}' ';'
+   13                 | ENUM type_ID '{' id-list . '}' type_ID ';'
+   23 id-list: id-list . ',' id
 
-    $default  reduce using rule 15 (type-specifier)
+    '}'  shift, and go to state 38
+    ','  shift, and go to state 39
 
 
 State 26
 
-   21 param: type-specifier . type_ID
-   22      | type-specifier . type_ID '[' ']'
+   24 id-list: id .
 
-    ID  shift, and go to state 13
-
-    type_ID  go to state 36
+    $default  reduce using rule 24 (id-list)
 
 
 State 27
 
-   12 enum-declaration: ENUM type_ID '{' param-list . '}' ';'
-   13                 | ENUM type_ID '{' param-list . '}' type_ID ';'
-   19 param-list: param-list . ',' param
+   25 id: type_ID .
 
-    '}'  shift, and go to state 37
-    ','  shift, and go to state 38
+    $default  reduce using rule 25 (id)
 
 
 State 28
-
-   20 param-list: param .
-
-    $default  reduce using rule 20 (param-list)
-
-
-State 29
 
    11 enum-declaration: ENUM type_ID type_ID ';' .
 
     $default  reduce using rule 11 (enum-declaration)
 
 
+State 29
+
+   80 type_NUM: NUM .
+
+    $default  reduce using rule 80 (type_NUM)
+
+
 State 30
 
-   77 type_NUM: NUM .
+    9 var-declaration: type-specifier type_ID '[' type_NUM . ']' ';'
 
-    $default  reduce using rule 77 (type_NUM)
+    ']'  shift, and go to state 40
 
 
 State 31
 
-    9 var-declaration: type-specifier type_ID '[' type_NUM . ']' ';'
+   15 type-specifier: INT .
 
-    ']'  shift, and go to state 39
+    $default  reduce using rule 15 (type-specifier)
 
 
 State 32
@@ -574,237 +581,271 @@ State 32
 
 State 33
 
-   14 fun-declaration: type-specifier type_ID '(' params . ')' compound-stmt
+   21 param: type-specifier . type_ID
+   22      | type-specifier . type_ID '[' ']'
 
-    ')'  shift, and go to state 40
+    ID  shift, and go to state 13
+
+    type_ID  go to state 41
 
 
 State 34
 
-   17 params: param-list .
-   19 param-list: param-list . ',' param
+   14 fun-declaration: type-specifier type_ID '(' params . ')' compound-stmt
 
-    ','  shift, and go to state 38
-
-    $default  reduce using rule 17 (params)
+    ')'  shift, and go to state 42
 
 
 State 35
 
-   10 const-declaration: INT CONST type_ID '=' type_NUM . ';'
+   17 params: param-list .
+   19 param-list: param-list . ',' param
 
-    ';'  shift, and go to state 41
+    ','  shift, and go to state 43
+
+    $default  reduce using rule 17 (params)
 
 
 State 36
 
-   21 param: type-specifier type_ID .
-   22      | type-specifier type_ID . '[' ']'
+   20 param-list: param .
 
-    '['  shift, and go to state 42
-
-    $default  reduce using rule 21 (param)
+    $default  reduce using rule 20 (param-list)
 
 
 State 37
 
-   12 enum-declaration: ENUM type_ID '{' param-list '}' . ';'
-   13                 | ENUM type_ID '{' param-list '}' . type_ID ';'
+   10 const-declaration: INT CONST type_ID '=' type_NUM . ';'
 
-    ID   shift, and go to state 13
-    ';'  shift, and go to state 43
-
-    type_ID  go to state 44
+    ';'  shift, and go to state 44
 
 
 State 38
 
-   19 param-list: param-list ',' . param
+   12 enum-declaration: ENUM type_ID '{' id-list '}' . ';'
+   13                 | ENUM type_ID '{' id-list '}' . type_ID ';'
 
-    INT   shift, and go to state 25
-    VOID  shift, and go to state 2
+    ID   shift, and go to state 13
+    ';'  shift, and go to state 45
 
-    type-specifier  go to state 26
-    param           go to state 45
+    type_ID  go to state 46
 
 
 State 39
 
-    9 var-declaration: type-specifier type_ID '[' type_NUM ']' . ';'
+   23 id-list: id-list ',' . id
 
-    ';'  shift, and go to state 46
+    ID  shift, and go to state 13
+
+    id       go to state 47
+    type_ID  go to state 27
 
 
 State 40
 
-   14 fun-declaration: type-specifier type_ID '(' params ')' . compound-stmt
+    9 var-declaration: type-specifier type_ID '[' type_NUM ']' . ';'
 
-    '{'  shift, and go to state 47
-
-    compound-stmt  go to state 48
+    ';'  shift, and go to state 48
 
 
 State 41
+
+   21 param: type-specifier type_ID .
+   22      | type-specifier type_ID . '[' ']'
+
+    '['  shift, and go to state 49
+
+    $default  reduce using rule 21 (param)
+
+
+State 42
+
+   14 fun-declaration: type-specifier type_ID '(' params ')' . compound-stmt
+
+    '{'  shift, and go to state 50
+
+    compound-stmt  go to state 51
+
+
+State 43
+
+   19 param-list: param-list ',' . param
+
+    INT   shift, and go to state 31
+    VOID  shift, and go to state 2
+
+    type-specifier  go to state 33
+    param           go to state 52
+
+
+State 44
 
    10 const-declaration: INT CONST type_ID '=' type_NUM ';' .
 
     $default  reduce using rule 10 (const-declaration)
 
 
-State 42
+State 45
 
-   22 param: type-specifier type_ID '[' . ']'
-
-    ']'  shift, and go to state 49
-
-
-State 43
-
-   12 enum-declaration: ENUM type_ID '{' param-list '}' ';' .
+   12 enum-declaration: ENUM type_ID '{' id-list '}' ';' .
 
     $default  reduce using rule 12 (enum-declaration)
 
 
-State 44
-
-   13 enum-declaration: ENUM type_ID '{' param-list '}' type_ID . ';'
-
-    ';'  shift, and go to state 50
-
-
-State 45
-
-   19 param-list: param-list ',' param .
-
-    $default  reduce using rule 19 (param-list)
-
-
 State 46
+
+   13 enum-declaration: ENUM type_ID '{' id-list '}' type_ID . ';'
+
+    ';'  shift, and go to state 53
+
+
+State 47
+
+   23 id-list: id-list ',' id .
+
+    $default  reduce using rule 23 (id-list)
+
+
+State 48
 
     9 var-declaration: type-specifier type_ID '[' type_NUM ']' ';' .
 
     $default  reduce using rule 9 (var-declaration)
 
 
-State 47
+State 49
 
-   23 compound-stmt: '{' . local-declarations statement-list '}'
+   22 param: type-specifier type_ID '[' . ']'
 
-    $default  reduce using rule 27 (local-declarations)
-
-    local-declarations  go to state 51
+    ']'  shift, and go to state 54
 
 
-State 48
+State 50
+
+   26 compound-stmt: '{' . local-declarations statement-list '}'
+
+    $default  reduce using rule 30 (local-declarations)
+
+    local-declarations  go to state 55
+
+
+State 51
 
    14 fun-declaration: type-specifier type_ID '(' params ')' compound-stmt .
 
     $default  reduce using rule 14 (fun-declaration)
 
 
-State 49
+State 52
+
+   19 param-list: param-list ',' param .
+
+    $default  reduce using rule 19 (param-list)
+
+
+State 53
+
+   13 enum-declaration: ENUM type_ID '{' id-list '}' type_ID ';' .
+
+    $default  reduce using rule 13 (enum-declaration)
+
+
+State 54
 
    22 param: type-specifier type_ID '[' ']' .
 
     $default  reduce using rule 22 (param)
 
 
-State 50
+State 55
 
-   13 enum-declaration: ENUM type_ID '{' param-list '}' type_ID ';' .
-
-    $default  reduce using rule 13 (enum-declaration)
-
-
-State 51
-
-   23 compound-stmt: '{' local-declarations . statement-list '}'
-   24 local-declarations: local-declarations . var-declaration
-   25                   | local-declarations . const-declaration
-   26                   | local-declarations . enum-declaration
+   26 compound-stmt: '{' local-declarations . statement-list '}'
+   27 local-declarations: local-declarations . var-declaration
+   28                   | local-declarations . const-declaration
+   29                   | local-declarations . enum-declaration
 
     INT   shift, and go to state 1
     VOID  shift, and go to state 2
     ENUM  shift, and go to state 3
 
-    $default  reduce using rule 29 (statement-list)
+    $default  reduce using rule 32 (statement-list)
 
-    var-declaration    go to state 52
-    const-declaration  go to state 53
-    enum-declaration   go to state 54
-    type-specifier     go to state 55
-    statement-list     go to state 56
-
-
-State 52
-
-   24 local-declarations: local-declarations var-declaration .
-
-    $default  reduce using rule 24 (local-declarations)
+    var-declaration    go to state 56
+    const-declaration  go to state 57
+    enum-declaration   go to state 58
+    type-specifier     go to state 59
+    statement-list     go to state 60
 
 
-State 53
+State 56
 
-   25 local-declarations: local-declarations const-declaration .
+   27 local-declarations: local-declarations var-declaration .
 
-    $default  reduce using rule 25 (local-declarations)
-
-
-State 54
-
-   26 local-declarations: local-declarations enum-declaration .
-
-    $default  reduce using rule 26 (local-declarations)
+    $default  reduce using rule 27 (local-declarations)
 
 
-State 55
+State 57
+
+   28 local-declarations: local-declarations const-declaration .
+
+    $default  reduce using rule 28 (local-declarations)
+
+
+State 58
+
+   29 local-declarations: local-declarations enum-declaration .
+
+    $default  reduce using rule 29 (local-declarations)
+
+
+State 59
 
     8 var-declaration: type-specifier . type_ID ';'
     9                | type-specifier . type_ID '[' type_NUM ']' ';'
 
     ID  shift, and go to state 13
 
-    type_ID  go to state 57
+    type_ID  go to state 61
 
 
-State 56
+State 60
 
-   23 compound-stmt: '{' local-declarations statement-list . '}'
-   28 statement-list: statement-list . statement
+   26 compound-stmt: '{' local-declarations statement-list . '}'
+   31 statement-list: statement-list . statement
 
-    NUM     shift, and go to state 30
+    NUM     shift, and go to state 29
     ID      shift, and go to state 13
-    IF      shift, and go to state 58
-    RETURN  shift, and go to state 59
-    WHILE   shift, and go to state 60
-    INC     shift, and go to state 61
-    DEC     shift, and go to state 62
-    ';'     shift, and go to state 63
-    '{'     shift, and go to state 47
-    '}'     shift, and go to state 64
-    '('     shift, and go to state 65
-    '!'     shift, and go to state 66
+    IF      shift, and go to state 62
+    RETURN  shift, and go to state 63
+    WHILE   shift, and go to state 64
+    INC     shift, and go to state 65
+    DEC     shift, and go to state 66
+    ';'     shift, and go to state 67
+    '{'     shift, and go to state 50
+    '}'     shift, and go to state 68
+    '('     shift, and go to state 69
+    '!'     shift, and go to state 70
 
-    compound-stmt        go to state 67
-    statement            go to state 68
-    expression-stmt      go to state 69
-    selection-stmt       go to state 70
-    iteration-stmt       go to state 71
-    return-stmt          go to state 72
-    expression           go to state 73
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    compound-stmt        go to state 71
+    statement            go to state 72
+    expression-stmt      go to state 73
+    selection-stmt       go to state 74
+    iteration-stmt       go to state 75
+    return-stmt          go to state 76
+    expression           go to state 77
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
-State 57
+State 61
 
     8 var-declaration: type-specifier type_ID . ';'
     9                | type-specifier type_ID . '[' type_NUM ']' ';'
@@ -813,905 +854,905 @@ State 57
     '['  shift, and go to state 22
 
 
-State 58
-
-   37 selection-stmt: IF . '(' expression ')' statement
-   38               | IF . '(' expression ')' statement ELSE statement
-
-    '('  shift, and go to state 84
-
-
-State 59
-
-   40 return-stmt: RETURN . ';'
-   41            | RETURN . expression ';'
-
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    ';'  shift, and go to state 85
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    expression           go to state 86
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
-
-
-State 60
-
-   39 iteration-stmt: WHILE . '(' expression ')' statement
-
-    '('  shift, and go to state 87
-
-
-State 61
-
-   67 unary_op: INC .
-
-    $default  reduce using rule 67 (unary_op)
-
-
 State 62
 
-   66 unary_op: DEC .
+   40 selection-stmt: IF . '(' expression ')' statement
+   41               | IF . '(' expression ')' statement ELSE statement
 
-    $default  reduce using rule 66 (unary_op)
+    '('  shift, and go to state 88
 
 
 State 63
 
-   36 expression-stmt: ';' .
+   43 return-stmt: RETURN . ';'
+   44            | RETURN . expression ';'
 
-    $default  reduce using rule 36 (expression-stmt)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    ';'  shift, and go to state 89
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    expression           go to state 90
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 64
 
-   23 compound-stmt: '{' local-declarations statement-list '}' .
+   42 iteration-stmt: WHILE . '(' expression ')' statement
 
-    $default  reduce using rule 23 (compound-stmt)
+    '('  shift, and go to state 91
 
 
 State 65
 
-   69 factor: '(' . expression ')'
+   70 unary_op: INC .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    expression           go to state 88
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    $default  reduce using rule 70 (unary_op)
 
 
 State 66
 
-   65 unary_op: '!' .
+   69 unary_op: DEC .
 
-    $default  reduce using rule 65 (unary_op)
+    $default  reduce using rule 69 (unary_op)
 
 
 State 67
 
-   31 statement: compound-stmt .
+   39 expression-stmt: ';' .
 
-    $default  reduce using rule 31 (statement)
+    $default  reduce using rule 39 (expression-stmt)
 
 
 State 68
 
-   28 statement-list: statement-list statement .
+   26 compound-stmt: '{' local-declarations statement-list '}' .
 
-    $default  reduce using rule 28 (statement-list)
+    $default  reduce using rule 26 (compound-stmt)
 
 
 State 69
 
-   30 statement: expression-stmt .
+   72 factor: '(' . expression ')'
 
-    $default  reduce using rule 30 (statement)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    expression           go to state 92
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 70
 
-   32 statement: selection-stmt .
+   68 unary_op: '!' .
 
-    $default  reduce using rule 32 (statement)
+    $default  reduce using rule 68 (unary_op)
 
 
 State 71
 
-   33 statement: iteration-stmt .
-
-    $default  reduce using rule 33 (statement)
-
-
-State 72
-
-   34 statement: return-stmt .
+   34 statement: compound-stmt .
 
     $default  reduce using rule 34 (statement)
 
 
+State 72
+
+   31 statement-list: statement-list statement .
+
+    $default  reduce using rule 31 (statement-list)
+
+
 State 73
 
-   35 expression-stmt: expression . ';'
+   33 statement: expression-stmt .
 
-    ';'  shift, and go to state 89
+    $default  reduce using rule 33 (statement)
 
 
 State 74
 
-   42 expression: var . '=' expression
-   70 factor: var .
+   35 statement: selection-stmt .
 
-    '='  shift, and go to state 90
-
-    $default  reduce using rule 70 (factor)
+    $default  reduce using rule 35 (statement)
 
 
 State 75
 
-   43 expression: simple-expression .
-   47 simple-expression: simple-expression . logop additive-expression
+   36 statement: iteration-stmt .
 
-    AND  shift, and go to state 91
-    OR   shift, and go to state 92
-
-    $default  reduce using rule 43 (expression)
-
-    logop  go to state 93
+    $default  reduce using rule 36 (statement)
 
 
 State 76
 
-   46 simple-expression: additive-expression . relop additive-expression
-   48                  | additive-expression .
-   58 additive-expression: additive-expression . '+' term
-   59                    | additive-expression . '-' term
+   37 statement: return-stmt .
 
-    EQ    shift, and go to state 94
-    NEQ   shift, and go to state 95
-    LT    shift, and go to state 96
-    GT    shift, and go to state 97
-    LTEQ  shift, and go to state 98
-    GTEQ  shift, and go to state 99
-    '+'   shift, and go to state 100
-    '-'   shift, and go to state 101
-
-    $default  reduce using rule 48 (simple-expression)
-
-    relop  go to state 102
+    $default  reduce using rule 37 (statement)
 
 
 State 77
 
-   57 additive-expression: term .
-   61 term: term . '*' factor
-   62     | term . '/' factor
+   38 expression-stmt: expression . ';'
 
-    '*'  shift, and go to state 103
-    '/'  shift, and go to state 104
-
-    $default  reduce using rule 57 (additive-expression)
+    ';'  shift, and go to state 93
 
 
 State 78
 
-   63 term: unary-expression .
+   45 expression: var . '=' expression
+   73 factor: var .
 
-    $default  reduce using rule 63 (term)
+    '='  shift, and go to state 94
+
+    $default  reduce using rule 73 (factor)
 
 
 State 79
 
-   64 unary-expression: unary_op . factor
+   46 expression: simple-expression .
+   50 simple-expression: simple-expression . logop additive-expression
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    '('  shift, and go to state 65
+    AND  shift, and go to state 95
+    OR   shift, and go to state 96
 
-    var       go to state 105
-    factor    go to state 106
-    call      go to state 81
-    type_NUM  go to state 82
-    type_ID   go to state 83
+    $default  reduce using rule 46 (expression)
+
+    logop  go to state 97
 
 
 State 80
 
-   60 term: factor .
+   49 simple-expression: additive-expression . relop additive-expression
+   51                  | additive-expression .
+   61 additive-expression: additive-expression . '+' term
+   62                    | additive-expression . '-' term
 
-    $default  reduce using rule 60 (term)
+    EQ    shift, and go to state 98
+    NEQ   shift, and go to state 99
+    LT    shift, and go to state 100
+    GT    shift, and go to state 101
+    LTEQ  shift, and go to state 102
+    GTEQ  shift, and go to state 103
+    '+'   shift, and go to state 104
+    '-'   shift, and go to state 105
+
+    $default  reduce using rule 51 (simple-expression)
+
+    relop  go to state 106
 
 
 State 81
 
-   71 factor: call .
+   60 additive-expression: term .
+   64 term: term . '*' factor
+   65     | term . '/' factor
 
-    $default  reduce using rule 71 (factor)
+    '*'  shift, and go to state 107
+    '/'  shift, and go to state 108
+
+    $default  reduce using rule 60 (additive-expression)
 
 
 State 82
 
-   68 factor: type_NUM .
+   66 term: unary-expression .
 
-    $default  reduce using rule 68 (factor)
+    $default  reduce using rule 66 (term)
 
 
 State 83
 
-   44 var: type_ID .
-   45    | type_ID . '[' expression ']'
-   72 call: type_ID . '(' args ')'
+   67 unary-expression: unary_op . factor
 
-    '['  shift, and go to state 107
-    '('  shift, and go to state 108
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    '('  shift, and go to state 69
 
-    $default  reduce using rule 44 (var)
+    var       go to state 109
+    factor    go to state 110
+    call      go to state 85
+    type_NUM  go to state 86
+    type_ID   go to state 87
 
 
 State 84
 
-   37 selection-stmt: IF '(' . expression ')' statement
-   38               | IF '(' . expression ')' statement ELSE statement
+   63 term: factor .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    expression           go to state 109
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    $default  reduce using rule 63 (term)
 
 
 State 85
 
-   40 return-stmt: RETURN ';' .
+   74 factor: call .
 
-    $default  reduce using rule 40 (return-stmt)
+    $default  reduce using rule 74 (factor)
 
 
 State 86
 
-   41 return-stmt: RETURN expression . ';'
+   71 factor: type_NUM .
 
-    ';'  shift, and go to state 110
+    $default  reduce using rule 71 (factor)
 
 
 State 87
 
-   39 iteration-stmt: WHILE '(' . expression ')' statement
+   47 var: type_ID .
+   48    | type_ID . '[' expression ']'
+   75 call: type_ID . '(' args ')'
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
+    '['  shift, and go to state 111
+    '('  shift, and go to state 112
 
-    expression           go to state 111
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    $default  reduce using rule 47 (var)
 
 
 State 88
 
-   69 factor: '(' expression . ')'
+   40 selection-stmt: IF '(' . expression ')' statement
+   41               | IF '(' . expression ')' statement ELSE statement
 
-    ')'  shift, and go to state 112
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    expression           go to state 113
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 89
 
-   35 expression-stmt: expression ';' .
+   43 return-stmt: RETURN ';' .
 
-    $default  reduce using rule 35 (expression-stmt)
+    $default  reduce using rule 43 (return-stmt)
 
 
 State 90
 
-   42 expression: var '=' . expression
+   44 return-stmt: RETURN expression . ';'
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    expression           go to state 113
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    ';'  shift, and go to state 114
 
 
 State 91
 
-   55 logop: AND .
+   42 iteration-stmt: WHILE '(' . expression ')' statement
 
-    $default  reduce using rule 55 (logop)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    expression           go to state 115
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 92
 
-   56 logop: OR .
+   72 factor: '(' expression . ')'
 
-    $default  reduce using rule 56 (logop)
+    ')'  shift, and go to state 116
 
 
 State 93
 
-   47 simple-expression: simple-expression logop . additive-expression
+   38 expression-stmt: expression ';' .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    var                  go to state 105
-    additive-expression  go to state 114
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    $default  reduce using rule 38 (expression-stmt)
 
 
 State 94
 
-   53 relop: EQ .
+   45 expression: var '=' . expression
 
-    $default  reduce using rule 53 (relop)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    expression           go to state 117
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 95
 
-   54 relop: NEQ .
+   58 logop: AND .
 
-    $default  reduce using rule 54 (relop)
+    $default  reduce using rule 58 (logop)
 
 
 State 96
 
-   50 relop: LT .
+   59 logop: OR .
 
-    $default  reduce using rule 50 (relop)
+    $default  reduce using rule 59 (logop)
 
 
 State 97
 
-   51 relop: GT .
+   50 simple-expression: simple-expression logop . additive-expression
 
-    $default  reduce using rule 51 (relop)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    var                  go to state 109
+    additive-expression  go to state 118
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 98
 
-   49 relop: LTEQ .
+   56 relop: EQ .
 
-    $default  reduce using rule 49 (relop)
+    $default  reduce using rule 56 (relop)
 
 
 State 99
 
-   52 relop: GTEQ .
+   57 relop: NEQ .
 
-    $default  reduce using rule 52 (relop)
+    $default  reduce using rule 57 (relop)
 
 
 State 100
 
-   58 additive-expression: additive-expression '+' . term
+   53 relop: LT .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    var               go to state 105
-    term              go to state 115
-    unary-expression  go to state 78
-    unary_op          go to state 79
-    factor            go to state 80
-    call              go to state 81
-    type_NUM          go to state 82
-    type_ID           go to state 83
+    $default  reduce using rule 53 (relop)
 
 
 State 101
 
-   59 additive-expression: additive-expression '-' . term
+   54 relop: GT .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    var               go to state 105
-    term              go to state 116
-    unary-expression  go to state 78
-    unary_op          go to state 79
-    factor            go to state 80
-    call              go to state 81
-    type_NUM          go to state 82
-    type_ID           go to state 83
+    $default  reduce using rule 54 (relop)
 
 
 State 102
 
-   46 simple-expression: additive-expression relop . additive-expression
+   52 relop: LTEQ .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
-
-    var                  go to state 105
-    additive-expression  go to state 117
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    $default  reduce using rule 52 (relop)
 
 
 State 103
 
-   61 term: term '*' . factor
+   55 relop: GTEQ .
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    '('  shift, and go to state 65
-
-    var       go to state 105
-    factor    go to state 118
-    call      go to state 81
-    type_NUM  go to state 82
-    type_ID   go to state 83
+    $default  reduce using rule 55 (relop)
 
 
 State 104
 
-   62 term: term '/' . factor
+   61 additive-expression: additive-expression '+' . term
 
-    NUM  shift, and go to state 30
+    NUM  shift, and go to state 29
     ID   shift, and go to state 13
-    '('  shift, and go to state 65
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
 
-    var       go to state 105
-    factor    go to state 119
-    call      go to state 81
-    type_NUM  go to state 82
-    type_ID   go to state 83
+    var               go to state 109
+    term              go to state 119
+    unary-expression  go to state 82
+    unary_op          go to state 83
+    factor            go to state 84
+    call              go to state 85
+    type_NUM          go to state 86
+    type_ID           go to state 87
 
 
 State 105
 
-   70 factor: var .
+   62 additive-expression: additive-expression '-' . term
 
-    $default  reduce using rule 70 (factor)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    var               go to state 109
+    term              go to state 120
+    unary-expression  go to state 82
+    unary_op          go to state 83
+    factor            go to state 84
+    call              go to state 85
+    type_NUM          go to state 86
+    type_ID           go to state 87
 
 
 State 106
 
-   64 unary-expression: unary_op factor .
+   49 simple-expression: additive-expression relop . additive-expression
 
-    $default  reduce using rule 64 (unary-expression)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    var                  go to state 109
+    additive-expression  go to state 121
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 107
 
-   45 var: type_ID '[' . expression ']'
+   64 term: term '*' . factor
 
-    NUM  shift, and go to state 30
+    NUM  shift, and go to state 29
     ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
+    '('  shift, and go to state 69
 
-    expression           go to state 120
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    var       go to state 109
+    factor    go to state 122
+    call      go to state 85
+    type_NUM  go to state 86
+    type_ID   go to state 87
 
 
 State 108
 
-   72 call: type_ID '(' . args ')'
+   65 term: term '/' . factor
 
-    NUM  shift, and go to state 30
+    NUM  shift, and go to state 29
     ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
+    '('  shift, and go to state 69
 
-    $default  reduce using rule 74 (args)
-
-    expression           go to state 121
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    args                 go to state 122
-    args-list            go to state 123
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    var       go to state 109
+    factor    go to state 123
+    call      go to state 85
+    type_NUM  go to state 86
+    type_ID   go to state 87
 
 
 State 109
 
-   37 selection-stmt: IF '(' expression . ')' statement
-   38               | IF '(' expression . ')' statement ELSE statement
+   73 factor: var .
 
-    ')'  shift, and go to state 124
+    $default  reduce using rule 73 (factor)
 
 
 State 110
 
-   41 return-stmt: RETURN expression ';' .
+   67 unary-expression: unary_op factor .
 
-    $default  reduce using rule 41 (return-stmt)
+    $default  reduce using rule 67 (unary-expression)
 
 
 State 111
 
-   39 iteration-stmt: WHILE '(' expression . ')' statement
+   48 var: type_ID '[' . expression ']'
 
-    ')'  shift, and go to state 125
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    expression           go to state 124
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 112
 
-   69 factor: '(' expression ')' .
+   75 call: type_ID '(' . args ')'
 
-    $default  reduce using rule 69 (factor)
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
+
+    $default  reduce using rule 77 (args)
+
+    expression           go to state 125
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    args                 go to state 126
+    args-list            go to state 127
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 113
 
-   42 expression: var '=' expression .
+   40 selection-stmt: IF '(' expression . ')' statement
+   41               | IF '(' expression . ')' statement ELSE statement
 
-    $default  reduce using rule 42 (expression)
+    ')'  shift, and go to state 128
 
 
 State 114
 
-   47 simple-expression: simple-expression logop additive-expression .
-   58 additive-expression: additive-expression . '+' term
-   59                    | additive-expression . '-' term
+   44 return-stmt: RETURN expression ';' .
 
-    '+'  shift, and go to state 100
-    '-'  shift, and go to state 101
-
-    $default  reduce using rule 47 (simple-expression)
+    $default  reduce using rule 44 (return-stmt)
 
 
 State 115
 
-   58 additive-expression: additive-expression '+' term .
-   61 term: term . '*' factor
-   62     | term . '/' factor
+   42 iteration-stmt: WHILE '(' expression . ')' statement
 
-    '*'  shift, and go to state 103
-    '/'  shift, and go to state 104
-
-    $default  reduce using rule 58 (additive-expression)
+    ')'  shift, and go to state 129
 
 
 State 116
 
-   59 additive-expression: additive-expression '-' term .
-   61 term: term . '*' factor
-   62     | term . '/' factor
+   72 factor: '(' expression ')' .
 
-    '*'  shift, and go to state 103
-    '/'  shift, and go to state 104
-
-    $default  reduce using rule 59 (additive-expression)
+    $default  reduce using rule 72 (factor)
 
 
 State 117
 
-   46 simple-expression: additive-expression relop additive-expression .
-   58 additive-expression: additive-expression . '+' term
-   59                    | additive-expression . '-' term
+   45 expression: var '=' expression .
 
-    '+'  shift, and go to state 100
-    '-'  shift, and go to state 101
-
-    $default  reduce using rule 46 (simple-expression)
+    $default  reduce using rule 45 (expression)
 
 
 State 118
 
-   61 term: term '*' factor .
+   50 simple-expression: simple-expression logop additive-expression .
+   61 additive-expression: additive-expression . '+' term
+   62                    | additive-expression . '-' term
 
-    $default  reduce using rule 61 (term)
+    '+'  shift, and go to state 104
+    '-'  shift, and go to state 105
+
+    $default  reduce using rule 50 (simple-expression)
 
 
 State 119
 
-   62 term: term '/' factor .
+   61 additive-expression: additive-expression '+' term .
+   64 term: term . '*' factor
+   65     | term . '/' factor
 
-    $default  reduce using rule 62 (term)
+    '*'  shift, and go to state 107
+    '/'  shift, and go to state 108
+
+    $default  reduce using rule 61 (additive-expression)
 
 
 State 120
 
-   45 var: type_ID '[' expression . ']'
+   62 additive-expression: additive-expression '-' term .
+   64 term: term . '*' factor
+   65     | term . '/' factor
 
-    ']'  shift, and go to state 126
+    '*'  shift, and go to state 107
+    '/'  shift, and go to state 108
+
+    $default  reduce using rule 62 (additive-expression)
 
 
 State 121
 
-   75 args-list: expression .
+   49 simple-expression: additive-expression relop additive-expression .
+   61 additive-expression: additive-expression . '+' term
+   62                    | additive-expression . '-' term
 
-    $default  reduce using rule 75 (args-list)
+    '+'  shift, and go to state 104
+    '-'  shift, and go to state 105
+
+    $default  reduce using rule 49 (simple-expression)
 
 
 State 122
 
-   72 call: type_ID '(' args . ')'
+   64 term: term '*' factor .
 
-    ')'  shift, and go to state 127
+    $default  reduce using rule 64 (term)
 
 
 State 123
 
-   73 args: args-list .
-   76 args-list: args-list . ',' expression
+   65 term: term '/' factor .
 
-    ','  shift, and go to state 128
-
-    $default  reduce using rule 73 (args)
+    $default  reduce using rule 65 (term)
 
 
 State 124
 
-   37 selection-stmt: IF '(' expression ')' . statement
-   38               | IF '(' expression ')' . statement ELSE statement
+   48 var: type_ID '[' expression . ']'
 
-    NUM     shift, and go to state 30
-    ID      shift, and go to state 13
-    IF      shift, and go to state 58
-    RETURN  shift, and go to state 59
-    WHILE   shift, and go to state 60
-    INC     shift, and go to state 61
-    DEC     shift, and go to state 62
-    ';'     shift, and go to state 63
-    '{'     shift, and go to state 47
-    '('     shift, and go to state 65
-    '!'     shift, and go to state 66
-
-    compound-stmt        go to state 67
-    statement            go to state 129
-    expression-stmt      go to state 69
-    selection-stmt       go to state 70
-    iteration-stmt       go to state 71
-    return-stmt          go to state 72
-    expression           go to state 73
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    ']'  shift, and go to state 130
 
 
 State 125
 
-   39 iteration-stmt: WHILE '(' expression ')' . statement
+   78 args-list: expression .
 
-    NUM     shift, and go to state 30
-    ID      shift, and go to state 13
-    IF      shift, and go to state 58
-    RETURN  shift, and go to state 59
-    WHILE   shift, and go to state 60
-    INC     shift, and go to state 61
-    DEC     shift, and go to state 62
-    ';'     shift, and go to state 63
-    '{'     shift, and go to state 47
-    '('     shift, and go to state 65
-    '!'     shift, and go to state 66
-
-    compound-stmt        go to state 67
-    statement            go to state 130
-    expression-stmt      go to state 69
-    selection-stmt       go to state 70
-    iteration-stmt       go to state 71
-    return-stmt          go to state 72
-    expression           go to state 73
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    $default  reduce using rule 78 (args-list)
 
 
 State 126
 
-   45 var: type_ID '[' expression ']' .
+   75 call: type_ID '(' args . ')'
 
-    $default  reduce using rule 45 (var)
+    ')'  shift, and go to state 131
 
 
 State 127
 
-   72 call: type_ID '(' args ')' .
+   76 args: args-list .
+   79 args-list: args-list . ',' expression
 
-    $default  reduce using rule 72 (call)
+    ','  shift, and go to state 132
+
+    $default  reduce using rule 76 (args)
 
 
 State 128
 
-   76 args-list: args-list ',' . expression
+   40 selection-stmt: IF '(' expression ')' . statement
+   41               | IF '(' expression ')' . statement ELSE statement
 
-    NUM  shift, and go to state 30
-    ID   shift, and go to state 13
-    INC  shift, and go to state 61
-    DEC  shift, and go to state 62
-    '('  shift, and go to state 65
-    '!'  shift, and go to state 66
+    NUM     shift, and go to state 29
+    ID      shift, and go to state 13
+    IF      shift, and go to state 62
+    RETURN  shift, and go to state 63
+    WHILE   shift, and go to state 64
+    INC     shift, and go to state 65
+    DEC     shift, and go to state 66
+    ';'     shift, and go to state 67
+    '{'     shift, and go to state 50
+    '('     shift, and go to state 69
+    '!'     shift, and go to state 70
 
-    expression           go to state 131
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    compound-stmt        go to state 71
+    statement            go to state 133
+    expression-stmt      go to state 73
+    selection-stmt       go to state 74
+    iteration-stmt       go to state 75
+    return-stmt          go to state 76
+    expression           go to state 77
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 129
 
-   37 selection-stmt: IF '(' expression ')' statement .
-   38               | IF '(' expression ')' statement . ELSE statement
+   42 iteration-stmt: WHILE '(' expression ')' . statement
 
-    ELSE  shift, and go to state 132
+    NUM     shift, and go to state 29
+    ID      shift, and go to state 13
+    IF      shift, and go to state 62
+    RETURN  shift, and go to state 63
+    WHILE   shift, and go to state 64
+    INC     shift, and go to state 65
+    DEC     shift, and go to state 66
+    ';'     shift, and go to state 67
+    '{'     shift, and go to state 50
+    '('     shift, and go to state 69
+    '!'     shift, and go to state 70
 
-    ELSE      [reduce using rule 37 (selection-stmt)]
-    $default  reduce using rule 37 (selection-stmt)
+    compound-stmt        go to state 71
+    statement            go to state 134
+    expression-stmt      go to state 73
+    selection-stmt       go to state 74
+    iteration-stmt       go to state 75
+    return-stmt          go to state 76
+    expression           go to state 77
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 130
 
-   39 iteration-stmt: WHILE '(' expression ')' statement .
+   48 var: type_ID '[' expression ']' .
 
-    $default  reduce using rule 39 (iteration-stmt)
+    $default  reduce using rule 48 (var)
 
 
 State 131
 
-   76 args-list: args-list ',' expression .
+   75 call: type_ID '(' args ')' .
 
-    $default  reduce using rule 76 (args-list)
+    $default  reduce using rule 75 (call)
 
 
 State 132
 
-   38 selection-stmt: IF '(' expression ')' statement ELSE . statement
+   79 args-list: args-list ',' . expression
 
-    NUM     shift, and go to state 30
-    ID      shift, and go to state 13
-    IF      shift, and go to state 58
-    RETURN  shift, and go to state 59
-    WHILE   shift, and go to state 60
-    INC     shift, and go to state 61
-    DEC     shift, and go to state 62
-    ';'     shift, and go to state 63
-    '{'     shift, and go to state 47
-    '('     shift, and go to state 65
-    '!'     shift, and go to state 66
+    NUM  shift, and go to state 29
+    ID   shift, and go to state 13
+    INC  shift, and go to state 65
+    DEC  shift, and go to state 66
+    '('  shift, and go to state 69
+    '!'  shift, and go to state 70
 
-    compound-stmt        go to state 67
-    statement            go to state 133
-    expression-stmt      go to state 69
-    selection-stmt       go to state 70
-    iteration-stmt       go to state 71
-    return-stmt          go to state 72
-    expression           go to state 73
-    var                  go to state 74
-    simple-expression    go to state 75
-    additive-expression  go to state 76
-    term                 go to state 77
-    unary-expression     go to state 78
-    unary_op             go to state 79
-    factor               go to state 80
-    call                 go to state 81
-    type_NUM             go to state 82
-    type_ID              go to state 83
+    expression           go to state 135
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
 
 
 State 133
 
-   38 selection-stmt: IF '(' expression ')' statement ELSE statement .
+   40 selection-stmt: IF '(' expression ')' statement .
+   41               | IF '(' expression ')' statement . ELSE statement
 
-    $default  reduce using rule 38 (selection-stmt)
+    ELSE  shift, and go to state 136
+
+    ELSE      [reduce using rule 40 (selection-stmt)]
+    $default  reduce using rule 40 (selection-stmt)
+
+
+State 134
+
+   42 iteration-stmt: WHILE '(' expression ')' statement .
+
+    $default  reduce using rule 42 (iteration-stmt)
+
+
+State 135
+
+   79 args-list: args-list ',' expression .
+
+    $default  reduce using rule 79 (args-list)
+
+
+State 136
+
+   41 selection-stmt: IF '(' expression ')' statement ELSE . statement
+
+    NUM     shift, and go to state 29
+    ID      shift, and go to state 13
+    IF      shift, and go to state 62
+    RETURN  shift, and go to state 63
+    WHILE   shift, and go to state 64
+    INC     shift, and go to state 65
+    DEC     shift, and go to state 66
+    ';'     shift, and go to state 67
+    '{'     shift, and go to state 50
+    '('     shift, and go to state 69
+    '!'     shift, and go to state 70
+
+    compound-stmt        go to state 71
+    statement            go to state 137
+    expression-stmt      go to state 73
+    selection-stmt       go to state 74
+    iteration-stmt       go to state 75
+    return-stmt          go to state 76
+    expression           go to state 77
+    var                  go to state 78
+    simple-expression    go to state 79
+    additive-expression  go to state 80
+    term                 go to state 81
+    unary-expression     go to state 82
+    unary_op             go to state 83
+    factor               go to state 84
+    call                 go to state 85
+    type_NUM             go to state 86
+    type_ID              go to state 87
+
+
+State 137
+
+   41 selection-stmt: IF '(' expression ')' statement ELSE statement .
+
+    $default  reduce using rule 41 (selection-stmt)

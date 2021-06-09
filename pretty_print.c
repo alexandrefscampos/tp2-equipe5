@@ -83,7 +83,7 @@ void prettyprint_id_list(struct id_list *pl)
     }
 
     prettyprint_id_list(p->next);
-
+    printf("\n[enum-const ");
     if (p->name)
     {
         printf("[%s]", p->name);
@@ -128,10 +128,14 @@ void prettyprint_func(struct decl *func)
 prettyprint_const(struct decl *decl)
 {
     printf("\n[const-declaration ");
-    printf("\n[int]");
-    // printf("\n[%s] ", decl->name);
-    // printf("\n[%d] ", decl->expr->integer_value);
-    printf(" ] ");
+    printf("[int] ");
+    printf("[%s] ", decl->name);
+    if (decl->expr)
+    {
+        int i = decl->expr->integer_value;
+        printf("[%d] ", i);
+    }
+    printf("] ");
 }
 
 void prettyprint_decl(struct decl *decl)
@@ -153,17 +157,16 @@ void prettyprint_decl(struct decl *decl)
     }
     case TYPE_INTEGER:
     {
-        // printf(":)");
-        // if (decl->expr)
-        //     prettyprint_const(decl);
-        // else
-        prettyprint_var(decl);
+        if (decl->expr)
+            prettyprint_const(decl);
+        else
+            prettyprint_var(decl);
         break;
     }
 
     case TYPE_ENUM:
     {
-        if (!decl->type->params)
+        if (!decl->type->id_list)
         {
 
             printf("\n[enum-var-declaration ");
@@ -172,20 +175,20 @@ void prettyprint_decl(struct decl *decl)
         }
         else
         {
-            printf("[enum-type-declaration ");
+            printf("\n[enum-type-declaration ");
             prettyprint_name(decl->type->subtype);
 
             if (decl->name)
                 printf("[%s] ", decl->name);
 
-            if (decl->type->params)
+            if (decl->type->id_list)
             {
                 printf("\n[enum_consts");
                 prettyprint_id_list(decl->type->id_list);
                 printf("\n]");
             }
         }
-        printf(" ] ");
+        printf("\n] ");
         break;
     }
     case TYPE_ARRAY:
@@ -329,6 +332,7 @@ void prettyprint_expr(struct expr *e)
             printf("[var ");
             prettyprint_expr(e->left);
             prettyprint_expr(e->right);
+            printf("]");
             break;
         }
         case EXPR_INTEGER_LITERAL:

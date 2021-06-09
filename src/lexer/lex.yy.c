@@ -1013,15 +1013,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-<<<<<<< HEAD:src/lexer/lex.yy.c
 #line 61 "./lexer/cminus.l"
-=======
-<<<<<<< HEAD
-#line 61 "./cminus.l"
-=======
-#line 61 "cminus.l"
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
->>>>>>> af294345b4bd5864fbb259ce64663e3b3559b41e:lex.yy.c
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
 #line 1020 "./lexer/lex.yy.c"
@@ -2042,6 +2034,4 @@ void yyfree (void * ptr )
 #define YYTABLES_NAME "yytables"
 
 #line 61 "./lexer/cminus.l"
-
-
 

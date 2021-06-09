@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 %option yylineno nodefault noyywrap
-=======
-%option yylineno noyywrap nodefault
->>>>>>> 187d73f305fca1a9c5cd561075ffa6ec03ad02be
 %{ 
     #include <string.h>
     #include "../parser/cminus.tab.h"
@@ -63,4 +59,3 @@
 "\r"    { /* ignore white space */ }
 . 		{ yyerror("lexical error, character %c", yytext[0]); }
 %%
-

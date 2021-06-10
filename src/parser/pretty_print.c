@@ -112,7 +112,7 @@ void prettyprint_array(struct decl *array)
 
 void prettyprint_func(struct decl *func)
 {
-    printf("\n[func-declaration ");
+    printf("\n[fun-declaration ");
     prettyprint_type(func->type);
     prettyprint_name(func->name);
     printf("\n[params");
@@ -257,6 +257,7 @@ void prettyprint_stmt(struct stmt *s)
             prettyprint_expr(s->expr);
         else
             printf("[;]\n");
+        printf("]");
         break;
     }
     case STMT_BLOCK:
@@ -404,6 +405,7 @@ void prettyprint_expr(struct expr *e)
         }
         case EXPR_EMPTY:
         {
+            printf("\n[;]");
             break;
         }
         case EXPR_CALL:
@@ -412,6 +414,7 @@ void prettyprint_expr(struct expr *e)
             prettyprint_expr(e->left);
             printf("\n[args ");
             prettyprint_expr(e->right);
+            printf("]\n");
             printf("]\n");
             break;
         }
